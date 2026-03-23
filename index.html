@@ -167,6 +167,7 @@ tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
 /* Level styling */
 .grow.lvl-proj{background:rgba(168,85,247,.06);min-height:36px}
 .grow.lvl-group{background:rgba(59,130,246,.05);min-height:34px}
+.grow.lvl-group2{background:rgba(34,197,94,.04);min-height:32px}
 .grow.lvl-task{}
 /* Left cells */
 .grow-left{display:flex;align-items:stretch;flex-shrink:0}
@@ -206,6 +207,7 @@ tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
 .gbar{height:100%;border-radius:3px;position:relative;overflow:visible;min-width:4px}
 .gbar.bar-proj{background:var(--purple);opacity:.8}
 .gbar.bar-group{background:var(--accent);opacity:.75}
+.gbar.bar-group2{background:var(--green);opacity:.6}
 .gbar.bar-task{background:var(--surface3);border:1px solid var(--border2)}
 .gbar-prog{position:absolute;top:0;left:0;height:100%;border-radius:3px;opacity:.9}
 .prog-green{background:var(--green)}
@@ -717,8 +719,15 @@ async function apiSaveInforme(inf){
 function fd(d){if(!d)return'—';const s=(d+'').split('T')[0];const[y,m,dd]=s.split('-');return dd?`${dd}/${m}/${y}`:d;}
 function fmoney(v){return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(v||0);}
 function calcPlan(p){
-  if(!p.inicio||!p.fin)return 0;
+  if(!p||!p.inicio||!p.fin)return 0;
   const h=new Date(),i=new Date(p.inicio),f=new Date(p.fin);
+  if(h<=i)return 0;if(h>=f)return 100;
+  return Math.round(((h-i)/(f-i))*100);
+}
+// Calculates planned% for a task/group using its effective date range
+function calcTaskPlan(gd){
+  if(!gd||!gd.i||!gd.f)return 0;
+  const h=new Date(),i=new Date(gd.i),f=new Date(gd.f);
   if(h<=i)return 0;if(h>=f)return 100;
   return Math.round(((h-i)/(f-i))*100);
 }
@@ -828,14 +837,15 @@ function renderTable(){
   if(!list.length){tbody.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';
   tbody.innerHTML=list.map(p=>{
-    const pl=calcPlan(p),dv=calcDev(p),rc=p.real>=pl?'green':p.real>=pl-10?'yellow':'red';
+    const pl=calcPlan(p),real=p.real||0,dv=real-pl;
+    const rc=real>=pl?'green':real>=pl-10?'yellow':'red';
     return`<tr onclick="openProj(${p.id})">
       <td class="td-code">${p.fr||'—'}</td>
       <td class="td-name" title="${p.nombre||''}">${p.nombre||'Sin nombre'}</td>
       <td style="font-size:11px;max-width:130px;overflow:hidden;text-overflow:ellipsis;">${p.jp||'—'}</td>
       <td class="td-date">${fd(p.inicio)}</td>
       <td class="td-date">${fd(p.fin)}</td>
-      <td>${pbar(p.real||0,rc,44)}</td>
+      <td>${pbar(real,rc,44)}</td>
       <td>${pbar(pl,'blue',44)}</td>
       <td>${devH(dv)}</td>
       <td>${bComp(p.complejidad)}</td>
@@ -1106,17 +1116,25 @@ function renderGantt(){
     <div class="gantt-body" id="gantt-body"></div>
   `;
 
-  // Populate parent selector
+  // Populate parent selector — show ALL tasks with hierarchy indentation
   if(canEdit()){
     const sel=document.getElementById('nt-parent');
     if(sel){
-      sel.innerHTML='<option value="">Sin padre (raíz)</option>';
-      curTasks.filter(t=>t.is_group).forEach(t=>{
-        const o=document.createElement('option');
-        o.value=t.id;o.textContent=t.nombre;sel.appendChild(o);
-      });
+      sel.innerHTML='<option value="">— Raíz (sin padre) —</option>';
+      // Build hierarchy-aware list
+      function addOptions(parentId,depth){
+        curTasks.filter(t=>(t.parent_id||null)===(parentId||null))
+          .sort((a,b)=>(a.orden||0)-(b.orden||0))
+          .forEach(t=>{
+            const o=document.createElement('option');
+            o.value=t.id;
+            o.textContent='　'.repeat(depth)+(t.is_group?'▸ ':'  ')+t.nombre;
+            sel.appendChild(o);
+            addOptions(t.id,depth+1);
+          });
+      }
+      addOptions(null,0);
     }
-    // Default dates
     const niEl=document.getElementById('nt-ini'),nfEl=document.getElementById('nt-fin');
     if(niEl&&!niEl.value)niEl.value=p.inicio||'';
     if(nfEl&&!nfEl.value)nfEl.value=p.fin||'';
@@ -1157,19 +1175,20 @@ function buildGanttContent(){
 
   // Group stats — uses recursive calcTaskPct defined above
   function gPct(t){return calcTaskPct(t.id);}
-  function gDates(t){
-    if(!t.is_group)return{i:t.inicio,f:t.fin};
-    const ch=curTasks.filter(x=>(x.parent_id||null)===(t.id||null));
-    if(!ch.length)return{i:t.inicio,f:t.fin};
-    const ii=ch.map(x=>x.inicio).filter(Boolean).sort();
-    const ff=ch.map(x=>x.fin).filter(Boolean).sort().reverse();
-    return{i:ii[0]||t.inicio,f:ff[0]||t.fin};
+
+  // getAllDescendants: returns ALL tasks under a given parentId recursively
+  function getAllDesc(parentId){
+    const direct=curTasks.filter(x=>(x.parent_id||null)===(parentId||null));
+    return direct.flatMap(c=>[c,...getAllDesc(c.id)]);
   }
-  function tPlan(gd){
-    if(!gd.i||!gd.f)return 0;
-    const h=new Date(),i=new Date(gd.i),f=new Date(gd.f);
-    if(h<=i)return 0;if(h>=f)return 100;
-    return Math.round(((h-i)/(f-i))*100);
+
+  function gDates(t){
+    // For any task (group or not): span covers itself + all descendants
+    const desc=getAllDesc(t.id);
+    const all=[t,...desc];
+    const dates=all.flatMap(x=>[x.inicio,x.fin]).filter(Boolean).sort();
+    if(!dates.length)return{i:t.inicio,f:t.fin};
+    return{i:dates[0],f:dates[dates.length-1]};
   }
 
   // Build visible rows — supports infinite nesting levels
@@ -1236,13 +1255,13 @@ function buildGanttContent(){
   // ── TASK ROWS ──
   let leftRows='',rightRows='';
   rows.forEach(({t,depth})=>{
-    const gd=gDates(t),pctR=gPct(t),pctP=tPlan(gd),dv=pctR-pctP;
+    const gd=gDates(t),pctR=gPct(t),pctP=calcTaskPlan(gd),dv=pctR-pctP;
     const tX=dx(gd.i),tW=Math.max(4,dx(gd.f)-tX);
-    // Level styling: depth0+group=lvl-group, depth0+task=lvl-task, depth1+=lvl-task with more indent
-    const lvl=t.is_group&&depth===0?'lvl-group':'lvl-task';
-    const barCls=t.is_group?'bar-group':'bar-task';
+    // 4 visual levels: 0=resumen principal, 1=encabezado, 2=tarea, 3+=subtarea
+    const lvlClass=depth===0&&t.is_group?'lvl-group':depth===1&&t.is_group?'lvl-group2':'lvl-task';
+    const barCls=depth===0?'bar-group':t.is_group?'bar-group2':'bar-task';
     const pc=pctR>=pctP?'prog-green':pctR>=pctP-15?'prog-yellow':'prog-red';
-    const indent=depth*18+8;
+    const indent=depth*20+8;
     const toggle=t.is_group
       ?`<span class="gtoggle ${collapsed.has(t.id)?'':'open'}" onclick="toggleG(${t.id})">▶</span>`
       :`<span class="g-spacer"></span>`;
@@ -1265,7 +1284,7 @@ function buildGanttContent(){
       return'';
     }
 
-    leftRows+=`<div class="grow ${lvl}" id="grow-${t.id}">
+    leftRows+=`<div class="grow ${lvlClass}" id="grow-${t.id}">
       <div class="grow-left" style="width:${lw}px;">
         <div class="gcell name-cell" style="width:${COL_NAME_W}px;flex-shrink:0;padding-left:${indent}px;">
           ${toggle}
@@ -1279,8 +1298,8 @@ function buildGanttContent(){
       </div>
     </div>`;
 
-    rightRows+=`<div class="grow ${lvl}">
-      <div class="grow-right" style="width:${totalW}px;min-height:${t.is_group?34:32}px;">
+    rightRows+=`<div class="grow ${lvlClass}">
+      <div class="grow-right" style="width:${totalW}px;min-height:${t.is_group?34:30}px;">
         ${weeks.map((_,i)=>`<div class="grid-vline" style="left:${i*WEEK_W}px;"></div>`).join('')}
         ${tX>=0&&tW>0?`<div class="gbar-wrap" style="left:${tX}px;width:${tW}px;"><div class="gbar ${barCls}" style="width:100%;"><div class="gbar-prog ${pc}" style="width:${pctR}%;"></div><span class="gbar-lbl">${pctR}%</span></div></div>`:''}
         <div class="today-line" style="left:${todayX}px;"></div>
@@ -1326,13 +1345,24 @@ async function quickAddTask(){
   const ini=document.getElementById('nt-ini')?.value||null;
   const fin=document.getElementById('nt-fin')?.value||null;
   const tipo=document.getElementById('nt-tipo')?.value||'task';
-  const pid=parseInt(document.getElementById('nt-parent')?.value)||null;
+  const pidRaw=document.getElementById('nt-parent')?.value;
+  const pid=pidRaw&&pidRaw!==''?parseInt(pidRaw):null;
+
+  // Compute depth level by walking up parent chain
+  function getDepth(parentId){
+    if(!parentId)return 0;
+    const parent=curTasks.find(x=>x.id===parentId);
+    if(!parent)return 1;
+    return 1+getDepth(parent.parent_id||null);
+  }
+  const nivel=getDepth(pid)+1;
+
   const t={
     proyecto_id:curProj.id,
     nombre,inicio:ini,fin,pct:0,
     responsable:curProj.jp||null,
     is_group:tipo==='group',
-    nivel:pid?2:1,
+    nivel,
     parent_id:pid,
     orden:curTasks.length+1
   };
