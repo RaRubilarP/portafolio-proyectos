@@ -3,869 +3,760 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>PM · Portfolio Manager</title>
+<title>PM · Portfolio Manager v4</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-  /* ══════════ TOKENS ══════════ */
-  :root {
-    --bg: #0a0c10; --surface: #111318; --surface2: #181c24; --surface3: #1e2330;
-    --border: #252b38; --border2: #2e3547;
-    --accent: #3b82f6; --accent2: #60a5fa; --accent-dim: rgba(59,130,246,.12);
-    --green: #22c55e; --green-dim: rgba(34,197,94,.12);
-    --yellow: #f59e0b; --yellow-dim: rgba(245,158,11,.12);
-    --red: #ef4444; --red-dim: rgba(239,68,68,.12);
-    --purple: #a855f7; --purple-dim: rgba(168,85,247,.12);
-    --text: #e2e8f0; --text2: #94a3b8; --text3: #64748b;
-    --mono: 'IBM Plex Mono', monospace; --sans: 'IBM Plex Sans', sans-serif;
-    --r: 6px; --r2: 10px;
-  }
-  *{box-sizing:border-box;margin:0;padding:0}
-  body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;min-height:100vh;display:flex;flex-direction:column}
+:root{
+  --bg:#0a0c10;--surface:#111318;--surface2:#181c24;--surface3:#1e2330;
+  --border:#252b38;--border2:#2e3547;
+  --accent:#3b82f6;--accent2:#60a5fa;--accent-dim:rgba(59,130,246,.12);
+  --green:#22c55e;--green-dim:rgba(34,197,94,.12);
+  --yellow:#f59e0b;--yellow-dim:rgba(245,158,11,.12);
+  --red:#ef4444;--red-dim:rgba(239,68,68,.12);
+  --purple:#a855f7;--purple-dim:rgba(168,85,247,.12);
+  --text:#e2e8f0;--text2:#94a3b8;--text3:#64748b;
+  --mono:'IBM Plex Mono',monospace;--sans:'IBM Plex Sans',sans-serif;
+  --r:6px;--r2:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:var(--sans);font-size:13px;min-height:100vh;display:flex;flex-direction:column}
 
-  /* ══════════ TOPBAR ══════════ */
-  .topbar{display:flex;align-items:center;gap:12px;padding:0 20px;height:50px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100;flex-shrink:0}
-  .logo{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent2);letter-spacing:.04em;white-space:nowrap}
-  .logo span{color:var(--text3);font-weight:400}
-  .tsep{width:1px;height:20px;background:var(--border)}
-  .nav-tabs{display:flex;gap:2px;flex:1;overflow-x:auto}
-  .nav-tab{padding:5px 12px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text3);font-family:var(--sans);transition:all .15s;white-space:nowrap}
-  .nav-tab:hover{background:var(--surface2);color:var(--text2)}
-  .nav-tab.active{background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
-  .topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
-  .role-btn{font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:none;transition:all .15s;white-space:nowrap}
-  .role-btn:hover{border-color:var(--accent);color:var(--accent2)}
-  .btn-new{display:flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .15s;white-space:nowrap}
-  .btn-new:hover{background:var(--accent2)}
-  .db-status{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border);display:flex;align-items:center;gap:5px;white-space:nowrap}
-  .db-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite}
-  .db-dot.connected{background:var(--green);animation:none}
-  .db-dot.error{background:var(--red);animation:none}
-  @keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
+/* ── TOPBAR ── */
+.topbar{display:flex;align-items:center;gap:12px;padding:0 20px;height:50px;border-bottom:1px solid var(--border);background:var(--surface);position:sticky;top:0;z-index:100;flex-shrink:0}
+.logo{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--accent2);letter-spacing:.04em;white-space:nowrap}
+.logo span{color:var(--text3);font-weight:400}
+.tsep{width:1px;height:20px;background:var(--border);flex-shrink:0}
+.nav-tabs{display:flex;gap:2px;flex:1;overflow-x:auto}
+.nav-tab{padding:5px 12px;border-radius:var(--r);font-size:12px;font-weight:500;cursor:pointer;border:none;background:none;color:var(--text3);font-family:var(--sans);transition:all .15s;white-space:nowrap}
+.nav-tab:hover{background:var(--surface2);color:var(--text2)}
+.nav-tab.active{background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
+.topbar-right{display:flex;align-items:center;gap:8px;margin-left:auto;flex-shrink:0}
+.role-btn{font-family:var(--mono);font-size:10px;padding:4px 10px;border-radius:20px;border:1px solid var(--border2);color:var(--text2);cursor:pointer;background:none;transition:all .15s;white-space:nowrap}
+.role-btn:hover{border-color:var(--accent);color:var(--accent2)}
+.btn-new{display:flex;align-items:center;gap:5px;padding:6px 14px;background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:600;font-family:var(--sans);cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-new:hover{background:var(--accent2)}
+.db-status{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border);display:flex;align-items:center;gap:5px;white-space:nowrap;cursor:default}
+.db-dot{width:6px;height:6px;border-radius:50%;background:var(--yellow);animation:pulse 2s infinite}
+.db-dot.on{background:var(--green);animation:none}
+.db-dot.err{background:var(--red);animation:none}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
 
-  /* ══════════ LAYOUT ══════════ */
-  .layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 50px)}
-  .sidebar{width:210px;flex-shrink:0;border-right:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow-y:auto}
-  .sb-section{padding:14px 10px 6px}
-  .sb-label{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:6px;padding-left:6px}
-  .sb-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;color:var(--text3);font-size:12px;font-weight:500;transition:all .12s;border:1px solid transparent}
-  .sb-item:hover{background:var(--surface2);color:var(--text2)}
-  .sb-item.active{background:var(--accent-dim);color:var(--accent2);border-color:rgba(59,130,246,.2)}
-  .sb-count{margin-left:auto;font-family:var(--mono);font-size:10px;background:var(--surface3);padding:1px 6px;border-radius:10px;color:var(--text3)}
-  .sb-sep{height:1px;background:var(--border);margin:6px 10px}
-  .sb-proj{padding:5px 10px;border-radius:var(--r);cursor:pointer;color:var(--text3);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:all .12s}
-  .sb-proj:hover{background:var(--surface2);color:var(--text2)}
-  .sb-proj.active{color:var(--accent2)}
-  .sb-proj-code{font-family:var(--mono);font-size:9px;color:var(--text3);display:block}
-  .main{flex:1;overflow:auto;display:flex;flex-direction:column}
+/* ── LAYOUT ── */
+.layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 50px)}
+.sidebar{width:210px;flex-shrink:0;border-right:1px solid var(--border);background:var(--surface);display:flex;flex-direction:column;overflow-y:auto}
+.sb-sec{padding:14px 10px 6px}
+.sb-lbl{font-family:var(--mono);font-size:9px;letter-spacing:.1em;color:var(--text3);text-transform:uppercase;margin-bottom:6px;padding-left:6px}
+.sb-item{display:flex;align-items:center;gap:8px;padding:7px 10px;border-radius:var(--r);cursor:pointer;color:var(--text3);font-size:12px;font-weight:500;transition:all .12s;border:1px solid transparent}
+.sb-item:hover{background:var(--surface2);color:var(--text2)}
+.sb-item.active{background:var(--accent-dim);color:var(--accent2);border-color:rgba(59,130,246,.2)}
+.sb-cnt{margin-left:auto;font-family:var(--mono);font-size:10px;background:var(--surface3);padding:1px 6px;border-radius:10px;color:var(--text3)}
+.sb-sep{height:1px;background:var(--border);margin:6px 10px}
+.sb-proj{padding:5px 10px;border-radius:var(--r);cursor:pointer;color:var(--text3);font-size:11px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;transition:all .12s}
+.sb-proj:hover{background:var(--surface2);color:var(--text2)}
+.sb-proj.active{color:var(--accent2)}
+.sb-proj-code{font-family:var(--mono);font-size:9px;color:var(--text3);display:block}
+.main{flex:1;overflow:auto;display:flex;flex-direction:column}
 
-  /* ══════════ VIEWS ══════════ */
-  .view{display:none;flex-direction:column;flex:1}
-  .view.active{display:flex}
-  .view-hdr{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0}
-  .view-title{font-size:15px;font-weight:700}
-  .view-sub{font-size:11px;color:var(--text3);font-family:var(--mono)}
-  .view-actions{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+/* ── VIEWS ── */
+.view{display:none;flex-direction:column;flex:1;min-height:0}
+.view.active{display:flex}
+.view-hdr{padding:14px 20px 10px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;background:var(--surface)}
+.view-title{font-size:15px;font-weight:700}
+.view-sub{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.view-actions{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
 
-  /* ══════════ STATS BAR ══════════ */
-  .stats-bar{display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;overflow-x:auto}
-  .stat{flex:1;min-width:100px;padding:12px 16px;border-right:1px solid var(--border)}
-  .stat:last-child{border-right:none}
-  .stat-val{font-family:var(--mono);font-size:20px;font-weight:600;line-height:1}
-  .stat-lbl{font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:uppercase;margin-top:3px}
+/* ── STATS ── */
+.stats-bar{display:flex;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;overflow-x:auto}
+.stat{flex:1;min-width:90px;padding:10px 14px;border-right:1px solid var(--border)}
+.stat:last-child{border-right:none}
+.stat-val{font-family:var(--mono);font-size:20px;font-weight:600;line-height:1}
+.stat-lbl{font-size:10px;color:var(--text3);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
 
-  /* ══════════ TABLE ══════════ */
-  .table-wrap{overflow:auto;flex:1}
-  table{width:100%;border-collapse:collapse}
-  thead th{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);padding:9px 10px;text-align:left;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);letter-spacing:.06em;white-space:nowrap;cursor:pointer;user-select:none}
-  thead th:hover{color:var(--text2)}
-  tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer}
-  tbody tr:hover{background:var(--surface2)}
-  tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
-  .td-code{font-family:var(--mono);font-size:11px;color:var(--accent2)}
-  .td-name{font-weight:600;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis}
-  .td-date{font-family:var(--mono);font-size:11px}
-  .td-jp{font-size:11px;max-width:130px;overflow:hidden;text-overflow:ellipsis}
+/* ── TABLE ── */
+.table-wrap{overflow:auto;flex:1}
+table{width:100%;border-collapse:collapse;min-width:900px}
+thead th{position:sticky;top:0;background:var(--surface);border-bottom:1px solid var(--border);padding:9px 10px;text-align:left;font-family:var(--mono);font-size:10px;font-weight:500;color:var(--text3);letter-spacing:.06em;white-space:nowrap;cursor:pointer;user-select:none;z-index:2}
+thead th:hover{color:var(--text2)}
+tbody tr{border-bottom:1px solid var(--border);transition:background .1s;cursor:pointer}
+tbody tr:hover{background:var(--surface2)}
+tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
+.td-code{font-family:var(--mono);font-size:11px;color:var(--accent2)}
+.td-name{font-weight:600;color:var(--text);max-width:200px;overflow:hidden;text-overflow:ellipsis}
+.td-date{font-family:var(--mono);font-size:11px}
 
-  /* ══════════ BADGES + BARS ══════════ */
-  .badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;font-family:var(--mono);letter-spacing:.03em}
-  .b-alta{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.25)}
-  .b-media{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,.25)}
-  .b-baja{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25)}
-  .b-completo{background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
-  .b-basico{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
-  .b-agil{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,.25)}
-  .pbar{display:flex;align-items:center;gap:6px}
-  .pbar-track{width:55px;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden}
-  .pbar-fill{height:100%;border-radius:2px}
-  .pbar-val{font-family:var(--mono);font-size:11px}
-  .dev-pos{color:var(--green);font-family:var(--mono);font-size:11px}
-  .dev-neg{color:var(--red);font-family:var(--mono);font-size:11px}
-  .dev-zero{color:var(--text3);font-family:var(--mono);font-size:11px}
-  .act-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:3px 5px;border-radius:var(--r);transition:all .12s}
-  .act-btn:hover{background:var(--surface3);color:var(--accent2)}
+/* ── BADGES + BARS ── */
+.badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;font-family:var(--mono)}
+.b-alta{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.b-media{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,.25)}
+.b-baja{background:var(--green-dim);color:var(--green);border:1px solid rgba(34,197,94,.25)}
+.b-completo{background:var(--accent-dim);color:var(--accent2);border:1px solid rgba(59,130,246,.25)}
+.b-basico{background:var(--purple-dim);color:var(--purple);border:1px solid rgba(168,85,247,.25)}
+.b-agil{background:var(--yellow-dim);color:var(--yellow);border:1px solid rgba(245,158,11,.25)}
+.pbar{display:flex;align-items:center;gap:5px}
+.pbar-track{width:52px;height:4px;background:var(--surface3);border-radius:2px;overflow:hidden;flex-shrink:0}
+.pbar-fill{height:100%;border-radius:2px;transition:width .3s}
+.pbar-val{font-family:var(--mono);font-size:11px;flex-shrink:0}
+.dev-pos{color:var(--green);font-family:var(--mono);font-size:11px}
+.dev-neg{color:var(--red);font-family:var(--mono);font-size:11px}
+.dev-z{color:var(--text3);font-family:var(--mono);font-size:11px}
+.act-btn{background:none;border:none;cursor:pointer;color:var(--text3);font-size:13px;padding:3px 5px;border-radius:var(--r);transition:all .12s;line-height:1}
+.act-btn:hover{background:var(--surface3);color:var(--accent2)}
+.act-btn.danger:hover{background:var(--red-dim);color:var(--red)}
+.search-inp{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 10px;width:170px;outline:none;transition:border .15s}
+.search-inp:focus{border-color:var(--accent)}
+.search-inp::placeholder{color:var(--text3)}
+.filt-sel{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);font-size:12px;font-family:var(--sans);padding:6px 10px;cursor:pointer;outline:none;transition:all .15s}
+.filt-sel:focus{border-color:var(--accent)}
+.filt-sel option{background:var(--surface2)}
 
-  /* ══════════ FILTROS ══════════ */
-  .search-inp{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:12px;padding:6px 10px;width:180px;outline:none;transition:border .15s}
-  .search-inp:focus{border-color:var(--accent)}
-  .search-inp::placeholder{color:var(--text3)}
-  .filt-sel{background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);font-size:12px;font-family:var(--sans);padding:6px 10px;cursor:pointer;outline:none;transition:all .15s}
-  .filt-sel:focus{border-color:var(--accent)}
-  .filt-sel option{background:var(--surface2)}
+/* ── PROJ TABS ── */
+.proj-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 20px;flex-shrink:0;overflow-x:auto;align-items:center}
+.proj-tab{padding:11px 14px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
+.proj-tab:hover{color:var(--text2)}
+.proj-tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
+.pview{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0}
+.pview.active{display:flex}
 
-  /* ══════════ PROJ TABS ══════════ */
-  .proj-tabs{display:flex;border-bottom:1px solid var(--border);background:var(--surface);padding:0 20px;flex-shrink:0;overflow-x:auto}
-  .proj-tab{padding:11px 14px;font-size:12px;font-weight:500;color:var(--text3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
-  .proj-tab:hover{color:var(--text2)}
-  .proj-tab.active{color:var(--accent2);border-bottom-color:var(--accent2)}
-  .pview{display:none;flex:1;overflow:hidden;flex-direction:column}
-  .pview.active{display:flex}
+/* ── DETALLE ── */
+.det-hero{background:linear-gradient(135deg,var(--surface2),var(--surface));border-bottom:1px solid var(--border);padding:18px 20px;display:flex;gap:14px;align-items:flex-start;flex-wrap:wrap;flex-shrink:0}
+.det-code{font-family:var(--mono);font-size:11px;color:var(--accent2);background:var(--accent-dim);border:1px solid rgba(59,130,246,.25);padding:3px 10px;border-radius:20px;display:inline-block}
+.det-name{font-size:20px;font-weight:700;margin-top:5px}
+.det-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:7px;align-items:center}
+.det-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:10px 13px}
+.kpi-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
+.kpi-val{font-family:var(--mono);font-size:20px;font-weight:700;margin-top:4px;line-height:1}
+.det-grid{display:grid;grid-template-columns:1fr 1fr;overflow-y:auto;flex:1}
+.det-sec{padding:14px 20px;border-bottom:1px solid var(--border)}
+.det-sec:nth-child(odd){border-right:1px solid var(--border)}
+.sec-ttl{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.sec-ttl::after{content:'';flex:1;height:1px;background:var(--border)}
+.frow{display:flex;align-items:baseline;gap:8px;padding:5px 0;border-bottom:1px solid var(--border)}
+.frow:last-child{border-bottom:none}
+.flbl{font-size:11px;color:var(--text3);width:130px;flex-shrink:0}
+.fval{font-size:12px;color:var(--text2);flex:1}
 
-  /* ══════════ DETALLE ══════════ */
-  .det-hero{background:linear-gradient(135deg,var(--surface2),var(--surface));border-bottom:1px solid var(--border);padding:20px;display:flex;gap:16px;align-items:flex-start;flex-wrap:wrap;flex-shrink:0}
-  .det-code{font-family:var(--mono);font-size:11px;color:var(--accent2);background:var(--accent-dim);border:1px solid rgba(59,130,246,.25);padding:3px 10px;border-radius:20px;display:inline-block}
-  .det-name{font-size:20px;font-weight:700;margin-top:6px}
-  .det-meta{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px;align-items:center}
-  .det-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;padding:16px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
-  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px}
-  .kpi-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;font-family:var(--mono)}
-  .kpi-val{font-family:var(--mono);font-size:22px;font-weight:700;margin-top:5px;line-height:1}
-  .kpi-sub{font-size:10px;color:var(--text3);margin-top:3px}
-  .det-grid{display:grid;grid-template-columns:1fr 1fr;overflow-y:auto;flex:1}
-  .det-sec{padding:16px 20px;border-bottom:1px solid var(--border)}
-  .det-sec:nth-child(odd){border-right:1px solid var(--border)}
-  .sec-ttl{font-size:11px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .sec-ttl::after{content:'';flex:1;height:1px;background:var(--border)}
-  .frow{display:flex;align-items:baseline;gap:8px;padding:6px 0;border-bottom:1px solid var(--border)}
-  .frow:last-child{border-bottom:none}
-  .flbl{font-size:11px;color:var(--text3);width:130px;flex-shrink:0}
-  .fval{font-size:12px;color:var(--text2);flex:1}
+/* ══════════════════════════════════════════
+   GANTT v4 — MEJORADO
+══════════════════════════════════════════ */
+.gantt-shell{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
+.gantt-toolbar{display:flex;align-items:center;gap:8px;padding:8px 14px;border-bottom:1px solid var(--border);background:var(--surface);flex-shrink:0;flex-wrap:wrap}
+.gantt-toolbar-title{font-size:13px;font-weight:700;color:var(--text)}
+.gantt-toolbar-sub{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.gantt-col-toggles{display:flex;gap:4px;margin-left:8px;flex-wrap:wrap}
+.col-toggle{font-family:var(--mono);font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--border2);color:var(--text3);cursor:pointer;background:none;transition:all .12s;white-space:nowrap}
+.col-toggle:hover{border-color:var(--accent);color:var(--accent2)}
+.col-toggle.active{background:var(--accent-dim);color:var(--accent2);border-color:rgba(59,130,246,.3)}
 
-  /* ══════════ GANTT ══════════ */
-  .gantt-wrap{display:flex;flex:1;overflow:hidden;flex-direction:column}
-  .gantt-body{display:flex;flex:1;overflow:hidden}
-  .gantt-left{width:420px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;overflow-x:hidden}
-  .gantt-right{flex:1;overflow:auto}
-  /* GANTT HEADER */
-  .gantt-hdr{display:flex;border-bottom:2px solid var(--border2);background:var(--surface);flex-shrink:0;position:sticky;top:0;z-index:10}
-  .gantt-hdr-left{width:420px;flex-shrink:0;border-right:1px solid var(--border);display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;padding:0}
-  .gantt-hdr-cell{padding:8px 8px;font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.06em;border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-  .gantt-hdr-cell:last-child{border-right:none}
-  .gantt-weeks{display:flex;flex-shrink:0}
-  .gantt-week{min-width:110px;padding:8px 6px;border-right:1px solid var(--border);font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;white-space:nowrap}
-  /* GANTT ROWS */
-  .grow{display:flex;border-bottom:1px solid var(--border);min-height:34px;align-items:stretch}
-  .grow.ggroup{background:var(--surface2)}
-  .grow:hover{background:rgba(255,255,255,.02)}
-  .grow-left{width:420px;flex-shrink:0;border-right:1px solid var(--border);display:grid;grid-template-columns:2fr 1fr 1fr 1fr 1fr 1fr;align-items:center}
-  .grow-cell{padding:4px 8px;font-size:11px;color:var(--text2);border-right:1px solid var(--border);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .grow-cell:last-child{border-right:none}
-  .grow-cell.name-cell{display:flex;align-items:center;gap:4px;font-weight:500}
-  .grow-cell.name-cell.grp{font-weight:700;color:var(--text)}
-  .grow-cell.mono{font-family:var(--mono);font-size:10px}
-  .gtoggle{cursor:pointer;color:var(--text3);font-size:10px;width:14px;flex-shrink:0;transition:transform .15s}
-  .gtoggle.open{transform:rotate(90deg)}
-  .grow-right{flex:1;position:relative;display:flex;align-items:center;min-height:34px}
-  .gbar-wrap{position:absolute;height:18px;display:flex;align-items:center}
-  .gbar{height:100%;border-radius:3px;position:relative;overflow:visible;min-width:3px}
-  .gbar.proj-bar{background:var(--purple);opacity:.75}
-  .gbar.grp-bar{background:var(--accent);opacity:.8}
-  .gbar.task-bar{background:var(--surface3);border:1px solid var(--border2)}
-  .gbar-prog{position:absolute;top:0;left:0;height:100%;border-radius:3px;opacity:.85}
-  .gbar-prog.green{background:var(--green)}
-  .gbar-prog.yellow{background:var(--yellow)}
-  .gbar-prog.red{background:var(--red)}
-  .gbar-lbl{position:absolute;right:-2px;top:50%;transform:translateY(-50%) translateX(100%);font-family:var(--mono);font-size:9px;color:var(--text3);padding-left:4px;white-space:nowrap}
-  .today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--red);opacity:.7;z-index:5}
-  .today-lbl{position:absolute;top:1px;font-family:var(--mono);font-size:8px;color:var(--red);transform:translateX(-50%);white-space:nowrap;background:var(--bg);padding:0 2px}
-  .grid-line{position:absolute;top:0;bottom:0;width:1px;background:var(--border);opacity:.4}
-  .gantt-proj-row{display:flex;border-bottom:2px solid var(--border2);min-height:36px;background:var(--surface3);align-items:stretch}
-  .gantt-proj-row .grow-left{background:var(--surface3)}
-  .gantt-proj-row .grow-cell.name-cell{color:var(--accent2);font-size:12px}
+/* Gantt layout */
+.gantt-body{display:flex;flex:1;overflow:hidden;min-height:0}
+.gantt-left-panel{flex-shrink:0;border-right:2px solid var(--border2);display:flex;flex-direction:column;overflow:hidden;transition:width .2s}
+.gantt-left-head{background:var(--surface);border-bottom:2px solid var(--border2);display:flex;flex-shrink:0}
+.gantt-left-scroll{overflow-y:auto;overflow-x:hidden;flex:1}
+.gantt-right-panel{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
+.gantt-right-head{background:var(--surface);border-bottom:2px solid var(--border2);overflow:hidden;flex-shrink:0}
+.gantt-right-scroll{overflow:auto;flex:1}
 
-  /* ══════════ AVANCE ══════════ */
-  .av-wrap{flex:1;padding:16px 20px;overflow-y:auto}
-  .av-hdr{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
-  .btn-add{background:var(--green-dim);border:1px solid rgba(34,197,94,.25);color:var(--green);border-radius:var(--r);font-size:11px;font-weight:600;font-family:var(--sans);padding:6px 12px;cursor:pointer;transition:all .15s}
-  .btn-add:hover{background:rgba(34,197,94,.2)}
-  .inf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;overflow:hidden}
-  .inf-hdr{display:flex;align-items:center;gap:10px;padding:10px 14px;background:var(--surface2);border-bottom:1px solid var(--border);cursor:pointer}
-  .inf-hdr:hover{background:var(--surface3)}
-  .inf-week{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--accent2);background:var(--accent-dim);border:1px solid rgba(59,130,246,.2);padding:2px 7px;border-radius:20px}
-  .inf-body{padding:14px;display:none}
-  .inf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
-  .inf-field{margin-bottom:10px}
-  .inf-flbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;font-family:var(--mono)}
-  .inf-fval{font-size:12px;color:var(--text2);line-height:1.6}
+/* Column headers */
+.gcol-h{padding:8px 8px;font-family:var(--mono);font-size:9px;font-weight:600;color:var(--text3);letter-spacing:.06em;border-right:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;display:flex;align-items:center;justify-content:center;text-align:center}
+.gcol-h.name-h{justify-content:flex-start;text-align:left}
 
-  /* ══════════ INFO PANEL ══════════ */
-  .info-wrap{flex:1;overflow-y:auto}
-  .info-grid{display:grid;grid-template-columns:1fr 1fr}
-  .info-panel{padding:16px 20px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
-  .info-panel:nth-child(even){border-right:none}
-  .info-panel:last-child{grid-column:1/-1;border-right:none}
-  .ip-ttl{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px;display:flex;align-items:center;gap:8px}
-  .risk-item{padding:8px 10px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;display:flex;gap:8px;align-items:flex-start}
-  .risk-desc{font-size:12px;color:var(--text2);flex:1;line-height:1.5}
-  .risk-owner{font-size:10px;color:var(--text3);margin-top:2px}
-  .doc-item{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid var(--border);cursor:pointer}
-  .doc-item:last-child{border-bottom:none}
-  .doc-name{font-size:12px;color:var(--text2);font-weight:500}
-  .comment-item{padding:8px 0;border-bottom:1px solid var(--border)}
-  .comment-item:last-child{border-bottom:none}
-  .cm-meta{display:flex;gap:8px;align-items:center;margin-bottom:4px}
-  .cm-author{font-size:11px;font-weight:600;color:var(--accent2)}
-  .cm-date{font-family:var(--mono);font-size:10px;color:var(--text3)}
-  .cm-text{font-size:12px;color:var(--text2);line-height:1.5}
+/* Gantt rows */
+.grow{display:flex;border-bottom:1px solid var(--border);min-height:32px;align-items:stretch;transition:background .08s}
+.grow:hover{background:rgba(255,255,255,.025)}
+/* Level styling */
+.grow.lvl-proj{background:rgba(168,85,247,.06);min-height:36px}
+.grow.lvl-group{background:rgba(59,130,246,.05);min-height:34px}
+.grow.lvl-task{}
+/* Left cells */
+.grow-left{display:flex;align-items:stretch;flex-shrink:0}
+.gcell{padding:0 8px;font-size:11px;color:var(--text2);border-right:1px solid var(--border);display:flex;align-items:center;flex-shrink:0;overflow:hidden}
+.gcell.name-cell{gap:4px;min-width:0}
+.gcell-name-text{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
+.lvl-proj .gcell.name-cell .gcell-name-text{color:var(--accent2);font-weight:700;font-size:12px}
+.lvl-group .gcell.name-cell .gcell-name-text{color:var(--text);font-weight:600}
+.lvl-task .gcell.name-cell .gcell-name-text{color:var(--text2);font-weight:400}
 
-  /* ══════════ MODAL ══════════ */
-  .overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center}
-  .overlay.open{display:flex}
-  .modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);width:560px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
-  .modal-hdr{padding:16px 20px 12px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
-  .modal-ttl{font-size:14px;font-weight:700}
-  .modal-sub{font-size:11px;color:var(--text3);font-family:var(--mono)}
-  .modal-x{margin-left:auto;background:none;border:none;color:var(--text3);font-size:16px;cursor:pointer;width:26px;height:26px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;transition:all .15s}
-  .modal-x:hover{background:var(--surface3);color:var(--text)}
-  .modal-body{padding:18px 20px}
-  .modal-footer{padding:12px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
-  .fg{margin-bottom:14px}
-  .flabel{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;display:block;letter-spacing:.03em}
-  .finput,.fselect,.ftextarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:13px;padding:7px 10px;outline:none;transition:border .15s}
-  .finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--accent)}
-  .fselect option{background:var(--surface2)}
-  .ftextarea{min-height:70px;resize:vertical}
-  .frow2{display:grid;grid-template-columns:1fr 1fr;gap:12px}
-  .fhint{font-size:10px;color:var(--text3);margin-top:3px}
-  .btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--sans);padding:8px 16px;cursor:pointer;transition:all .15s}
-  .btn-primary:hover{background:var(--accent2)}
-  .btn-sec{background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;font-weight:500;font-family:var(--sans);padding:8px 14px;cursor:pointer;transition:all .15s}
-  .btn-sec:hover{border-color:var(--accent);color:var(--accent2)}
+/* Inline real % editor */
+.pct-inline{display:flex;align-items:center;gap:4px;width:100%}
+.pct-inp{width:36px;background:var(--surface3);border:1px solid var(--border2);border-radius:3px;color:var(--text);font-family:var(--mono);font-size:10px;padding:2px 4px;outline:none;text-align:center}
+.pct-inp:focus{border-color:var(--accent)}
+.pct-save-btn{background:var(--green-dim);border:1px solid rgba(34,197,94,.3);color:var(--green);border-radius:3px;font-size:9px;padding:2px 5px;cursor:pointer;font-family:var(--mono);white-space:nowrap}
+.pct-save-btn:hover{background:rgba(34,197,94,.2)}
 
-  /* ══════════ SUPABASE CONFIG ══════════ */
-  .config-panel{background:var(--surface);border:1px solid var(--yellow);border-radius:var(--r2);padding:20px;margin:20px;max-width:700px}
-  .config-ttl{font-size:14px;font-weight:700;color:var(--yellow);margin-bottom:6px;display:flex;align-items:center;gap:8px}
-  .config-sub{font-size:12px;color:var(--text2);margin-bottom:16px;line-height:1.7}
-  .config-row{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:10px}
+/* Gantt toggle */
+.gtoggle{cursor:pointer;color:var(--text3);font-size:9px;width:14px;height:14px;flex-shrink:0;transition:transform .15s;display:flex;align-items:center;justify-content:center;border-radius:2px}
+.gtoggle:hover{background:var(--surface3);color:var(--text2)}
+.gtoggle.open{transform:rotate(90deg)}
+.g-spacer{width:14px;flex-shrink:0}
 
-  /* ══════════ REPORTE ══════════ */
-  .rpt-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:12px;margin-bottom:20px}
-  .rpt-chart{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:16px;margin-bottom:16px}
-  .rpt-chart-ttl{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:12px}
-  .chart-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
-  .chart-bar-lbl{font-size:11px;color:var(--text2);width:100px;text-align:right;flex-shrink:0}
-  .chart-bar-track{flex:1;background:var(--surface3);border-radius:3px;height:14px;overflow:hidden}
-  .chart-bar-fill{height:100%;border-radius:3px;transition:width .5s}
-  .chart-bar-val{font-family:var(--mono);font-size:10px;color:var(--text2);width:40px;flex-shrink:0}
+/* Row actions */
+.row-actions{display:flex;gap:2px;opacity:0;transition:opacity .12s;margin-left:auto;flex-shrink:0}
+.grow:hover .row-actions{opacity:1}
+.row-act{background:none;border:none;cursor:pointer;color:var(--text3);font-size:11px;padding:2px 3px;border-radius:3px;transition:all .1s;line-height:1}
+.row-act:hover{background:var(--surface3);color:var(--accent2)}
+.row-act.del:hover{background:var(--red-dim);color:var(--red)}
 
-  /* ══════════ EMPTY / TOAST / LOADER ══════════ */
-  .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:12px;padding:50px 20px;text-align:center}
-  .empty-icon{font-size:40px;opacity:.2}
-  .empty-ttl{font-size:15px;font-weight:700;color:var(--text2)}
-  .empty-sub{font-size:12px;color:var(--text3);max-width:320px;line-height:1.6}
-  .toast{position:fixed;bottom:20px;right:20px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);padding:10px 16px;font-size:13px;color:var(--text2);box-shadow:0 8px 30px rgba(0,0,0,.5);z-index:300;transform:translateY(60px);opacity:0;transition:all .3s;display:flex;align-items:center;gap:8px}
-  .toast.show{transform:translateY(0);opacity:1}
-  .loader{display:inline-block;width:14px;height:14px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite;flex-shrink:0}
-  @keyframes spin{to{transform:rotate(360deg)}}
-  .loading-row{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:var(--text3);font-size:13px}
+/* Right / timeline */
+.grow-right{position:relative;display:flex;align-items:center;min-height:inherit}
+.gbar-wrap{position:absolute;height:16px;pointer-events:none}
+.lvl-proj .gbar-wrap{height:20px}
+.lvl-group .gbar-wrap{height:18px}
+.gbar{height:100%;border-radius:3px;position:relative;overflow:visible;min-width:4px}
+.gbar.bar-proj{background:var(--purple);opacity:.8}
+.gbar.bar-group{background:var(--accent);opacity:.75}
+.gbar.bar-task{background:var(--surface3);border:1px solid var(--border2)}
+.gbar-prog{position:absolute;top:0;left:0;height:100%;border-radius:3px;opacity:.9}
+.prog-green{background:var(--green)}
+.prog-yellow{background:var(--yellow)}
+.prog-red{background:var(--red)}
+.gbar-lbl{position:absolute;right:0;top:50%;transform:translateY(-50%) translateX(calc(100% + 4px));font-family:var(--mono);font-size:9px;color:var(--text3);white-space:nowrap}
+.today-line{position:absolute;top:0;bottom:0;width:2px;background:var(--red);opacity:.6;z-index:5;pointer-events:none}
+.today-lbl{position:absolute;top:2px;font-family:var(--mono);font-size:8px;color:var(--red);transform:translateX(-50%);white-space:nowrap;background:var(--bg);padding:0 2px;z-index:6}
+.grid-vline{position:absolute;top:0;bottom:0;width:1px;background:var(--border);opacity:.35;pointer-events:none}
+.gantt-week-hdr{min-width:0;padding:8px 6px;border-right:1px solid var(--border);font-family:var(--mono);font-size:9px;color:var(--text3);text-align:center;white-space:nowrap;flex-shrink:0}
 
-  ::-webkit-scrollbar{width:5px;height:5px}
-  ::-webkit-scrollbar-track{background:transparent}
-  ::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+/* Add task inline row */
+.add-task-row{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--border);background:var(--surface2)}
+.add-task-inp{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:12px;padding:5px 8px;outline:none;flex:1;transition:border .15s}
+.add-task-inp:focus{border-color:var(--accent)}
+.add-task-sel{background:var(--surface3);border:1px solid var(--border2);border-radius:var(--r);color:var(--text2);font-size:11px;font-family:var(--sans);padding:5px 8px;outline:none}
+.add-task-sel option{background:var(--surface2)}
+.btn-xs{font-size:11px;font-weight:600;font-family:var(--sans);padding:5px 10px;border-radius:var(--r);border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
+.btn-xs.primary{background:var(--accent);color:#fff}
+.btn-xs.primary:hover{background:var(--accent2)}
+.btn-xs.sec{background:var(--surface3);color:var(--text2);border:1px solid var(--border2)}
+.btn-xs.sec:hover{border-color:var(--accent);color:var(--accent2)}
+.btn-xs.danger{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.25)}
+.btn-xs.danger:hover{background:rgba(239,68,68,.2)}
 
-  @media(max-width:768px){
-    .sidebar{display:none}
-    .frow2{grid-template-columns:1fr}
-    .det-grid{grid-template-columns:1fr}
-    .info-grid{grid-template-columns:1fr}
-    .gantt-hdr-left,.grow-left{width:200px}
-    .gantt-hdr-cell:not(:first-child){display:none}
-    .grow-cell:not(.name-cell){display:none}
-  }
+/* ── AVANCE ── */
+.av-wrap{flex:1;padding:14px 20px;overflow-y:auto}
+.av-hdr{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
+.btn-add{background:var(--green-dim);border:1px solid rgba(34,197,94,.25);color:var(--green);border-radius:var(--r);font-size:11px;font-weight:600;font-family:var(--sans);padding:6px 12px;cursor:pointer;transition:all .15s}
+.btn-add:hover{background:rgba(34,197,94,.2)}
+.inf-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);margin-bottom:8px;overflow:hidden}
+.inf-hdr{display:flex;align-items:center;gap:10px;padding:9px 13px;background:var(--surface2);cursor:pointer}
+.inf-hdr:hover{background:var(--surface3)}
+.inf-week{font-family:var(--mono);font-size:10px;font-weight:600;color:var(--accent2);background:var(--accent-dim);border:1px solid rgba(59,130,246,.2);padding:2px 7px;border-radius:20px}
+.inf-body{padding:13px;display:none}
+.inf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:10px}
+.inf-field{margin-bottom:9px}
+.inf-flbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:3px;font-family:var(--mono)}
+.inf-fval{font-size:12px;color:var(--text2);line-height:1.6}
+
+/* ── INFO ── */
+.info-wrap{flex:1;overflow-y:auto}
+.info-grid{display:grid;grid-template-columns:1fr 1fr}
+.info-panel{padding:14px 18px;border-bottom:1px solid var(--border);border-right:1px solid var(--border)}
+.info-panel:nth-child(even){border-right:none}
+.info-panel:last-child{grid-column:1/-1;border-right:none}
+.ip-ttl{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px;display:flex;align-items:center;gap:8px}
+.risk-item{padding:7px 9px;background:var(--surface2);border:1px solid var(--border);border-radius:var(--r);margin-bottom:6px;display:flex;gap:7px;align-items:flex-start}
+.doc-item{display:flex;align-items:center;gap:7px;padding:6px 0;border-bottom:1px solid var(--border)}
+.doc-item:last-child{border-bottom:none}
+.comment-item{padding:7px 0;border-bottom:1px solid var(--border)}
+.comment-item:last-child{border-bottom:none}
+.cm-meta{display:flex;gap:7px;align-items:center;margin-bottom:3px}
+.cm-author{font-size:11px;font-weight:600;color:var(--accent2)}
+.cm-date{font-family:var(--mono);font-size:10px;color:var(--text3)}
+
+/* ── MODAL ── */
+.overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:200;align-items:center;justify-content:center}
+.overlay.open{display:flex}
+.modal{background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);width:540px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
+.modal.sm{width:400px}
+.modal-hdr{padding:15px 20px 11px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:8px}
+.modal-ttl{font-size:14px;font-weight:700}
+.modal-sub{font-size:11px;color:var(--text3);font-family:var(--mono);margin-top:2px}
+.modal-x{margin-left:auto;background:none;border:none;color:var(--text3);font-size:15px;cursor:pointer;width:26px;height:26px;border-radius:var(--r);display:flex;align-items:center;justify-content:center;transition:all .15s}
+.modal-x:hover{background:var(--surface3);color:var(--text)}
+.modal-body{padding:16px 20px}
+.modal-footer{padding:11px 20px;border-top:1px solid var(--border);display:flex;gap:8px;justify-content:flex-end}
+.fg{margin-bottom:13px}
+.flabel{font-size:11px;font-weight:600;color:var(--text2);margin-bottom:4px;display:block;letter-spacing:.03em}
+.finput,.fselect,.ftextarea{width:100%;background:var(--surface2);border:1px solid var(--border2);border-radius:var(--r);color:var(--text);font-family:var(--sans);font-size:13px;padding:7px 10px;outline:none;transition:border .15s}
+.finput:focus,.fselect:focus,.ftextarea:focus{border-color:var(--accent)}
+.fselect option{background:var(--surface2)}
+.ftextarea{min-height:65px;resize:vertical}
+.frow2{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.fhint{font-size:10px;color:var(--text3);margin-top:3px}
+.btn-primary{background:var(--accent);color:#fff;border:none;border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--sans);padding:8px 16px;cursor:pointer;transition:all .15s}
+.btn-primary:hover{background:var(--accent2)}
+.btn-sec{background:var(--surface2);color:var(--text2);border:1px solid var(--border2);border-radius:var(--r);font-size:13px;font-weight:500;font-family:var(--sans);padding:8px 14px;cursor:pointer;transition:all .15s}
+.btn-sec:hover{border-color:var(--accent);color:var(--accent2)}
+.btn-danger-full{background:var(--red-dim);color:var(--red);border:1px solid rgba(239,68,68,.3);border-radius:var(--r);font-size:13px;font-weight:600;font-family:var(--sans);padding:8px 16px;cursor:pointer;transition:all .15s}
+.btn-danger-full:hover{background:rgba(239,68,68,.2)}
+
+/* ── CONFIG ── */
+.cfg-panel{background:var(--surface);border:1px solid var(--yellow);border-radius:var(--r2);padding:18px;margin:16px;max-width:700px}
+.cfg-ttl{font-size:13px;font-weight:700;color:var(--yellow);margin-bottom:5px;display:flex;align-items:center;gap:7px}
+.cfg-sub{font-size:12px;color:var(--text2);margin-bottom:14px;line-height:1.75}
+
+/* ── REPORT ── */
+.rpt-kpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:10px;margin-bottom:18px}
+.rpt-chart{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:14px;margin-bottom:13px}
+.rpt-chart-ttl{font-size:12px;font-weight:700;color:var(--text2);margin-bottom:10px}
+.cbar-row{display:flex;align-items:center;gap:8px;margin-bottom:7px}
+.cbar-lbl{font-size:11px;color:var(--text2);width:90px;text-align:right;flex-shrink:0}
+.cbar-track{flex:1;background:var(--surface3);border-radius:3px;height:12px;overflow:hidden}
+.cbar-fill{height:100%;border-radius:3px;transition:width .5s}
+.cbar-val{font-family:var(--mono);font-size:10px;color:var(--text2);width:30px;flex-shrink:0}
+
+/* ── CONFIRM MODAL ── */
+.confirm-body{padding:20px;text-align:center}
+.confirm-icon{font-size:40px;margin-bottom:10px}
+.confirm-msg{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:6px}
+.confirm-sub{font-size:12px;color:var(--text3)}
+
+/* ── MISC ── */
+.empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:11px;padding:48px 20px;text-align:center}
+.empty-icon{font-size:38px;opacity:.2}
+.empty-ttl{font-size:14px;font-weight:700;color:var(--text2)}
+.empty-sub{font-size:12px;color:var(--text3);max-width:300px;line-height:1.6}
+.toast{position:fixed;bottom:18px;right:18px;background:var(--surface);border:1px solid var(--border2);border-radius:var(--r2);padding:9px 15px;font-size:13px;color:var(--text2);box-shadow:0 8px 30px rgba(0,0,0,.5);z-index:400;transform:translateY(55px);opacity:0;transition:all .28s;display:flex;align-items:center;gap:8px;max-width:340px}
+.toast.show{transform:translateY(0);opacity:1}
+.loader{display:inline-block;width:13px;height:13px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin .7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.loading-row{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:var(--text3);font-size:13px}
+::-webkit-scrollbar{width:5px;height:5px}
+::-webkit-scrollbar-track{background:transparent}
+::-webkit-scrollbar-thumb{background:var(--border2);border-radius:3px}
+::-webkit-scrollbar-thumb:hover{background:var(--text3)}
+@media(max-width:768px){.sidebar{display:none}.frow2{grid-template-columns:1fr}.det-grid{grid-template-columns:1fr}.info-grid{grid-template-columns:1fr}}
 </style>
 </head>
 <body>
 
 <!-- TOPBAR -->
 <div class="topbar">
-  <div class="logo">PM<span>·</span>PORTFOLIO <span style="font-size:9px;color:var(--text3);margin-left:2px">v3.0</span></div>
+  <div class="logo">PM<span>·</span>PORTFOLIO <span style="font-size:9px;color:var(--text3);margin-left:2px">v4</span></div>
   <div class="tsep"></div>
   <div class="nav-tabs">
     <button class="nav-tab active" onclick="goView('centro')">📋 Centro de Proyectos</button>
     <button class="nav-tab" onclick="goView('reporte')">📈 Reportería</button>
-    <button class="nav-tab" onclick="goView('config')">⚙️ Configurar BD</button>
+    <button class="nav-tab" onclick="goView('config')">⚙️ Base de Datos</button>
   </div>
   <div class="topbar-right">
-    <div class="db-status" id="db-status"><div class="db-dot" id="db-dot"></div><span id="db-label">Desconectado</span></div>
+    <div class="db-status"><div class="db-dot" id="db-dot"></div><span id="db-lbl">Demo</span></div>
     <button class="role-btn" onclick="cycleRole()">👤 <span id="role-lbl">Administrador</span></button>
-    <button class="btn-new" onclick="openNewProject()" id="btn-new">+ Nuevo Proyecto</button>
+    <button class="btn-new" onclick="openNewProject()">+ Nuevo Proyecto</button>
   </div>
 </div>
 
 <div class="layout">
-  <!-- SIDEBAR -->
-  <div class="sidebar">
-    <div class="sb-section">
-      <div class="sb-label">Portafolio</div>
-      <div class="sb-item active" id="sb-centro" onclick="goView('centro')">
-        <span>📋</span> Centro de Proyectos <span class="sb-count" id="sb-count">0</span>
-      </div>
-      <div class="sb-item" id="sb-reporte" onclick="goView('reporte')"><span>📈</span> Reportería</div>
-      <div class="sb-item" id="sb-config" onclick="goView('config')"><span>⚙️</span> Base de Datos</div>
-    </div>
-    <div class="sb-sep"></div>
-    <div class="sb-section"><div class="sb-label">Proyectos</div></div>
-    <div id="sb-projects" style="padding:0 10px 16px;"></div>
+<!-- SIDEBAR -->
+<div class="sidebar">
+  <div class="sb-sec">
+    <div class="sb-lbl">Portafolio</div>
+    <div class="sb-item active" id="sb-centro" onclick="goView('centro')"><span>📋</span>Centro de Proyectos<span class="sb-cnt" id="sb-cnt">0</span></div>
+    <div class="sb-item" id="sb-reporte" onclick="goView('reporte')"><span>📈</span>Reportería</div>
+    <div class="sb-item" id="sb-config" onclick="goView('config')"><span>⚙️</span>Base de Datos</div>
   </div>
+  <div class="sb-sep"></div>
+  <div class="sb-sec"><div class="sb-lbl">Proyectos</div></div>
+  <div id="sb-projs" style="padding:0 10px 16px;"></div>
+</div>
 
-  <!-- MAIN -->
-  <div class="main" id="main">
+<!-- MAIN -->
+<div class="main" id="main">
 
-    <!-- ═══ CENTRO DE PROYECTOS ═══ -->
-    <div class="view active" id="view-centro">
-      <div class="stats-bar" id="stats-bar">
-        <div class="stat"><div class="stat-val" style="color:var(--accent2)">—</div><div class="stat-lbl">Total</div></div>
-        <div class="stat"><div class="stat-val" style="color:var(--green)">—</div><div class="stat-lbl">Avance Prom.</div></div>
-        <div class="stat"><div class="stat-val" style="color:var(--green)">—</div><div class="stat-lbl">En Plazo</div></div>
-        <div class="stat"><div class="stat-val" style="color:var(--red)">—</div><div class="stat-lbl">Con Atraso</div></div>
+<!-- ═══ CENTRO ═══ -->
+<div class="view active" id="view-centro">
+  <div class="stats-bar" id="stats-bar">
+    <div class="stat"><div class="stat-val" style="color:var(--accent2)">—</div><div class="stat-lbl">Total</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--green)">—</div><div class="stat-lbl">Avance Prom.</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--green)">—</div><div class="stat-lbl">En Plazo</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">—</div><div class="stat-lbl">Con Atraso</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--yellow)">—</div><div class="stat-lbl">Alta Complejidad</div></div>
+  </div>
+  <div class="view-hdr">
+    <div><div class="view-title">Centro de Proyectos</div><div class="view-sub" id="centro-sub">Cargando...</div></div>
+    <div class="view-actions">
+      <input class="search-inp" placeholder="🔍 Buscar..." id="search" oninput="renderTable()">
+      <select class="filt-sel" id="fc" onchange="renderTable()"><option value="">Complejidad</option><option>Alta</option><option>Media</option><option>Baja</option></select>
+      <select class="filt-sel" id="ff" onchange="renderTable()"><option value="">Flujo</option><option>Completo</option><option>Básico</option><option>Ágil</option></select>
+    </div>
+  </div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th onclick="sort('fr')">FR</th>
+        <th onclick="sort('nombre')">NOMBRE</th>
+        <th onclick="sort('jp')">JEFE DE PROYECTO</th>
+        <th onclick="sort('inicio')">INICIO</th>
+        <th onclick="sort('fin')">FIN</th>
+        <th onclick="sort('real')">% REAL</th>
+        <th onclick="sort('planificado')">% PLAN.</th>
+        <th onclick="sort('desviacion')">DESV.</th>
+        <th>COMPLEJIDAD</th>
+        <th>FLUJO</th>
+        <th style="width:90px;">ACCIONES</th>
+      </tr></thead>
+      <tbody id="tbody"></tbody>
+    </table>
+    <div class="loading-row" id="load-row"><div class="loader"></div>Cargando...</div>
+    <div class="empty" id="empty-st" style="display:none;">
+      <div class="empty-icon">📋</div><div class="empty-ttl">Sin proyectos</div>
+      <div class="empty-sub">Crea tu primer proyecto con "+ Nuevo Proyecto"</div>
+      <button class="btn-primary" onclick="openNewProject()">+ Crear Proyecto</button>
+    </div>
+  </div>
+</div>
+
+<!-- ═══ PROYECTO ═══ -->
+<div class="view" id="view-proyecto">
+  <div class="proj-tabs">
+    <div class="proj-tab active" id="ptab-detalle" onclick="switchTab('detalle')">🗂 Detalle</div>
+    <div class="proj-tab" id="ptab-gantt" onclick="switchTab('gantt')">📊 Planificación</div>
+    <div class="proj-tab" id="ptab-avance" onclick="switchTab('avance')">📝 Avance Semanal</div>
+    <div class="proj-tab" id="ptab-info" onclick="switchTab('info')">ℹ️ Información</div>
+    <div style="margin-left:auto;display:flex;align-items:center;gap:8px;padding:0 8px;">
+      <span style="font-family:var(--mono);font-size:10px;color:var(--accent2);" id="proj-badge"></span>
+      <button class="btn-xs sec" onclick="goView('centro')">← Volver</button>
+    </div>
+  </div>
+  <div class="pview active" id="pview-detalle"><div style="overflow-y:auto;flex:1;" id="det-content"></div></div>
+  <div class="pview" id="pview-gantt"><div class="gantt-shell" id="gantt-shell"></div></div>
+  <div class="pview" id="pview-avance"><div class="av-wrap"><div class="av-hdr"><div><div style="font-size:14px;font-weight:700;" id="av-ttl">Avance Semanal</div><div style="font-size:11px;color:var(--text3);font-family:var(--mono);" id="av-sub"></div></div><button class="btn-add" id="btn-inf" onclick="openNewInforme()">+ Nuevo Informe</button></div><div id="inf-list"></div></div></div>
+  <div class="pview" id="pview-info"><div class="info-wrap"><div class="info-grid" id="info-content"></div></div></div>
+</div>
+
+<!-- ═══ REPORTERÍA ═══ -->
+<div class="view" id="view-reporte">
+  <div class="view-hdr">
+    <div><div class="view-title">Reportería del Portafolio</div><div class="view-sub" id="rpt-date"></div></div>
+    <div class="view-actions"><button class="btn-sec" onclick="exportCSV()">⬇ CSV</button><button class="btn-sec" onclick="window.print()">🖨 Imprimir</button></div>
+  </div>
+  <div style="padding:16px 20px;overflow-y:auto;flex:1;" id="rpt-content"></div>
+</div>
+
+<!-- ═══ CONFIG ═══ -->
+<div class="view" id="view-config">
+  <div class="view-hdr"><div><div class="view-title">⚙️ Configurar Base de Datos</div><div class="view-sub">Conexión a Supabase (PostgreSQL)</div></div></div>
+  <div style="padding:16px;overflow-y:auto;flex:1;">
+    <div class="cfg-panel">
+      <div class="cfg-ttl">🔗 Credenciales Supabase</div>
+      <div class="cfg-sub">
+        <strong style="color:var(--accent2)">1.</strong> Ve a <a href="https://supabase.com" target="_blank" style="color:var(--accent2)">supabase.com</a> → abre tu proyecto → <strong>Project Settings → API</strong><br>
+        <strong style="color:var(--accent2)">2.</strong> Copia la <strong>Project URL</strong> y la <strong>anon public key</strong><br>
+        <strong style="color:var(--accent2)">3.</strong> Ve a <strong>SQL Editor</strong> → pega y ejecuta el script de abajo para crear las tablas<br>
+        <strong style="color:var(--accent2)">4.</strong> Ingresa las credenciales y haz clic en "Conectar y Guardar"
       </div>
-      <div class="view-hdr">
-        <div>
-          <div class="view-title">Centro de Proyectos</div>
-          <div class="view-sub" id="centro-sub">Cargando...</div>
-        </div>
-        <div class="view-actions">
-          <input class="search-inp" placeholder="🔍 Buscar..." id="search" oninput="renderTable()">
-          <select class="filt-sel" id="filt-comp" onchange="renderTable()">
-            <option value="">Complejidad</option>
-            <option>Alta</option><option>Media</option><option>Baja</option>
-          </select>
-          <select class="filt-sel" id="filt-flujo" onchange="renderTable()">
-            <option value="">Flujo</option>
-            <option>Completo</option><option>Básico</option><option>Ágil</option>
-          </select>
-        </div>
+      <div class="frow2">
+        <div class="fg"><label class="flabel">Project URL</label><input class="finput" id="cfg-url" placeholder="https://xxxx.supabase.co"></div>
+        <div class="fg"><label class="flabel">Anon Public Key</label><input class="finput" id="cfg-key" placeholder="eyJhbGciOi..."></div>
       </div>
-      <div class="table-wrap">
-        <table>
-          <thead>
-            <tr>
-              <th onclick="sort('fr')">FR</th>
-              <th onclick="sort('nombre')">NOMBRE DEL PROYECTO</th>
-              <th onclick="sort('jp')">JEFE DE PROYECTO</th>
-              <th onclick="sort('inicio')">INICIO</th>
-              <th onclick="sort('fin')">FIN</th>
-              <th onclick="sort('real')">% REAL</th>
-              <th onclick="sort('planificado')">% PLAN.</th>
-              <th onclick="sort('desviacion')">% DESV.</th>
-              <th>COMPLEJIDAD</th>
-              <th>FLUJO</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody id="tbody"></tbody>
-        </table>
-        <div class="loading-row" id="loading-row"><div class="loader"></div> Cargando proyectos...</div>
-        <div class="empty" id="empty-state" style="display:none;">
-          <div class="empty-icon">📋</div>
-          <div class="empty-ttl">Sin proyectos en el portafolio</div>
-          <div class="empty-sub">Crea tu primer proyecto con el botón "Nuevo Proyecto" en la barra superior.</div>
-          <button class="btn-primary" onclick="openNewProject()">+ Crear Primer Proyecto</button>
-        </div>
+      <div style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;">
+        <button class="btn-primary" onclick="connectSB()">🔌 Conectar y Guardar</button>
+        <button class="btn-sec" onclick="testSB()">🧪 Probar</button>
+        <button class="btn-sec" onclick="useDemo()">🎭 Modo Demo</button>
+        <span id="cfg-res" style="font-size:12px;color:var(--text3);font-family:var(--mono);"></span>
       </div>
     </div>
-
-    <!-- ═══ PROYECTO (multi-tab) ═══ -->
-    <div class="view" id="view-proyecto">
-      <div class="proj-tabs">
-        <div class="proj-tab active" id="ptab-detalle" onclick="switchTab('detalle')">🗂 Detalle</div>
-        <div class="proj-tab" id="ptab-gantt" onclick="switchTab('gantt')">📊 Planificación</div>
-        <div class="proj-tab" id="ptab-avance" onclick="switchTab('avance')">📝 Avance Semanal</div>
-        <div class="proj-tab" id="ptab-info" onclick="switchTab('info')">ℹ️ Información</div>
-        <div style="margin-left:auto;display:flex;align-items:center;padding:0 6px;gap:8px;">
-          <span style="font-family:var(--mono);font-size:10px;color:var(--accent2)" id="proj-badge"></span>
-          <button class="act-btn" onclick="goView('centro')" title="Volver">← Volver</button>
-        </div>
-      </div>
-      <!-- Detalle -->
-      <div class="pview active" id="pview-detalle"><div style="overflow-y:auto;flex:1;" id="det-content"></div></div>
-      <!-- Gantt -->
-      <div class="pview" id="pview-gantt">
-        <div style="display:flex;align-items:center;gap:10px;padding:10px 16px;border-bottom:1px solid var(--border);flex-shrink:0;flex-wrap:wrap;background:var(--surface);">
-          <div style="font-size:13px;font-weight:700;" id="gantt-ttl">Planificación</div>
-          <div style="font-size:11px;color:var(--text3);font-family:var(--mono);" id="gantt-sub"></div>
-          <div style="margin-left:auto;display:flex;gap:6px;" id="gantt-btns">
-            <button class="btn-sec" style="font-size:11px;padding:5px 10px;" onclick="openAddTask('task')">+ Tarea</button>
-            <button class="btn-sec" style="font-size:11px;padding:5px 10px;" onclick="openAddTask('group')">+ Resumen</button>
-          </div>
-        </div>
-        <div class="gantt-wrap" id="gantt-content"></div>
-      </div>
-      <!-- Avance -->
-      <div class="pview" id="pview-avance">
-        <div class="av-wrap">
-          <div class="av-hdr">
-            <div><div style="font-size:14px;font-weight:700;" id="av-ttl">Avance Semanal</div><div style="font-size:11px;color:var(--text3);font-family:var(--mono);" id="av-sub"></div></div>
-            <button class="btn-add" onclick="openNewInforme()" id="btn-informe">+ Nuevo Informe</button>
-          </div>
-          <div id="informes-list"></div>
-        </div>
-      </div>
-      <!-- Info -->
-      <div class="pview" id="pview-info">
-        <div class="info-wrap"><div class="info-grid" id="info-content"></div></div>
-      </div>
-    </div>
-
-    <!-- ═══ REPORTERÍA ═══ -->
-    <div class="view" id="view-reporte">
-      <div class="view-hdr">
-        <div><div class="view-title">Reportería del Portafolio</div><div class="view-sub" id="rpt-date"></div></div>
-        <div class="view-actions">
-          <button class="btn-sec" onclick="exportCSV()">⬇ CSV</button>
-          <button class="btn-sec" onclick="window.print()">🖨 Imprimir</button>
-        </div>
-      </div>
-      <div style="padding:16px 20px;overflow-y:auto;flex:1;" id="rpt-content"></div>
-    </div>
-
-    <!-- ═══ CONFIGURAR BD ═══ -->
-    <div class="view" id="view-config">
-      <div class="view-hdr">
-        <div><div class="view-title">⚙️ Configurar Base de Datos (Supabase)</div>
-        <div class="view-sub">Conecta tu proyecto de Supabase para persistir todos los datos</div></div>
-      </div>
-      <div style="padding:20px;overflow-y:auto;flex:1;">
-        <div class="config-panel">
-          <div class="config-ttl">🔗 Conexión a Supabase</div>
-          <div class="config-sub">
-            Supabase es una base de datos PostgreSQL gratuita en la nube. Sigue estos pasos:<br>
-            <strong style="color:var(--accent2)">1.</strong> Ve a <a href="https://supabase.com" target="_blank" style="color:var(--accent2)">supabase.com</a> → Crea una cuenta y un nuevo proyecto.<br>
-            <strong style="color:var(--accent2)">2.</strong> En tu proyecto, ve a <strong>Project Settings → API</strong> y copia la <strong>Project URL</strong> y la <strong>anon public key</strong>.<br>
-            <strong style="color:var(--accent2)">3.</strong> Ve a <strong>SQL Editor</strong> y ejecuta el script SQL que aparece abajo para crear las tablas.<br>
-            <strong style="color:var(--accent2)">4.</strong> Ingresa tus credenciales aquí y haz clic en "Conectar y Guardar".
-          </div>
-          <div class="config-row">
-            <div class="fg"><label class="flabel">Project URL</label>
-              <input class="finput" id="cfg-url" placeholder="https://xxxx.supabase.co" oninput="saveCfgTemp()">
-              <div class="fhint">Ej: https://abcdefgh.supabase.co</div>
-            </div>
-            <div class="fg"><label class="flabel">Anon Public Key</label>
-              <input class="finput" id="cfg-key" placeholder="eyJhbGciOi..." oninput="saveCfgTemp()">
-              <div class="fhint">La clave "anon public" de tu proyecto</div>
-            </div>
-          </div>
-          <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-            <button class="btn-primary" onclick="connectSupabase()">🔌 Conectar y Guardar</button>
-            <button class="btn-sec" onclick="testConnection()">🧪 Probar Conexión</button>
-            <button class="btn-sec" onclick="useDemoMode()">🎭 Modo Demo (sin BD)</button>
-            <span id="cfg-result" style="font-size:12px;color:var(--text3);font-family:var(--mono);"></span>
-          </div>
-        </div>
-        <div class="config-panel" style="border-color:var(--border2);margin-top:0;">
-          <div class="config-ttl" style="color:var(--accent2)">📋 Script SQL — Ejecutar en Supabase → SQL Editor</div>
-          <div style="font-size:11px;color:var(--text3);margin-bottom:10px;">Copia y pega este código completo en el editor SQL de Supabase:</div>
-          <pre style="background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:14px;font-family:var(--mono);font-size:11px;color:var(--text2);overflow-x:auto;line-height:1.7;">-- TABLA PROYECTOS
-CREATE TABLE IF NOT EXISTS proyectos (
-  id         BIGSERIAL PRIMARY KEY,
-  fr         TEXT,
-  nombre     TEXT,
-  inicio     DATE,
-  fin        DATE,
-  real       INTEGER DEFAULT 0,
-  complejidad TEXT DEFAULT 'Media',
-  flujo      TEXT DEFAULT 'Completo',
-  jp         TEXT,
-  area       TEXT,
-  descripcion TEXT,
-  presupuesto BIGINT DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW(),
-  updated_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- TABLA TAREAS (Gantt)
-CREATE TABLE IF NOT EXISTS tareas (
-  id         BIGSERIAL PRIMARY KEY,
-  proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,
-  nombre     TEXT,
-  inicio     DATE,
-  fin        DATE,
-  pct        INTEGER DEFAULT 0,
-  responsable TEXT,
-  is_group   BOOLEAN DEFAULT FALSE,
-  parent_id  BIGINT REFERENCES tareas(id) ON DELETE SET NULL,
-  orden      INTEGER DEFAULT 0,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- TABLA INFORMES SEMANALES
-CREATE TABLE IF NOT EXISTS informes (
-  id         BIGSERIAL PRIMARY KEY,
-  proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,
-  responsable TEXT,
-  fecha      DATE,
-  pct        INTEGER DEFAULT 0,
-  estado     TEXT,
-  detalle    TEXT,
-  proximos   TEXT,
-  obstaculos TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- TABLA RIESGOS
-CREATE TABLE IF NOT EXISTS riesgos (
-  id         BIGSERIAL PRIMARY KEY,
-  proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,
-  nivel      TEXT,
-  descripcion TEXT,
-  responsable TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- TABLA DOCUMENTOS
-CREATE TABLE IF NOT EXISTS documentos (
-  id         BIGSERIAL PRIMARY KEY,
-  proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,
-  nombre     TEXT,
-  tipo       TEXT DEFAULT '📄',
-  tamano     TEXT,
-  url        TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- TABLA COMENTARIOS
-CREATE TABLE IF NOT EXISTS comentarios (
-  id         BIGSERIAL PRIMARY KEY,
-  proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,
-  autor      TEXT,
-  texto      TEXT,
-  created_at TIMESTAMPTZ DEFAULT NOW()
-);
-
--- HABILITAR RLS (Row Level Security) - ACCESO PÚBLICO para MVP
-ALTER TABLE proyectos   ENABLE ROW LEVEL SECURITY;
-ALTER TABLE tareas      ENABLE ROW LEVEL SECURITY;
-ALTER TABLE informes    ENABLE ROW LEVEL SECURITY;
-ALTER TABLE riesgos     ENABLE ROW LEVEL SECURITY;
-ALTER TABLE documentos  ENABLE ROW LEVEL SECURITY;
-ALTER TABLE comentarios ENABLE ROW LEVEL SECURITY;
-
--- POLÍTICAS DE ACCESO COMPLETO (MVP - cambiar en producción)
-CREATE POLICY "allow_all_proyectos"   ON proyectos   FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "allow_all_tareas"      ON tareas      FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "allow_all_informes"    ON informes    FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "allow_all_riesgos"     ON riesgos     FOR ALL USING (true) WITH CHECK (true);
-CREATE POLICY "allow_all_documentos"  ON documentos  FOR ALL USING (true) WITH CHECK (true);
+    <div class="cfg-panel" style="border-color:var(--border2);margin-top:0;">
+      <div class="cfg-ttl" style="color:var(--accent2)">📋 Script SQL — ejecutar en Supabase → SQL Editor</div>
+      <pre style="background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:12px;font-family:var(--mono);font-size:10px;color:var(--text2);overflow-x:auto;line-height:1.7;white-space:pre-wrap;">CREATE TABLE IF NOT EXISTS proyectos (id BIGSERIAL PRIMARY KEY,fr TEXT,nombre TEXT,inicio DATE,fin DATE,real INTEGER DEFAULT 0,complejidad TEXT DEFAULT 'Media',flujo TEXT DEFAULT 'Completo',jp TEXT,area TEXT,descripcion TEXT,presupuesto BIGINT DEFAULT 0,created_at TIMESTAMPTZ DEFAULT NOW(),updated_at TIMESTAMPTZ DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS tareas (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,nombre TEXT,inicio DATE,fin DATE,pct INTEGER DEFAULT 0,responsable TEXT,is_group BOOLEAN DEFAULT FALSE,nivel INTEGER DEFAULT 1,parent_id BIGINT REFERENCES tareas(id) ON DELETE SET NULL,orden INTEGER DEFAULT 0,created_at TIMESTAMPTZ DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS informes (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,responsable TEXT,fecha DATE,pct INTEGER DEFAULT 0,estado TEXT,detalle TEXT,proximos TEXT,obstaculos TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS riesgos (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,nivel TEXT,descripcion TEXT,responsable TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS documentos (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,nombre TEXT,tipo TEXT DEFAULT '📄',tamano TEXT,url TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
+CREATE TABLE IF NOT EXISTS comentarios (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,autor TEXT,texto TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
+ALTER TABLE proyectos ENABLE ROW LEVEL SECURITY;ALTER TABLE tareas ENABLE ROW LEVEL SECURITY;ALTER TABLE informes ENABLE ROW LEVEL SECURITY;ALTER TABLE riesgos ENABLE ROW LEVEL SECURITY;ALTER TABLE documentos ENABLE ROW LEVEL SECURITY;ALTER TABLE comentarios ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "allow_all_proyectos" ON proyectos FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "allow_all_tareas" ON tareas FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "allow_all_informes" ON informes FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "allow_all_riesgos" ON riesgos FOR ALL USING (true) WITH CHECK (true);
+CREATE POLICY "allow_all_documentos" ON documentos FOR ALL USING (true) WITH CHECK (true);
 CREATE POLICY "allow_all_comentarios" ON comentarios FOR ALL USING (true) WITH CHECK (true);</pre>
-        </div>
-      </div>
-    </div>
-
-  </div>
-</div>
-
-<!-- MODAL NUEVO/EDITAR PROYECTO -->
-<div class="overlay" id="modal-proj">
-  <div class="modal">
-    <div class="modal-hdr">
-      <div><div class="modal-ttl" id="mproj-ttl">Nuevo Proyecto</div><div class="modal-sub">Todos los campos son opcionales para el MVP</div></div>
-      <button class="modal-x" onclick="closeModal('modal-proj')">✕</button>
-    </div>
-    <div class="modal-body">
-      <div class="frow2">
-        <div class="fg"><label class="flabel">Código FR</label><input class="finput" id="pf-fr" placeholder="Ej: FR-2024-001"><div class="fhint">Identificador único manual</div></div>
-        <div class="fg"><label class="flabel">Nombre del Proyecto</label><input class="finput" id="pf-nombre" placeholder="Nombre del proyecto"></div>
-      </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">Fecha de Inicio</label><input class="finput" id="pf-inicio" type="date"></div>
-        <div class="fg"><label class="flabel">Fecha de Fin</label><input class="finput" id="pf-fin" type="date"></div>
-      </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">Jefe de Proyecto</label><input class="finput" id="pf-jp" placeholder="Nombre del responsable"></div>
-        <div class="fg"><label class="flabel">Área / Unidad</label><input class="finput" id="pf-area" placeholder="Área responsable"></div>
-      </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">Complejidad</label>
-          <select class="fselect" id="pf-comp"><option value="">— Sin definir —</option><option>Alta</option><option>Media</option><option>Baja</option></select>
-        </div>
-        <div class="fg"><label class="flabel">Flujo de Proyecto</label>
-          <select class="fselect" id="pf-flujo"><option value="">— Sin definir —</option><option>Completo</option><option>Básico</option><option>Ágil</option></select>
-        </div>
-      </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">% Avance Real</label><input class="finput" id="pf-real" type="number" min="0" max="100" placeholder="0"></div>
-        <div class="fg"><label class="flabel">Presupuesto (CLP)</label><input class="finput" id="pf-ppto" type="number" min="0" placeholder="0"></div>
-      </div>
-      <div class="fg"><label class="flabel">Descripción</label><textarea class="ftextarea" id="pf-desc" placeholder="Objetivo, alcance y contexto del proyecto..."></textarea></div>
-    </div>
-    <div class="modal-footer">
-      <button class="btn-sec" onclick="closeModal('modal-proj')">Cancelar</button>
-      <button class="btn-primary" onclick="saveProject()" id="btn-save-proj">✓ Guardar Proyecto</button>
     </div>
   </div>
 </div>
 
-<!-- MODAL TAREA GANTT -->
-<div class="overlay" id="modal-task">
+</div><!-- main -->
+</div><!-- layout -->
+
+<!-- MODALS -->
+<!-- Proyecto -->
+<div class="overlay" id="m-proj">
   <div class="modal">
-    <div class="modal-hdr">
-      <div><div class="modal-ttl" id="mtask-ttl">Nueva Tarea</div></div>
-      <button class="modal-x" onclick="closeModal('modal-task')">✕</button>
-    </div>
+    <div class="modal-hdr"><div><div class="modal-ttl" id="mp-ttl">Nuevo Proyecto</div><div class="modal-sub">Todos los campos son opcionales</div></div><button class="modal-x" onclick="closeM('m-proj')">✕</button></div>
     <div class="modal-body">
-      <div class="fg"><label class="flabel">Nombre</label><input class="finput" id="tf-nombre" placeholder="Nombre de la tarea"></div>
+      <div class="frow2"><div class="fg"><label class="flabel">Código FR</label><input class="finput" id="pf-fr" placeholder="FR-2024-001"></div><div class="fg"><label class="flabel">Nombre del Proyecto</label><input class="finput" id="pf-nombre" placeholder="Nombre..."></div></div>
+      <div class="frow2"><div class="fg"><label class="flabel">Fecha Inicio</label><input class="finput" id="pf-ini" type="date"></div><div class="fg"><label class="flabel">Fecha Fin</label><input class="finput" id="pf-fin" type="date"></div></div>
+      <div class="frow2"><div class="fg"><label class="flabel">Jefe de Proyecto</label><input class="finput" id="pf-jp" placeholder="Nombre..."></div><div class="fg"><label class="flabel">Área / Unidad</label><input class="finput" id="pf-area" placeholder="Área..."></div></div>
       <div class="frow2">
-        <div class="fg"><label class="flabel">Fecha Inicio</label><input class="finput" id="tf-inicio" type="date"></div>
-        <div class="fg"><label class="flabel">Fecha Fin</label><input class="finput" id="tf-fin" type="date"></div>
+        <div class="fg"><label class="flabel">Complejidad</label><select class="fselect" id="pf-comp"><option value="">— Sin definir —</option><option>Alta</option><option>Media</option><option>Baja</option></select></div>
+        <div class="fg"><label class="flabel">Flujo</label><select class="fselect" id="pf-flujo"><option value="">— Sin definir —</option><option>Completo</option><option>Básico</option><option>Ágil</option></select></div>
       </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">% Avance</label><input class="finput" id="tf-pct" type="number" min="0" max="100" value="0"></div>
-        <div class="fg"><label class="flabel">Responsable</label><input class="finput" id="tf-resp" placeholder="Nombre del responsable"></div>
-      </div>
-      <div class="fg"><label class="flabel">Tarea Resumen Padre</label>
-        <select class="fselect" id="tf-parent"><option value="">— Sin padre (nivel raíz) —</option></select>
-      </div>
+      <div class="frow2"><div class="fg"><label class="flabel">% Avance Real</label><input class="finput" id="pf-real" type="number" min="0" max="100" placeholder="0"></div><div class="fg"><label class="flabel">Presupuesto (CLP)</label><input class="finput" id="pf-ppto" type="number" min="0" placeholder="0"></div></div>
+      <div class="fg"><label class="flabel">Descripción</label><textarea class="ftextarea" id="pf-desc" placeholder="Objetivo y alcance..."></textarea></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-sec" onclick="closeModal('modal-task')">Cancelar</button>
-      <button class="btn-primary" onclick="saveTask()">✓ Guardar</button>
-    </div>
+    <div class="modal-footer"><button class="btn-sec" onclick="closeM('m-proj')">Cancelar</button><button class="btn-primary" onclick="saveProject()" id="btn-sp">✓ Guardar</button></div>
   </div>
 </div>
 
-<!-- MODAL INFORME -->
-<div class="overlay" id="modal-inf">
+<!-- Confirmar eliminar proyecto -->
+<div class="overlay" id="m-confirm-del">
+  <div class="modal sm">
+    <div class="modal-hdr"><div class="modal-ttl" style="color:var(--red)">⚠️ Eliminar Proyecto</div><button class="modal-x" onclick="closeM('m-confirm-del')">✕</button></div>
+    <div class="confirm-body">
+      <div class="confirm-icon">🗑</div>
+      <div class="confirm-msg" id="confirm-msg">¿Eliminar este proyecto?</div>
+      <div class="confirm-sub">Se eliminarán también todas las tareas, informes, riesgos, documentos y comentarios asociados. Esta acción no se puede deshacer.</div>
+    </div>
+    <div class="modal-footer"><button class="btn-sec" onclick="closeM('m-confirm-del')">Cancelar</button><button class="btn-danger-full" onclick="confirmDelete()">🗑 Eliminar Permanentemente</button></div>
+  </div>
+</div>
+
+<!-- Confirmar eliminar tarea -->
+<div class="overlay" id="m-confirm-task">
+  <div class="modal sm">
+    <div class="modal-hdr"><div class="modal-ttl" style="color:var(--red)">⚠️ Eliminar Tarea</div><button class="modal-x" onclick="closeM('m-confirm-task')">✕</button></div>
+    <div class="confirm-body">
+      <div class="confirm-icon">🗂</div>
+      <div class="confirm-msg" id="confirm-task-msg">¿Eliminar esta tarea?</div>
+      <div class="confirm-sub" id="confirm-task-sub">Si es una tarea resumen, también se eliminarán todas sus subtareas.</div>
+    </div>
+    <div class="modal-footer"><button class="btn-sec" onclick="closeM('m-confirm-task')">Cancelar</button><button class="btn-danger-full" onclick="confirmDeleteTask()">🗑 Eliminar Tarea</button></div>
+  </div>
+</div>
+
+<!-- Editar tarea inline -->
+<div class="overlay" id="m-task-edit">
   <div class="modal">
-    <div class="modal-hdr">
-      <div><div class="modal-ttl">Nuevo Informe de Avance</div><div class="modal-sub" id="minf-sub"></div></div>
-      <button class="modal-x" onclick="closeModal('modal-inf')">✕</button>
-    </div>
+    <div class="modal-hdr"><div class="modal-ttl" id="te-ttl">Editar Tarea</div><button class="modal-x" onclick="closeM('m-task-edit')">✕</button></div>
     <div class="modal-body">
-      <div class="frow2">
-        <div class="fg"><label class="flabel">Responsable</label><input class="finput" id="if-resp" placeholder="Nombre"></div>
-        <div class="fg"><label class="flabel">Fecha de Informe</label><input class="finput" id="if-fecha" type="date"></div>
-      </div>
-      <div class="frow2">
-        <div class="fg"><label class="flabel">% Avance Reportado</label><input class="finput" id="if-pct" type="number" min="0" max="100" placeholder="0"></div>
-        <div class="fg"><label class="flabel">Estado General</label>
-          <select class="fselect" id="if-estado">
-            <option>🟢 En Plazo</option><option>🟡 En Riesgo</option><option>🔴 Atrasado</option><option>⚪ Suspendido</option>
-          </select>
-        </div>
-      </div>
-      <div class="fg"><label class="flabel">Detalle del Avance</label><textarea class="ftextarea" id="if-detalle" placeholder="Avances, hitos alcanzados, acciones..." style="min-height:90px;"></textarea></div>
-      <div class="fg"><label class="flabel">Próximos Pasos</label><textarea class="ftextarea" id="if-prox" placeholder="Actividades planificadas para la próxima semana..."></textarea></div>
-      <div class="fg"><label class="flabel">Obstáculos / Riesgos</label><textarea class="ftextarea" id="if-obs" placeholder="Problemas o riesgos identificados..."></textarea></div>
+      <div class="fg"><label class="flabel">Nombre</label><input class="finput" id="te-nombre" placeholder="Nombre de la tarea"></div>
+      <div class="frow2"><div class="fg"><label class="flabel">Fecha Inicio</label><input class="finput" id="te-ini" type="date"></div><div class="fg"><label class="flabel">Fecha Fin</label><input class="finput" id="te-fin" type="date"></div></div>
+      <div class="frow2"><div class="fg"><label class="flabel">% Avance Real</label><input class="finput" id="te-pct" type="number" min="0" max="100"></div><div class="fg"><label class="flabel">Responsable</label><input class="finput" id="te-resp" placeholder="Responsable..."></div></div>
     </div>
-    <div class="modal-footer">
-      <button class="btn-sec" onclick="closeModal('modal-inf')">Cancelar</button>
-      <button class="btn-primary" onclick="saveInforme()">✓ Guardar Informe</button>
+    <div class="modal-footer"><button class="btn-sec" onclick="closeM('m-task-edit')">Cancelar</button><button class="btn-primary" onclick="saveTaskEdit()">✓ Guardar</button></div>
+  </div>
+</div>
+
+<!-- Informe -->
+<div class="overlay" id="m-inf">
+  <div class="modal">
+    <div class="modal-hdr"><div><div class="modal-ttl">Nuevo Informe de Avance</div><div class="modal-sub" id="minf-sub"></div></div><button class="modal-x" onclick="closeM('m-inf')">✕</button></div>
+    <div class="modal-body">
+      <div class="frow2"><div class="fg"><label class="flabel">Responsable</label><input class="finput" id="if-resp" placeholder="Nombre..."></div><div class="fg"><label class="flabel">Fecha Informe</label><input class="finput" id="if-fecha" type="date"></div></div>
+      <div class="frow2"><div class="fg"><label class="flabel">% Avance Reportado</label><input class="finput" id="if-pct" type="number" min="0" max="100" placeholder="0"></div><div class="fg"><label class="flabel">Estado General</label><select class="fselect" id="if-estado"><option>🟢 En Plazo</option><option>🟡 En Riesgo</option><option>🔴 Atrasado</option><option>⚪ Suspendido</option></select></div></div>
+      <div class="fg"><label class="flabel">Detalle del Avance</label><textarea class="ftextarea" id="if-det" placeholder="Avances realizados..." style="min-height:80px;"></textarea></div>
+      <div class="fg"><label class="flabel">Próximos Pasos</label><textarea class="ftextarea" id="if-prox" placeholder="Actividades planificadas..."></textarea></div>
+      <div class="fg"><label class="flabel">Obstáculos / Riesgos</label><textarea class="ftextarea" id="if-obs" placeholder="Problemas identificados..."></textarea></div>
     </div>
+    <div class="modal-footer"><button class="btn-sec" onclick="closeM('m-inf')">Cancelar</button><button class="btn-primary" onclick="saveInforme()">✓ Guardar</button></div>
   </div>
 </div>
 
 <div class="toast" id="toast"><span id="t-icon">✓</span><span id="t-msg">OK</span></div>
 
 <script>
-// ═══════════════════════════════════════════════
-//  CONFIG & STATE
-// ═══════════════════════════════════════════════
-let SB_URL = localStorage.getItem('sb_url') || '';
-let SB_KEY = localStorage.getItem('sb_key') || '';
-let DEMO_MODE = !SB_URL || !SB_KEY;
+// ═══════════════════════════════════════
+//  STATE
+// ═══════════════════════════════════════
+let SB_URL = localStorage.getItem('sb_url')||'';
+let SB_KEY = localStorage.getItem('sb_key')||'';
+let DEMO = !SB_URL||!SB_KEY;
+const ROLES=['Administrador','Jefe de Proyecto','Solo Lectura'];
+let roleIdx=0;
+let projects=[];
+let curProj=null;
+let curTasks=[];
+let curInformes=[];
+let sortK='fr',sortD=1;
+let editProjId=null;
+let collapsed=new Set();
+let pendingDelProjId=null;
+let pendingDelTaskId=null;
+let editingTaskId=null;
 
-const ROLES = ['Administrador', 'Jefe de Proyecto', 'Solo Lectura'];
-let roleIdx = 0;
-let projects = [];
-let currentProj = null;
-let currentTasks = [];
-let currentInformes = [];
-let sortKey = 'fr', sortDir = 1;
-let editingProjId = null;
-let addingTaskType = 'task';
-let collapsed = new Set();
+// Column visibility config (gantt)
+let visibleCols={inicio:true,fin:true,real:true,plan:true,desv:true,resp:false};
+
+// Column widths
+const COL_NAME_W=200;
+const COL_W={inicio:70,fin:70,real:70,plan:70,desv:60,resp:100};
+const WEEK_W=100;
 
 // Demo data
-const DEMO_PROJECTS = [
-  { id:1, fr:'FR-2024-001', nombre:'Modernización ERP Corporativo', inicio:'2024-01-15', fin:'2024-12-31', real:68, complejidad:'Alta', flujo:'Completo', jp:'Ana González', area:'TI', descripcion:'Proyecto de modernización del sistema ERP corporativo.', presupuesto:250000000 },
-  { id:2, fr:'FR-2024-002', nombre:'Portal Ciudadano Digital', inicio:'2024-03-01', fin:'2024-10-31', real:95, complejidad:'Media', flujo:'Ágil', jp:'Carlos Rojas', area:'Transformación Digital', descripcion:'Portal web y app móvil para atención ciudadana.', presupuesto:85000000 },
-  { id:3, fr:'FR-2024-003', nombre:'Infraestructura Cloud', inicio:'2024-06-01', fin:'2025-05-31', real:30, complejidad:'Alta', flujo:'Básico', jp:'Marcela Torres', area:'Infraestructura', descripcion:'Migración a nube híbrida AWS/Azure.', presupuesto:420000000 }
+const D_PROJS=[
+  {id:1,fr:'FR-2024-001',nombre:'Modernización ERP Corporativo',inicio:'2024-01-15',fin:'2024-12-31',real:68,complejidad:'Alta',flujo:'Completo',jp:'Ana González',area:'TI',descripcion:'Modernización del sistema ERP corporativo.',presupuesto:250000000},
+  {id:2,fr:'FR-2024-002',nombre:'Portal Ciudadano Digital',inicio:'2024-03-01',fin:'2024-10-31',real:95,complejidad:'Media',flujo:'Ágil',jp:'Carlos Rojas',area:'Transformación Digital',descripcion:'Portal web y app móvil para atención ciudadana.',presupuesto:85000000},
+  {id:3,fr:'FR-2024-003',nombre:'Infraestructura Cloud',inicio:'2024-06-01',fin:'2025-05-31',real:30,complejidad:'Alta',flujo:'Básico',jp:'Marcela Torres',area:'Infraestructura',descripcion:'Migración a nube híbrida.',presupuesto:420000000}
 ];
-const DEMO_TASKS = {
-  1: [
-    {id:1,nombre:'Fase 1: Análisis y Diseño',inicio:'2024-01-15',fin:'2024-03-31',pct:100,responsable:'Ana González',is_group:true,parent_id:null,orden:1},
-    {id:2,nombre:'Levantamiento de requerimientos',inicio:'2024-01-15',fin:'2024-02-15',pct:100,responsable:'Pedro Martínez',is_group:false,parent_id:1,orden:2},
-    {id:3,nombre:'Diseño de arquitectura',inicio:'2024-02-16',fin:'2024-03-31',pct:100,responsable:'Ana González',is_group:false,parent_id:1,orden:3},
-    {id:4,nombre:'Fase 2: Desarrollo',inicio:'2024-04-01',fin:'2024-09-30',pct:85,responsable:'Ana González',is_group:true,parent_id:null,orden:4},
-    {id:5,nombre:'Módulo Finanzas',inicio:'2024-04-01',fin:'2024-06-30',pct:100,responsable:'Luis Pérez',is_group:false,parent_id:4,orden:5},
-    {id:6,nombre:'Módulo RRHH',inicio:'2024-07-01',fin:'2024-09-30',pct:70,responsable:'Carmen Soto',is_group:false,parent_id:4,orden:6},
-    {id:7,nombre:'Fase 3: Implementación',inicio:'2024-10-01',fin:'2024-12-31',pct:20,responsable:'Ana González',is_group:true,parent_id:null,orden:7},
-    {id:8,nombre:'Capacitación usuarios',inicio:'2024-10-01',fin:'2024-11-30',pct:30,responsable:'Diego Muñoz',is_group:false,parent_id:7,orden:8},
-    {id:9,nombre:'Go-Live y Soporte',inicio:'2024-12-01',fin:'2024-12-31',pct:0,responsable:'Ana González',is_group:false,parent_id:7,orden:9}
+const D_TASKS={
+  1:[
+    {id:1,nombre:'Fase 1: Análisis y Diseño',inicio:'2024-01-15',fin:'2024-03-31',pct:100,responsable:'Ana González',is_group:true,nivel:1,parent_id:null,orden:1},
+    {id:2,nombre:'Levantamiento de requerimientos',inicio:'2024-01-15',fin:'2024-02-15',pct:100,responsable:'Pedro Martínez',is_group:false,nivel:2,parent_id:1,orden:2},
+    {id:3,nombre:'Diseño de arquitectura',inicio:'2024-02-16',fin:'2024-03-31',pct:100,responsable:'Ana González',is_group:false,nivel:2,parent_id:1,orden:3},
+    {id:4,nombre:'Fase 2: Desarrollo',inicio:'2024-04-01',fin:'2024-09-30',pct:85,responsable:'Ana González',is_group:true,nivel:1,parent_id:null,orden:4},
+    {id:5,nombre:'Módulo Finanzas',inicio:'2024-04-01',fin:'2024-06-30',pct:100,responsable:'Luis Pérez',is_group:false,nivel:2,parent_id:4,orden:5},
+    {id:6,nombre:'Módulo RRHH',inicio:'2024-07-01',fin:'2024-09-30',pct:70,responsable:'Carmen Soto',is_group:false,nivel:2,parent_id:4,orden:6},
+    {id:7,nombre:'Fase 3: Implementación',inicio:'2024-10-01',fin:'2024-12-31',pct:20,responsable:'Ana González',is_group:true,nivel:1,parent_id:null,orden:7},
+    {id:8,nombre:'Capacitación usuarios',inicio:'2024-10-01',fin:'2024-11-30',pct:30,responsable:'Diego Muñoz',is_group:false,nivel:2,parent_id:7,orden:8},
+    {id:9,nombre:'Go-Live y Soporte',inicio:'2024-12-01',fin:'2024-12-31',pct:0,responsable:'Ana González',is_group:false,nivel:2,parent_id:7,orden:9}
   ],
-  2: [
-    {id:10,nombre:'Sprint 1 — Diseño UX/UI',inicio:'2024-03-01',fin:'2024-04-15',pct:100,responsable:'María Lagos',is_group:true,parent_id:null,orden:1},
-    {id:11,nombre:'Wireframes y prototipo',inicio:'2024-03-01',fin:'2024-03-31',pct:100,responsable:'María Lagos',is_group:false,parent_id:10,orden:2},
-    {id:12,nombre:'Sprint 2-4 — Desarrollo',inicio:'2024-04-16',fin:'2024-09-30',pct:100,responsable:'Carlos Rojas',is_group:true,parent_id:null,orden:3},
-    {id:13,nombre:'Backend y APIs',inicio:'2024-04-16',fin:'2024-07-31',pct:100,responsable:'Rodrigo Vega',is_group:false,parent_id:12,orden:4},
-    {id:14,nombre:'Sprint 5 — QA y Lanzamiento',inicio:'2024-10-01',fin:'2024-10-31',pct:80,responsable:'Carlos Rojas',is_group:true,parent_id:null,orden:5},
-    {id:15,nombre:'Pruebas de carga',inicio:'2024-10-01',fin:'2024-10-20',pct:100,responsable:'Rodrigo Vega',is_group:false,parent_id:14,orden:6}
+  2:[
+    {id:10,nombre:'Sprint 1 — Diseño UX/UI',inicio:'2024-03-01',fin:'2024-04-15',pct:100,responsable:'María Lagos',is_group:true,nivel:1,parent_id:null,orden:1},
+    {id:11,nombre:'Wireframes y prototipo',inicio:'2024-03-01',fin:'2024-03-31',pct:100,responsable:'María Lagos',is_group:false,nivel:2,parent_id:10,orden:2},
+    {id:12,nombre:'Sprint 2-4 — Desarrollo',inicio:'2024-04-16',fin:'2024-09-30',pct:100,responsable:'Carlos Rojas',is_group:true,nivel:1,parent_id:null,orden:3},
+    {id:13,nombre:'Backend y APIs',inicio:'2024-04-16',fin:'2024-07-31',pct:100,responsable:'Rodrigo Vega',is_group:false,nivel:2,parent_id:12,orden:4},
+    {id:14,nombre:'Sprint 5 — QA y Lanzamiento',inicio:'2024-10-01',fin:'2024-10-31',pct:80,responsable:'Carlos Rojas',is_group:true,nivel:1,parent_id:null,orden:5},
+    {id:15,nombre:'Pruebas de carga',inicio:'2024-10-01',fin:'2024-10-20',pct:100,responsable:'Rodrigo Vega',is_group:false,nivel:2,parent_id:14,orden:6}
   ],
-  3: [
-    {id:16,nombre:'Evaluación y Planificación',inicio:'2024-06-01',fin:'2024-08-31',pct:100,responsable:'Marcela Torres',is_group:true,parent_id:null,orden:1},
-    {id:17,nombre:'Inventario de sistemas',inicio:'2024-06-01',fin:'2024-07-15',pct:100,responsable:'Juan Valdés',is_group:false,parent_id:16,orden:2},
-    {id:18,nombre:'Migración Fase 1',inicio:'2024-09-01',fin:'2024-12-31',pct:35,responsable:'Marcela Torres',is_group:true,parent_id:null,orden:3},
-    {id:19,nombre:'Ambiente desarrollo',inicio:'2024-09-01',fin:'2024-10-31',pct:80,responsable:'Sofía Navarro',is_group:false,parent_id:18,orden:4}
+  3:[
+    {id:16,nombre:'Evaluación y Planificación',inicio:'2024-06-01',fin:'2024-08-31',pct:100,responsable:'Marcela Torres',is_group:true,nivel:1,parent_id:null,orden:1},
+    {id:17,nombre:'Inventario de sistemas',inicio:'2024-06-01',fin:'2024-07-15',pct:100,responsable:'Juan Valdés',is_group:false,nivel:2,parent_id:16,orden:2},
+    {id:18,nombre:'Migración Fase 1',inicio:'2024-09-01',fin:'2024-12-31',pct:35,responsable:'Marcela Torres',is_group:true,nivel:1,parent_id:null,orden:3},
+    {id:19,nombre:'Ambiente desarrollo',inicio:'2024-09-01',fin:'2024-10-31',pct:80,responsable:'Sofía Navarro',is_group:false,nivel:2,parent_id:18,orden:4}
   ]
 };
-const DEMO_INFORMES = {
-  1:[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance en módulo RRHH al 70%. Inicio de documentación Go-Live.',proximos:'Completar manual de usuario.',obstaculos:'Sin obstáculos relevantes.'}],
-  2:[{id:2,responsable:'Carlos Rojas',fecha:'2024-10-18',pct:90,estado:'🟢 En Plazo',detalle:'Pruebas de carga completadas.',proximos:'Preparar entorno de producción.',obstaculos:''}],
-  3:[]
-};
+const D_INF={1:[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH 70%. Documentación Go-Live iniciada.',proximos:'Manual de usuario.',obstaculos:'Sin obstáculos.'}],2:[{id:2,responsable:'Carlos Rojas',fecha:'2024-10-18',pct:90,estado:'🟢 En Plazo',detalle:'Pruebas de carga OK.',proximos:'Producción.',obstaculos:''}],3:[]};
 
-// ═══════════════════════════════════════════════
-//  SUPABASE API
-// ═══════════════════════════════════════════════
-async function sbFetch(table, method='GET', body=null, params='') {
-  const url = `${SB_URL}/rest/v1/${table}${params}`;
-  const opts = {
-    method,
-    headers: {
-      'apikey': SB_KEY,
-      'Authorization': `Bearer ${SB_KEY}`,
-      'Content-Type': 'application/json',
-      'Prefer': method === 'POST' ? 'return=representation' : method === 'PATCH' ? 'return=representation' : ''
-    }
-  };
-  if (body) opts.body = JSON.stringify(body);
-  const res = await fetch(url, opts);
-  if (!res.ok) { const e = await res.text(); throw new Error(e); }
-  if (method === 'DELETE') return null;
-  const txt = await res.text();
-  return txt ? JSON.parse(txt) : null;
+// ═══════════════════════════════════════
+//  SUPABASE
+// ═══════════════════════════════════════
+async function sbFetch(table,method='GET',body=null,params=''){
+  const url=`${SB_URL}/rest/v1/${table}${params}`;
+  const h={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json'};
+  if(method==='POST')h['Prefer']='return=representation';
+  if(method==='PATCH')h['Prefer']='return=representation';
+  const r=await fetch(url,{method,headers:h,body:body?JSON.stringify(body):null});
+  if(!r.ok){const e=await r.text();throw new Error(e.substring(0,120));}
+  if(method==='DELETE')return null;
+  const t=await r.text();return t?JSON.parse(t):null;
 }
 
-async function loadProjects() {
-  if (DEMO_MODE) { projects = [...DEMO_PROJECTS]; renderAll(); return; }
-  try {
-    const data = await sbFetch('proyectos', 'GET', null, '?select=*&order=created_at.desc');
-    projects = data || [];
-    renderAll();
-    setDBStatus(true);
-  } catch(e) { setDBStatus(false, e.message); toast('Error cargando proyectos: ' + e.message, '❌'); }
+async function loadProjects(){
+  if(DEMO){projects=[...D_PROJS.map(p=>({...p}))];renderAll();return;}
+  try{
+    const d=await sbFetch('proyectos','GET',null,'?select=*&order=created_at.desc');
+    projects=d||[];renderAll();setDB(true);
+  }catch(e){setDB(false,true);toast('Error cargando: '+e.message,'❌');}
 }
-
-async function apiSaveProject(p) {
-  if (DEMO_MODE) {
-    if (p.id) { const i = projects.findIndex(x=>x.id===p.id); if(i>=0) projects[i]={...p}; }
-    else { p.id = Date.now(); projects.unshift(p); }
+async function apiSaveProj(p){
+  if(DEMO){
+    if(p.id){const i=projects.findIndex(x=>x.id===p.id);if(i>=0)projects[i]={...p};}
+    else{p.id=Date.now();projects.unshift(p);}
     return p;
   }
-  if (p.id) {
-    const {id, created_at, ...rest} = p;
-    const res = await sbFetch('proyectos', 'PATCH', {...rest, updated_at: new Date().toISOString()}, `?id=eq.${id}`);
-    return Array.isArray(res) ? res[0] : res;
-  } else {
-    const {id, ...rest} = p;
-    const res = await sbFetch('proyectos', 'POST', rest);
-    return Array.isArray(res) ? res[0] : res;
+  if(p.id){
+    const{id,created_at,...rest}=p;
+    const r=await sbFetch('proyectos','PATCH',{...rest,updated_at:new Date().toISOString()},`?id=eq.${id}`);
+    return Array.isArray(r)?r[0]:r;
+  }else{
+    const{id,...rest}=p;
+    const r=await sbFetch('proyectos','POST',rest);
+    return Array.isArray(r)?r[0]:r;
   }
 }
-async function apiDeleteProject(id) {
-  if (DEMO_MODE) { projects = projects.filter(p=>p.id!==id); return; }
-  await sbFetch('proyectos', 'DELETE', null, `?id=eq.${id}`);
-  projects = projects.filter(p=>p.id!==id);
+async function apiDeleteProj(id){
+  if(DEMO){projects=projects.filter(p=>p.id!==id);return;}
+  // CASCADE will delete all related data automatically
+  await sbFetch('proyectos','DELETE',null,`?id=eq.${id}`);
+  projects=projects.filter(p=>p.id!==id);
 }
-
-async function loadTasks(projId) {
-  if (DEMO_MODE) { currentTasks = (DEMO_TASKS[projId]||[]).map(t=>({...t})); return; }
-  try {
-    currentTasks = await sbFetch('tareas','GET',null,`?proyecto_id=eq.${projId}&select=*&order=orden.asc`) || [];
-  } catch(e) { currentTasks = []; }
+async function loadTasks(pid){
+  if(DEMO){curTasks=(D_TASKS[pid]||[]).map(t=>({...t}));return;}
+  try{curTasks=await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`)||[];}
+  catch(e){curTasks=[];}
 }
-async function apiSaveTask(t) {
-  if (DEMO_MODE) {
-    if (t.id) { const i = currentTasks.findIndex(x=>x.id===t.id); if(i>=0) currentTasks[i]={...t}; }
-    else { t.id = Date.now(); currentTasks.push(t); }
+async function apiSaveTask(t){
+  if(DEMO){
+    if(t.id){const i=curTasks.findIndex(x=>x.id===t.id);if(i>=0)curTasks[i]={...t};}
+    else{t.id=Date.now();curTasks.push(t);}
     return t;
   }
-  if (t.id) {
-    const {id,...rest}=t;
-    const res = await sbFetch('tareas','PATCH',rest,`?id=eq.${id}`);
-    return Array.isArray(res)?res[0]:res;
-  } else {
-    const {id,...rest}=t;
-    const res = await sbFetch('tareas','POST',rest);
-    return Array.isArray(res)?res[0]:res;
+  if(t.id){
+    const{id,created_at,...rest}=t;
+    const r=await sbFetch('tareas','PATCH',rest,`?id=eq.${id}`);
+    return Array.isArray(r)?r[0]:r;
+  }else{
+    const{id,...rest}=t;
+    const r=await sbFetch('tareas','POST',rest);
+    return Array.isArray(r)?r[0]:r;
   }
 }
-async function loadInformes(projId) {
-  if (DEMO_MODE) { currentInformes = (DEMO_INFORMES[projId]||[]).map(i=>({...i})); return; }
-  try {
-    currentInformes = await sbFetch('informes','GET',null,`?proyecto_id=eq.${projId}&select=*&order=fecha.desc`) || [];
-  } catch(e) { currentInformes = []; }
+async function apiDeleteTask(id){
+  if(DEMO){
+    // Also delete children
+    const children=curTasks.filter(t=>t.parent_id===id).map(t=>t.id);
+    curTasks=curTasks.filter(t=>t.id!==id&&t.parent_id!==id);
+    return;
+  }
+  // Children are deleted by CASCADE in DB
+  await sbFetch('tareas','DELETE',null,`?id=eq.${id}`);
+  curTasks=curTasks.filter(t=>t.id!==id&&t.parent_id!==id);
 }
-async function apiSaveInforme(inf) {
-  if (DEMO_MODE) { inf.id = Date.now(); currentInformes.unshift(inf); return inf; }
-  const {id,...rest}=inf;
-  const res = await sbFetch('informes','POST',rest);
-  return Array.isArray(res)?res[0]:res;
+async function loadInformes(pid){
+  if(DEMO){curInformes=(D_INF[pid]||[]).map(i=>({...i}));return;}
+  try{curInformes=await sbFetch('informes','GET',null,`?proyecto_id=eq.${pid}&select=*&order=fecha.desc`)||[];}
+  catch(e){curInformes=[];}
+}
+async function apiSaveInforme(inf){
+  if(DEMO){inf.id=Date.now();curInformes.unshift(inf);return inf;}
+  const{id,...rest}=inf;
+  const r=await sbFetch('informes','POST',rest);
+  return Array.isArray(r)?r[0]:r;
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  UTILS
-// ═══════════════════════════════════════════════
-function fd(d){ if(!d)return'—'; const [y,m,dd]=(d+'').split('-'); return dd?`${dd}/${m}/${y}`:d; }
-function fmoney(v){ return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(v||0); }
+// ═══════════════════════════════════════
+function fd(d){if(!d)return'—';const s=(d+'').split('T')[0];const[y,m,dd]=s.split('-');return dd?`${dd}/${m}/${y}`:d;}
+function fmoney(v){return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(v||0);}
 function calcPlan(p){
-  const hoy=new Date(),ini=new Date(p.inicio||hoy),fin=new Date(p.fin||hoy);
-  if(!p.inicio||!p.fin)return 0; if(hoy<=ini)return 0; if(hoy>=fin)return 100;
-  return Math.round(((hoy-ini)/(fin-ini))*100);
+  if(!p.inicio||!p.fin)return 0;
+  const h=new Date(),i=new Date(p.inicio),f=new Date(p.fin);
+  if(h<=i)return 0;if(h>=f)return 100;
+  return Math.round(((h-i)/(f-i))*100);
 }
-function calcDev(p){ return (p.real||0)-calcPlan(p); }
-function badgeComp(c){ if(!c)return''; const m={Alta:'alta',Media:'media',Baja:'baja'}; return `<span class="badge b-${m[c]||'media'}">${c}</span>`; }
-function badgeFlujo(f){ if(!f)return''; const m={Completo:'completo',Básico:'basico',Ágil:'agil'}; return `<span class="badge b-${m[f]||'completo'}">${f}</span>`; }
-function pbar(v,col){
-  const w=Math.min(100,Math.max(0,v||0));
-  const colors={green:'var(--green)',blue:'var(--accent)',yellow:'var(--yellow)',red:'var(--red)'};
-  return `<div class="pbar"><div class="pbar-track"><div class="pbar-fill" style="width:${w}%;background:${colors[col]||colors.blue}"></div></div><span class="pbar-val" style="color:${colors[col]}">${v||0}%</span></div>`;
+function calcDev(p){return(p.real||0)-calcPlan(p);}
+function bComp(c){if(!c)return'';const m={Alta:'alta',Media:'media',Baja:'baja'};return`<span class="badge b-${m[c]||'media'}">${c}</span>`;}
+function bFlujo(f){if(!f)return'';const m={Completo:'completo',Básico:'basico',Ágil:'agil'};return`<span class="badge b-${m[f]||'completo'}">${f}</span>`;}
+function pbar(v,col,w=48){
+  const n=Math.min(100,Math.max(0,v||0));
+  const cols={green:'var(--green)',blue:'var(--accent)',yellow:'var(--yellow)',red:'var(--red)'};
+  return`<div class="pbar"><div class="pbar-track" style="width:${w}px"><div class="pbar-fill" style="width:${n}%;background:${cols[col]||cols.blue}"></div></div><span class="pbar-val" style="color:${cols[col]}">${v||0}%</span></div>`;
 }
-function devHtml(v){ if(v>0)return`<span class="dev-pos">+${v}%</span>`; if(v<0)return`<span class="dev-neg">${v}%</span>`; return`<span class="dev-zero">0%</span>`; }
-function canEdit(){ return roleIdx<=1; }
-function canAdmin(){ return roleIdx===0; }
-function toast(msg,icon='✓'){ document.getElementById('t-msg').textContent=msg; document.getElementById('t-icon').textContent=icon; const t=document.getElementById('toast'); t.classList.add('show'); setTimeout(()=>t.classList.remove('show'),3000); }
-function openModal(id){ document.getElementById(id).classList.add('open'); }
-function closeModal(id){ document.getElementById(id).classList.remove('open'); }
-function setDBStatus(ok, msg=''){
-  const dot=document.getElementById('db-dot'), lbl=document.getElementById('db-label');
-  if(ok){ dot.className='db-dot connected'; lbl.textContent='Supabase'; }
-  else if(msg){ dot.className='db-dot error'; lbl.textContent='Error BD'; }
-  else { dot.className='db-dot'; lbl.textContent='Demo'; }
+function devH(v){if(v>0)return`<span class="dev-pos">+${v}%</span>`;if(v<0)return`<span class="dev-neg">${v}%</span>`;return`<span class="dev-z">0%</span>`;}
+function canEdit(){return roleIdx<=1;}
+function canAdmin(){return roleIdx===0;}
+function toast(msg,icon='✓'){document.getElementById('t-msg').textContent=msg;document.getElementById('t-icon').textContent=icon;const t=document.getElementById('toast');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),3200);}
+function openM(id){document.getElementById(id).classList.add('open');}
+function closeM(id){document.getElementById(id).classList.remove('open');}
+function setDB(ok,err=false){
+  const dot=document.getElementById('db-dot'),lbl=document.getElementById('db-lbl');
+  if(ok){dot.className='db-dot on';lbl.textContent='Supabase';}
+  else if(err){dot.className='db-dot err';lbl.textContent='Error';}
+  else{dot.className='db-dot';lbl.textContent='Demo';}
 }
-function getWeekNum(d){ const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate())); dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7)); const y=new Date(Date.UTC(dt.getUTCFullYear(),0,1)); return Math.ceil((((dt-y)/86400000)+1)/7); }
+function getWeekNum(d){const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return Math.ceil((((dt-y)/86400000)+1)/7);}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  VIEWS
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 function goView(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-'+name).classList.add('active');
   document.querySelectorAll('.nav-tab').forEach(t=>t.classList.remove('active'));
   document.querySelectorAll('.sb-item').forEach(t=>t.classList.remove('active'));
-  const navMap={centro:0,reporte:1,config:2};
-  if(navMap[name]!==undefined) document.querySelectorAll('.nav-tab')[navMap[name]].classList.add('active');
-  const sbMap={centro:'sb-centro',reporte:'sb-reporte',config:'sb-config'};
-  if(sbMap[name]) document.getElementById(sbMap[name])?.classList.add('active');
-  if(name==='reporte') renderReporte();
-  if(name==='config'){ document.getElementById('cfg-url').value=SB_URL; document.getElementById('cfg-key').value=SB_KEY; }
-  if(name==='centro') renderTable();
+  const ni=['centro','reporte','config'].indexOf(name);
+  if(ni>=0)document.querySelectorAll('.nav-tab')[ni].classList.add('active');
+  const sm={centro:'sb-centro',reporte:'sb-reporte',config:'sb-config'};
+  if(sm[name])document.getElementById(sm[name])?.classList.add('active');
+  if(name==='reporte')renderReport();
+  if(name==='config'){document.getElementById('cfg-url').value=SB_URL;document.getElementById('cfg-key').value=SB_KEY;}
+  if(name==='centro')renderTable();
 }
-function openProject(id){
-  currentProj=projects.find(p=>p.id===id);
-  if(!currentProj)return;
+function openProj(id){
+  curProj=projects.find(p=>p.id===id);
+  if(!curProj)return;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('active'));
   document.getElementById('view-proyecto').classList.add('active');
-  document.getElementById('proj-badge').textContent=currentProj.fr||'';
+  document.getElementById('proj-badge').textContent=curProj.fr||'';
   switchTab('detalle');
   renderSidebar();
 }
@@ -874,112 +765,104 @@ function switchTab(tab){
   document.querySelectorAll('.pview').forEach(v=>v.classList.remove('active'));
   document.getElementById('ptab-'+tab).classList.add('active');
   document.getElementById('pview-'+tab).classList.add('active');
-  if(tab==='detalle') renderDetalle();
-  else if(tab==='gantt'){ loadTasks(currentProj.id).then(()=>renderGantt()); }
-  else if(tab==='avance'){ loadInformes(currentProj.id).then(()=>renderAvance()); }
-  else if(tab==='info'){ loadInfoData().then(()=>renderInfo()); }
+  if(tab==='detalle')renderDetalle();
+  else if(tab==='gantt')loadTasks(curProj.id).then(()=>renderGantt());
+  else if(tab==='avance')loadInformes(curProj.id).then(()=>renderAvance());
+  else if(tab==='info')loadInfoData().then(()=>renderInfo());
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  RENDER ALL
-// ═══════════════════════════════════════════════
-function renderAll(){
-  renderTable(); renderStats(); renderSidebar();
-  document.getElementById('loading-row').style.display='none';
-}
+// ═══════════════════════════════════════
+function renderAll(){renderTable();renderStats();renderSidebar();document.getElementById('load-row').style.display='none';}
 function renderStats(){
   const t=projects.length;
   const avg=t?Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t):0;
   const ep=projects.filter(p=>calcDev(p)>=0).length;
   const at=projects.filter(p=>calcDev(p)<-10).length;
+  const hc=projects.filter(p=>p.complejidad==='Alta').length;
   document.getElementById('stats-bar').innerHTML=`
     <div class="stat"><div class="stat-val" style="color:var(--accent2)">${t}</div><div class="stat-lbl">Total</div></div>
     <div class="stat"><div class="stat-val" style="color:var(--green)">${avg}%</div><div class="stat-lbl">Avance Prom.</div></div>
     <div class="stat"><div class="stat-val" style="color:var(--green)">${ep}</div><div class="stat-lbl">En Plazo</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--red)">${at}</div><div class="stat-lbl">Con Atraso</div></div>
-    <div class="stat"><div class="stat-val" style="color:var(--yellow)">${projects.filter(p=>p.complejidad==='Alta').length}</div><div class="stat-lbl">Alta Complejidad</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--red)">${at}</div><div class="stat-lbl">Atraso &gt;10%</div></div>
+    <div class="stat"><div class="stat-val" style="color:var(--yellow)">${hc}</div><div class="stat-lbl">Alta Complejidad</div></div>
   `;
 }
 function renderSidebar(){
-  document.getElementById('sb-count').textContent=projects.length;
-  document.getElementById('sb-projects').innerHTML=projects.map(p=>
-    `<div class="sb-proj ${currentProj?.id===p.id?'active':''}" onclick="openProject(${p.id})">
+  document.getElementById('sb-cnt').textContent=projects.length;
+  document.getElementById('sb-projs').innerHTML=projects.map(p=>
+    `<div class="sb-proj ${curProj?.id===p.id?'active':''}" onclick="openProj(${p.id})">
       <span class="sb-proj-code">${p.fr||'—'}</span>${p.nombre||'Sin nombre'}
     </div>`).join('');
 }
 function renderTable(){
   const q=(document.getElementById('search')?.value||'').toLowerCase();
-  const fc=document.getElementById('filt-comp')?.value||'';
-  const ff=document.getElementById('filt-flujo')?.value||'';
+  const fc=document.getElementById('fc')?.value||'';
+  const ff=document.getElementById('ff')?.value||'';
   let list=projects.filter(p=>{
     const m=!q||(p.fr||'').toLowerCase().includes(q)||(p.nombre||'').toLowerCase().includes(q)||(p.jp||'').toLowerCase().includes(q);
     return m&&(!fc||p.complejidad===fc)&&(!ff||p.flujo===ff);
   });
   list.sort((a,b)=>{
     let va,vb;
-    if(sortKey==='real'){va=a.real||0;vb=b.real||0;}
-    else if(sortKey==='planificado'){va=calcPlan(a);vb=calcPlan(b);}
-    else if(sortKey==='desviacion'){va=calcDev(a);vb=calcDev(b);}
-    else{va=(a[sortKey]||'').toString();vb=(b[sortKey]||'').toString();}
-    return typeof va==='number'?(va-vb)*sortDir:va.localeCompare(vb)*sortDir;
+    if(sortK==='real'){va=a.real||0;vb=b.real||0;}
+    else if(sortK==='planificado'){va=calcPlan(a);vb=calcPlan(b);}
+    else if(sortK==='desviacion'){va=calcDev(a);vb=calcDev(b);}
+    else{va=(a[sortK]||'').toString();vb=(b[sortK]||'').toString();}
+    return typeof va==='number'?(va-vb)*sortD:va.localeCompare(vb)*sortD;
   });
-  document.getElementById('centro-sub').textContent=`${list.length} proyecto(s) · ${DEMO_MODE?'Modo Demo':'Supabase'}`;
+  document.getElementById('centro-sub').textContent=`${list.length} proyecto(s) · ${DEMO?'Modo Demo':'Supabase'}`;
   const tbody=document.getElementById('tbody');
-  const empty=document.getElementById('empty-state');
-  document.getElementById('loading-row').style.display='none';
-  if(list.length===0){tbody.innerHTML='';empty.style.display='flex';return;}
+  const empty=document.getElementById('empty-st');
+  document.getElementById('load-row').style.display='none';
+  if(!list.length){tbody.innerHTML='';empty.style.display='flex';return;}
   empty.style.display='none';
   tbody.innerHTML=list.map(p=>{
-    const plan=calcPlan(p),dev=calcDev(p);
-    const rc=p.real>=plan?'green':p.real>=plan-10?'yellow':'red';
-    return `<tr onclick="openProject(${p.id})">
+    const pl=calcPlan(p),dv=calcDev(p),rc=p.real>=pl?'green':p.real>=pl-10?'yellow':'red';
+    return`<tr onclick="openProj(${p.id})">
       <td class="td-code">${p.fr||'—'}</td>
       <td class="td-name" title="${p.nombre||''}">${p.nombre||'Sin nombre'}</td>
-      <td class="td-jp">${p.jp||'—'}</td>
+      <td style="font-size:11px;max-width:130px;overflow:hidden;text-overflow:ellipsis;">${p.jp||'—'}</td>
       <td class="td-date">${fd(p.inicio)}</td>
       <td class="td-date">${fd(p.fin)}</td>
-      <td>${pbar(p.real||0,rc)}</td>
-      <td>${pbar(plan,'blue')}</td>
-      <td>${devHtml(dev)}</td>
-      <td>${badgeComp(p.complejidad)}</td>
-      <td>${badgeFlujo(p.flujo)}</td>
-      <td onclick="event.stopPropagation()">
-        ${canEdit()?`<button class="act-btn" onclick="startEditProject(${p.id})" title="Editar">✏️</button>`:''}
-        ${canAdmin()?`<button class="act-btn" onclick="deleteProject(${p.id})" title="Eliminar">🗑</button>`:''}
+      <td>${pbar(p.real||0,rc,44)}</td>
+      <td>${pbar(pl,'blue',44)}</td>
+      <td>${devH(dv)}</td>
+      <td>${bComp(p.complejidad)}</td>
+      <td>${bFlujo(p.flujo)}</td>
+      <td onclick="event.stopPropagation()" style="white-space:nowrap;">
+        ${canEdit()?`<button class="act-btn" onclick="startEditProj(${p.id})" title="Editar">✏️</button>`:''}
+        ${canAdmin()?`<button class="act-btn danger" onclick="askDeleteProj(${p.id},'${(p.nombre||'este proyecto').replace(/'/g,"\\'")}')">🗑</button>`:''}
       </td>
     </tr>`;
   }).join('');
 }
-function sort(k){ if(sortKey===k)sortDir*=-1; else{sortKey=k;sortDir=1;} renderTable(); }
+function sort(k){if(sortK===k)sortD*=-1;else{sortK=k;sortD=1;}renderTable();}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  PROYECTO CRUD
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 function openNewProject(){
   if(!canEdit()){toast('Sin permisos','⚠️');return;}
-  editingProjId=null;
-  document.getElementById('mproj-ttl').textContent='Nuevo Proyecto';
-  document.getElementById('pf-fr').value='';
-  document.getElementById('pf-nombre').value='';
-  document.getElementById('pf-inicio').value='';
-  document.getElementById('pf-fin').value='';
-  document.getElementById('pf-jp').value='';
-  document.getElementById('pf-area').value='';
+  editProjId=null;
+  document.getElementById('mp-ttl').textContent='Nuevo Proyecto';
+  ['fr','nombre','jp','area','desc'].forEach(f=>document.getElementById('pf-'+f).value='');
+  ['ini','fin'].forEach(f=>document.getElementById('pf-'+f).value='');
   document.getElementById('pf-comp').value='';
   document.getElementById('pf-flujo').value='';
   document.getElementById('pf-real').value='';
   document.getElementById('pf-ppto').value='';
-  document.getElementById('pf-desc').value='';
-  openModal('modal-proj');
+  openM('m-proj');
 }
-function startEditProject(id){
+function startEditProj(id){
   if(!canEdit()){toast('Sin permisos','⚠️');return;}
-  const p=projects.find(x=>x.id===id); if(!p)return;
-  editingProjId=id;
-  document.getElementById('mproj-ttl').textContent='Editar Proyecto';
+  const p=projects.find(x=>x.id===id);if(!p)return;
+  editProjId=id;
+  document.getElementById('mp-ttl').textContent='Editar Proyecto';
   document.getElementById('pf-fr').value=p.fr||'';
   document.getElementById('pf-nombre').value=p.nombre||'';
-  document.getElementById('pf-inicio').value=p.inicio||'';
+  document.getElementById('pf-ini').value=p.inicio||'';
   document.getElementById('pf-fin').value=p.fin||'';
   document.getElementById('pf-jp').value=p.jp||'';
   document.getElementById('pf-area').value=p.area||'';
@@ -988,15 +871,15 @@ function startEditProject(id){
   document.getElementById('pf-real').value=p.real||'';
   document.getElementById('pf-ppto').value=p.presupuesto||'';
   document.getElementById('pf-desc').value=p.descripcion||'';
-  openModal('modal-proj');
+  openM('m-proj');
 }
 async function saveProject(){
-  const btn=document.getElementById('btn-save-proj');
-  btn.disabled=true; btn.textContent='Guardando...';
+  const btn=document.getElementById('btn-sp');
+  btn.disabled=true;btn.textContent='Guardando...';
   const p={
     fr:document.getElementById('pf-fr').value.trim()||null,
     nombre:document.getElementById('pf-nombre').value.trim()||null,
-    inicio:document.getElementById('pf-inicio').value||null,
+    inicio:document.getElementById('pf-ini').value||null,
     fin:document.getElementById('pf-fin').value||null,
     jp:document.getElementById('pf-jp').value.trim()||null,
     area:document.getElementById('pf-area').value.trim()||null,
@@ -1006,286 +889,457 @@ async function saveProject(){
     presupuesto:parseInt(document.getElementById('pf-ppto').value)||0,
     descripcion:document.getElementById('pf-desc').value.trim()||null
   };
-  if(editingProjId) p.id=editingProjId;
+  if(editProjId)p.id=editProjId;
   try{
-    const saved=await apiSaveProject(p);
-    if(!editingProjId&&saved){ projects.unshift(saved); }
-    else if(editingProjId){ const i=projects.findIndex(x=>x.id===editingProjId); if(i>=0) projects[i]={...projects[i],...(saved||p)}; }
-    closeModal('modal-proj');
-    renderAll();
-    toast(editingProjId?'Proyecto actualizado':'Proyecto creado','✓');
-  }catch(e){ toast('Error: '+e.message,'❌'); }
-  btn.disabled=false; btn.textContent='✓ Guardar Proyecto';
-}
-async function deleteProject(id){
-  if(!canAdmin()){toast('Solo administradores pueden eliminar','⚠️');return;}
-  if(!confirm('¿Eliminar proyecto? Esta acción no se puede deshacer.'))return;
-  try{ await apiDeleteProject(id); if(currentProj?.id===id){currentProj=null;goView('centro');} renderAll(); toast('Proyecto eliminado','🗑'); }
-  catch(e){ toast('Error: '+e.message,'❌'); }
+    const saved=await apiSaveProj(p);
+    if(!editProjId&&saved){projects.unshift(saved);}
+    else if(editProjId){const i=projects.findIndex(x=>x.id===editProjId);if(i>=0)projects[i]={...projects[i],...(saved||p)};}
+    closeM('m-proj');renderAll();
+    toast(editProjId?'Proyecto actualizado':'Proyecto creado','✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
+  btn.disabled=false;btn.textContent='✓ Guardar';
 }
 
-// ═══════════════════════════════════════════════
+// ── DELETE PROJECT (with confirmation) ──
+function askDeleteProj(id,name){
+  if(!canAdmin()){toast('Solo administradores pueden eliminar','⚠️');return;}
+  pendingDelProjId=id;
+  document.getElementById('confirm-msg').innerHTML=`¿Eliminar el proyecto <strong style="color:var(--text)">"${name}"</strong>?`;
+  openM('m-confirm-del');
+}
+async function confirmDelete(){
+  if(!pendingDelProjId)return;
+  closeM('m-confirm-del');
+  try{
+    await apiDeleteProj(pendingDelProjId);
+    if(curProj?.id===pendingDelProjId){curProj=null;goView('centro');}
+    renderAll();
+    toast('Proyecto eliminado completamente','🗑');
+  }catch(e){toast('Error al eliminar: '+e.message,'❌');}
+  pendingDelProjId=null;
+}
+
+// ═══════════════════════════════════════
 //  DETALLE
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 function renderDetalle(){
-  const p=currentProj;
-  const plan=calcPlan(p),dev=calcDev(p),dc=dev>=0?'var(--green)':'var(--red)';
+  const p=curProj;
+  const pl=calcPlan(p),dv=calcDev(p),dc=dv>=0?'var(--green)':'var(--red)';
   document.getElementById('det-content').innerHTML=`
     <div class="det-hero">
       <div style="flex:1;min-width:220px;">
-        <div class="det-code">📁 ${p.fr||'Sin código'} ${p.area?`· ${p.area}`:''}</div>
+        <div class="det-code">📁 ${p.fr||'Sin código'}${p.area?` · ${p.area}`:''}</div>
         <div class="det-name">${p.nombre||'Sin nombre'}</div>
-        <div class="det-meta">
-          ${badgeComp(p.complejidad)} ${badgeFlujo(p.flujo)}
-          ${p.jp?`<span style="font-size:11px;color:var(--text3)">JP: ${p.jp}</span>`:''}
-        </div>
+        <div class="det-meta">${bComp(p.complejidad)}${bFlujo(p.flujo)}${p.jp?`<span style="font-size:11px;color:var(--text3)">JP: ${p.jp}</span>`:''}</div>
         ${p.descripcion?`<div style="font-size:12px;color:var(--text3);margin-top:10px;line-height:1.7;max-width:580px;">${p.descripcion}</div>`:''}
       </div>
-      ${canEdit()?`<button class="btn-sec" onclick="startEditProject(${p.id})" style="align-self:flex-start;flex-shrink:0;">✏️ Editar</button>`:''}
+      <div style="display:flex;gap:8px;flex-shrink:0;align-self:flex-start;flex-wrap:wrap;">
+        ${canEdit()?`<button class="btn-sec" onclick="startEditProj(${p.id})">✏️ Editar</button>`:''}
+        ${canAdmin()?`<button class="btn-danger-full" onclick="askDeleteProj(${p.id},'${(p.nombre||'').replace(/'/g,"\\'")}')">🗑 Eliminar</button>`:''}
+      </div>
     </div>
     <div class="det-kpis">
-      <div class="kpi"><div class="kpi-lbl">% Avance Real</div><div class="kpi-val" style="color:${p.real>=plan?'var(--green)':'var(--yellow)'}">${p.real||0}%</div>${pbar(p.real||0,p.real>=plan?'green':'yellow')}</div>
-      <div class="kpi"><div class="kpi-lbl">% Planificado</div><div class="kpi-val" style="color:var(--accent2)">${plan}%</div>${pbar(plan,'blue')}</div>
-      <div class="kpi"><div class="kpi-lbl">% Desviación</div><div class="kpi-val" style="color:${dc}">${dev>=0?'+':''}${dev}%</div><div class="kpi-sub">${dev>=0?'Adelantado':'Con atraso'}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Fecha Inicio</div><div class="kpi-val" style="font-size:16px;margin-top:8px;">${fd(p.inicio)}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Fecha Fin</div><div class="kpi-val" style="font-size:16px;margin-top:8px;">${fd(p.fin)}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Presupuesto</div><div class="kpi-val" style="font-size:13px;margin-top:8px;">${fmoney(p.presupuesto)}</div></div>
+      <div class="kpi"><div class="kpi-lbl">% Avance Real</div><div class="kpi-val" style="color:${p.real>=pl?'var(--green)':'var(--yellow)'}">${p.real||0}%</div>${pbar(p.real||0,p.real>=pl?'green':'yellow')}</div>
+      <div class="kpi"><div class="kpi-lbl">% Planificado</div><div class="kpi-val" style="color:var(--accent2)">${pl}%</div>${pbar(pl,'blue')}</div>
+      <div class="kpi"><div class="kpi-lbl">% Desviación</div><div class="kpi-val" style="color:${dc}">${dv>=0?'+':''}${dv}%</div><div style="font-size:10px;color:var(--text3);margin-top:3px;">${dv>=0?'Adelantado':'Con atraso'}</div></div>
+      <div class="kpi"><div class="kpi-lbl">Fecha Inicio</div><div class="kpi-val" style="font-size:15px;margin-top:6px;">${fd(p.inicio)}</div></div>
+      <div class="kpi"><div class="kpi-lbl">Fecha Fin</div><div class="kpi-val" style="font-size:15px;margin-top:6px;">${fd(p.fin)}</div></div>
+      <div class="kpi"><div class="kpi-lbl">Presupuesto</div><div class="kpi-val" style="font-size:12px;margin-top:6px;">${fmoney(p.presupuesto)}</div></div>
     </div>
     <div class="det-grid">
       <div class="det-sec"><div class="sec-ttl">📋 Información General</div>
         <div class="frow"><div class="flbl">Código FR</div><div class="fval" style="font-family:var(--mono);color:var(--accent2)">${p.fr||'—'}</div></div>
         <div class="frow"><div class="flbl">Jefe de Proyecto</div><div class="fval">${p.jp||'—'}</div></div>
         <div class="frow"><div class="flbl">Área / Unidad</div><div class="fval">${p.area||'—'}</div></div>
-        <div class="frow"><div class="flbl">Complejidad</div><div class="fval">${badgeComp(p.complejidad)||'—'}</div></div>
-        <div class="frow"><div class="flbl">Flujo</div><div class="fval">${badgeFlujo(p.flujo)||'—'}</div></div>
+        <div class="frow"><div class="flbl">Complejidad</div><div class="fval">${bComp(p.complejidad)||'—'}</div></div>
+        <div class="frow"><div class="flbl">Flujo</div><div class="fval">${bFlujo(p.flujo)||'—'}</div></div>
       </div>
       <div class="det-sec"><div class="sec-ttl">📅 Cronograma</div>
         <div class="frow"><div class="flbl">Fecha Inicio</div><div class="fval">${fd(p.inicio)}</div></div>
         <div class="frow"><div class="flbl">Fecha Fin</div><div class="fval">${fd(p.fin)}</div></div>
-        <div class="frow"><div class="flbl">Duración Total</div><div class="fval" style="font-family:var(--mono)">${p.inicio&&p.fin?Math.ceil((new Date(p.fin)-new Date(p.inicio))/(1000*60*60*24))+' días':'—'}</div></div>
-        <div class="frow"><div class="flbl">Días Restantes</div><div class="fval" style="font-family:var(--mono);color:${p.fin&&new Date(p.fin)<new Date()?'var(--red)':'var(--text2)'};">${p.fin?Math.max(0,Math.ceil((new Date(p.fin)-new Date())/(1000*60*60*24)))+' días':'—'}</div></div>
-        <div class="frow"><div class="flbl">% Tiempo Transcurrido</div><div class="fval">${pbar(plan,'blue')}</div></div>
-      </div>
-      <div class="det-sec"><div class="sec-ttl">📊 Estado Avance</div>
-        <div class="frow"><div class="flbl">Avance Real</div><div class="fval">${pbar(p.real||0,p.real>=plan?'green':'yellow')}</div></div>
-        <div class="frow"><div class="flbl">Avance Planificado</div><div class="fval">${pbar(plan,'blue')}</div></div>
-        <div class="frow"><div class="flbl">Desviación</div><div class="fval">${devHtml(dev)}</div></div>
-      </div>
-      <div class="det-sec"><div class="sec-ttl">💰 Presupuesto</div>
-        <div class="frow"><div class="flbl">Monto Aprobado</div><div class="fval" style="font-family:var(--mono)">${fmoney(p.presupuesto)}</div></div>
+        <div class="frow"><div class="flbl">Duración</div><div class="fval" style="font-family:var(--mono)">${p.inicio&&p.fin?Math.ceil((new Date(p.fin)-new Date(p.inicio))/(86400000))+' días':'—'}</div></div>
+        <div class="frow"><div class="flbl">Días Restantes</div><div class="fval" style="font-family:var(--mono);color:${p.fin&&new Date(p.fin)<new Date()?'var(--red)':'var(--text2)'};">${p.fin?Math.max(0,Math.ceil((new Date(p.fin)-new Date())/86400000))+' días':'—'}</div></div>
+        <div class="frow"><div class="flbl">Tiempo Transcurrido</div><div class="fval">${pbar(pl,'blue')}</div></div>
       </div>
     </div>
   `;
 }
 
-// ═══════════════════════════════════════════════
-//  GANTT — MEJORADO
-// ═══════════════════════════════════════════════
-const WCOL = 110;
-function renderGantt(){
-  const p=currentProj;
-  document.getElementById('gantt-ttl').textContent=`Planificación — ${p.nombre||'Proyecto'}`;
-  document.getElementById('gantt-sub').textContent=`${p.fr||''} · ${fd(p.inicio)} → ${fd(p.fin)}`;
-  const eb=document.getElementById('gantt-btns');
-  if(eb) eb.style.display=canEdit()?'flex':'none';
+// ═══════════════════════════════════════
+//  GANTT v4
+// ═══════════════════════════════════════
+function getVisibleCols(){
+  const cols=[];
+  if(visibleCols.inicio)cols.push({key:'inicio',label:'INICIO',w:COL_W.inicio});
+  if(visibleCols.fin)cols.push({key:'fin',label:'FIN',w:COL_W.fin});
+  if(visibleCols.real)cols.push({key:'real',label:'REAL',w:COL_W.real});
+  if(visibleCols.plan)cols.push({key:'plan',label:'PLAN.',w:COL_W.plan});
+  if(visibleCols.desv)cols.push({key:'desv',label:'DESV.',w:COL_W.desv});
+  if(visibleCols.resp)cols.push({key:'resp',label:'RESPONSABLE',w:COL_W.resp});
+  return cols;
+}
+function totalLeftW(){
+  return COL_NAME_W+getVisibleCols().reduce((s,c)=>s+c.w,0)+2;
+}
 
-  if(currentTasks.length===0){
-    document.getElementById('gantt-content').innerHTML=`<div class="empty"><div class="empty-icon">📊</div><div class="empty-ttl">Sin tareas en la planificación</div><div class="empty-sub">Agrega tareas para construir el diagrama Gantt.</div>${canEdit()?'<button class="btn-primary" onclick="openAddTask(\'task\')">+ Agregar Primera Tarea</button>':''}</div>`;
+function renderGantt(){
+  const p=curProj;
+  const shell=document.getElementById('gantt-shell');
+
+  // ── TOOLBAR ──
+  const colBtns=[
+    {key:'inicio',label:'Inicio'},
+    {key:'fin',label:'Fin'},
+    {key:'real',label:'% Real'},
+    {key:'plan',label:'% Plan.'},
+    {key:'desv',label:'Desv.'},
+    {key:'resp',label:'Responsable'},
+  ].map(c=>`<button class="col-toggle ${visibleCols[c.key]?'active':''}" onclick="toggleCol('${c.key}')">${c.label}</button>`).join('');
+
+  const addRowHtml=canEdit()?`
+    <div class="add-task-row" id="add-task-row">
+      <span style="font-size:11px;color:var(--text3);font-family:var(--mono);white-space:nowrap;">+ Agregar:</span>
+      <input class="add-task-inp" id="nt-nombre" placeholder="Nombre de la tarea...">
+      <input class="add-task-inp" id="nt-ini" type="date" style="width:120px;flex:none;">
+      <input class="add-task-inp" id="nt-fin" type="date" style="width:120px;flex:none;">
+      <select class="add-task-sel" id="nt-tipo">
+        <option value="task">Tarea</option>
+        <option value="group">Tarea Resumen</option>
+      </select>
+      <select class="add-task-sel" id="nt-parent">
+        <option value="">Sin padre</option>
+      </select>
+      <button class="btn-xs primary" onclick="quickAddTask()">✓ Agregar</button>
+    </div>`:''
+
+  shell.innerHTML=`
+    <div class="gantt-toolbar">
+      <div><div class="gantt-toolbar-title">Planificación — ${p.nombre||'Proyecto'}</div>
+      <div class="gantt-toolbar-sub">${p.fr||''} · ${fd(p.inicio)} → ${fd(p.fin)}</div></div>
+      <div class="gantt-col-toggles">${colBtns}</div>
+    </div>
+    ${addRowHtml}
+    <div class="gantt-body" id="gantt-body"></div>
+  `;
+
+  // Populate parent selector
+  if(canEdit()){
+    const sel=document.getElementById('nt-parent');
+    if(sel){
+      sel.innerHTML='<option value="">Sin padre (raíz)</option>';
+      curTasks.filter(t=>t.is_group).forEach(t=>{
+        const o=document.createElement('option');
+        o.value=t.id;o.textContent=t.nombre;sel.appendChild(o);
+      });
+    }
+    // Default dates
+    const niEl=document.getElementById('nt-ini'),nfEl=document.getElementById('nt-fin');
+    if(niEl&&!niEl.value)niEl.value=p.inicio||'';
+    if(nfEl&&!nfEl.value)nfEl.value=p.fin||'';
+  }
+
+  if(curTasks.length===0&&!canEdit()){
+    document.getElementById('gantt-body').innerHTML=`<div class="empty"><div class="empty-icon">📊</div><div class="empty-ttl">Sin tareas</div><div class="empty-sub">No hay tareas registradas en esta planificación.</div></div>`;
+    return;
+  }
+  if(curTasks.length===0){
+    document.getElementById('gantt-body').innerHTML=`<div class="empty"><div class="empty-icon">📊</div><div class="empty-ttl">Sin tareas</div><div class="empty-sub">Usa el formulario de arriba para agregar la primera tarea.</div></div>`;
     return;
   }
 
+  buildGanttContent();
+}
+
+function buildGanttContent(){
+  const p=curProj;
+  const vcols=getVisibleCols();
+  const lw=totalLeftW();
+
   // Date range
-  const allD=currentTasks.flatMap(t=>[new Date(t.inicio||p.inicio||new Date()),new Date(t.fin||p.fin||new Date())]);
-  if(p.inicio) allD.push(new Date(p.inicio));
-  if(p.fin) allD.push(new Date(p.fin));
+  const allD=curTasks.flatMap(t=>[t.inicio&&new Date(t.inicio),t.fin&&new Date(t.fin)]).filter(Boolean);
+  if(p.inicio)allD.push(new Date(p.inicio));
+  if(p.fin)allD.push(new Date(p.fin));
+  if(!allD.length){document.getElementById('gantt-body').innerHTML='<div class="empty"><div class="empty-ttl">Sin fechas definidas</div></div>';return;}
   const minD=new Date(Math.min(...allD.map(d=>d.getTime())));
   const maxD=new Date(Math.max(...allD.map(d=>d.getTime())));
-  minD.setDate(minD.getDate()-7);
-  maxD.setDate(maxD.getDate()+14);
+  minD.setDate(minD.getDate()-7);maxD.setDate(maxD.getDate()+14);
 
-  // Build weeks
-  const weeks=[];
-  let cur=new Date(minD);
+  const weeks=[];let cur=new Date(minD);
   cur.setDate(cur.getDate()-cur.getDay()+1);
-  while(cur<=maxD){ weeks.push(new Date(cur)); cur.setDate(cur.getDate()+7); }
-  const totalW=weeks.length*WCOL;
+  while(cur<=maxD){weeks.push(new Date(cur));cur.setDate(cur.getDate()+7);}
+  const totalW=weeks.length*WEEK_W;
 
-  function dx(d){ if(!d)return 0; const diff=(new Date(d)-minD)/(1000*60*60*24); return (diff/7)*WCOL; }
+  function dx(d){if(!d)return 0;const diff=(new Date(d)-minD)/(1000*60*60*24);return(diff/7)*WEEK_W;}
 
-  // Recalculate group stats
-  function groupPct(t){
+  // Group stats
+  function gPct(t){
     if(!t.is_group)return t.pct||0;
-    const ch=currentTasks.filter(x=>x.parent_id===t.id&&!x.is_group);
+    const ch=curTasks.filter(x=>(x.parent_id||null)===(t.id||null)&&!x.is_group);
     return ch.length?Math.round(ch.reduce((s,x)=>s+(x.pct||0),0)/ch.length):t.pct||0;
   }
-  function groupDates(t){
+  function gDates(t){
     if(!t.is_group)return{i:t.inicio,f:t.fin};
-    const ch=currentTasks.filter(x=>x.parent_id===t.id);
+    const ch=curTasks.filter(x=>(x.parent_id||null)===(t.id||null));
     if(!ch.length)return{i:t.inicio,f:t.fin};
-    return{i:ch.reduce((m,x)=>(!m||x.inicio<m?x.inicio:m),null)||t.inicio, f:ch.reduce((m,x)=>(!m||x.fin>m?x.fin:m),null)||t.fin};
+    const ii=ch.map(x=>x.inicio).filter(Boolean).sort();
+    const ff=ch.map(x=>x.fin).filter(Boolean).sort().reverse();
+    return{i:ii[0]||t.inicio,f:ff[0]||t.fin};
+  }
+  function tPlan(gd){
+    if(!gd.i||!gd.f)return 0;
+    const h=new Date(),i=new Date(gd.i),f=new Date(gd.f);
+    if(h<=i)return 0;if(h>=f)return 100;
+    return Math.round(((h-i)/(f-i))*100);
   }
 
-  // Build visible list
+  // Build visible rows
   function buildRows(parentId,depth){
     const rows=[];
-    currentTasks.filter(t=>(t.parent_id||null)===(parentId||null)).sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(t=>{
-      rows.push({t,depth});
-      if(t.is_group&&!collapsed.has(t.id)) rows.push(...buildRows(t.id,depth+1));
-    });
+    curTasks.filter(t=>(t.parent_id||null)===(parentId||null))
+      .sort((a,b)=>(a.orden||0)-(b.orden||0))
+      .forEach(t=>{
+        rows.push({t,depth});
+        if(t.is_group&&!collapsed.has(t.id))rows.push(...buildRows(t.id,depth+1));
+      });
     return rows;
   }
   const rows=buildRows(null,0);
   const today=new Date().toISOString().split('T')[0];
   const todayX=dx(today);
 
-  // HEADER COLUMNS (left panel)
-  const HDR_COLS=['NOMBRE / ACTIVIDAD','INICIO','FIN','REAL','PLAN.','DESV.'];
-  const COL_W=[180,60,60,50,50,50]; // px widths summing ~450
-  const leftW=COL_W.reduce((s,w)=>s+w,0)+32;
+  // ── HEADERS ──
+  const lHdrHtml=`
+    <div class="gcol-h name-h" style="width:${COL_NAME_W}px;flex-shrink:0;">NOMBRE / ACTIVIDAD</div>
+    ${vcols.map(c=>`<div class="gcol-h" style="width:${c.w}px;flex-shrink:0;">${c.label}</div>`).join('')}
+  `;
+  const rHdrHtml=`<div style="display:flex;width:${totalW}px;">
+    ${weeks.map(w=>`<div class="gantt-week-hdr" style="min-width:${WEEK_W}px;width:${WEEK_W}px;">S${getWeekNum(w)}<br><span style="font-size:8px;opacity:.5;">${w.getDate()} ${w.toLocaleDateString('es-CL',{month:'short'}).toUpperCase()}</span></div>`).join('')}
+  </div>`;
 
-  // Build week header HTML
-  const weeksHtml=weeks.map(w=>`<div class="gantt-week" style="min-width:${WCOL}px;">${'S'+getWeekNum(w)}<br><span style="opacity:.5;font-size:8px;">${w.getDate()} ${w.toLocaleDateString('es-CL',{month:'short'}).toUpperCase()}</span></div>`).join('');
+  // ── PROJECT ROW ──
+  const pGd={i:p.inicio,f:p.fin};
+  const pPct=p.real||0,pPl=calcPlan(p),pDv=calcDev(p);
+  const pX=dx(p.inicio),pW=Math.max(6,dx(p.fin)-dx(p.inicio));
+  const progCls=pPct>=pPl?'prog-green':pPct>=pPl-15?'prog-yellow':'prog-red';
 
-  // Build left header
-  const lHdr=HDR_COLS.map((h,i)=>`<div class="gantt-hdr-cell" style="width:${COL_W[i]}px;flex-shrink:0;">${h}</div>`).join('');
+  function makeCellVal(key,gd,pctR,pctP,dv,resp){
+    if(key==='inicio')return`<span style="font-family:var(--mono);font-size:9px;">${fd(gd.i)}</span>`;
+    if(key==='fin')return`<span style="font-family:var(--mono);font-size:9px;">${fd(gd.f)}</span>`;
+    if(key==='real')return pbar(pctR,pctR>=pctP?'green':'yellow',38);
+    if(key==='plan')return pbar(pctP,'blue',38);
+    if(key==='desv')return devH(dv);
+    if(key==='resp')return`<span style="font-size:10px;overflow:hidden;text-overflow:ellipsis;">${resp||'—'}</span>`;
+    return'';
+  }
 
-  // Project summary row
-  const pDates=groupDates({id:0,is_group:true,inicio:p.inicio,fin:p.fin,...{parent_id:null}});
-  // (use project's own dates)
-  const pX=dx(p.inicio),pW=Math.max(6,dx(p.fin)-dx(p.inicio)),pPct=p.real||0;
-  const pDevX=calcDev(p);
-
-  let projRowLeft=`<div class="gantt-proj-row">
-    <div class="grow-left" style="width:${leftW}px;">
-      <div class="grow-cell name-cell grp" style="width:${COL_W[0]}px;flex-shrink:0;padding-left:10px;">🗂 ${p.nombre||'Proyecto'}</div>
-      <div class="grow-cell mono" style="width:${COL_W[1]}px;flex-shrink:0;">${fd(p.inicio)}</div>
-      <div class="grow-cell mono" style="width:${COL_W[2]}px;flex-shrink:0;">${fd(p.fin)}</div>
-      <div class="grow-cell" style="width:${COL_W[3]}px;flex-shrink:0;">${pbar(pPct,pPct>=calcPlan(p)?'green':'yellow')}</div>
-      <div class="grow-cell" style="width:${COL_W[4]}px;flex-shrink:0;">${pbar(calcPlan(p),'blue')}</div>
-      <div class="grow-cell" style="width:${COL_W[5]}px;flex-shrink:0;">${devHtml(pDevX)}</div>
+  const projRowLeft=`<div class="grow lvl-proj" id="grow-proj">
+    <div class="grow-left" style="width:${lw}px;">
+      <div class="gcell name-cell" style="width:${COL_NAME_W}px;flex-shrink:0;padding-left:8px;">
+        <span style="font-size:14px;flex-shrink:0;">🗂</span>
+        <span class="gcell-name-text" title="${p.nombre||''}">${p.nombre||'Proyecto'}</span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--accent2);margin-left:4px;flex-shrink:0;">${p.fr||''}</span>
+      </div>
+      ${vcols.map(c=>`<div class="gcell" style="width:${c.w}px;flex-shrink:0;">${makeCellVal(c.key,pGd,pPct,pPl,pDv,p.jp)}</div>`).join('')}
     </div>
   </div>`;
-  let projRowRight=`<div class="gantt-proj-row" style="position:relative;">
+  const projRowRight=`<div class="grow lvl-proj">
     <div class="grow-right" style="width:${totalW}px;min-height:36px;">
-      ${weeks.map((_,i)=>`<div class="grid-line" style="left:${i*WCOL}px;"></div>`).join('')}
-      <div class="gbar-wrap" style="left:${pX}px;width:${pW}px;"><div class="gbar proj-bar" style="width:100%;"><div class="gbar-prog ${pPct>=calcPlan(p)?'green':'yellow'}" style="width:${pPct}%;"></div><span class="gbar-lbl">${pPct}%</span></div></div>
-      <div class="today-line" style="left:${todayX}px;"></div>
-      <div class="today-lbl" style="left:${todayX}px;">HOY</div>
+      ${weeks.map((_,i)=>`<div class="grid-vline" style="left:${i*WEEK_W}px;"></div>`).join('')}
+      <div class="gbar-wrap" style="left:${pX}px;width:${pW}px;"><div class="gbar bar-proj" style="width:100%;"><div class="gbar-prog ${progCls}" style="width:${pPct}%;"></div><span class="gbar-lbl">${pPct}%</span></div></div>
+      <div class="today-line" style="left:${todayX}px;"></div><div class="today-lbl" style="left:${todayX}px;">HOY</div>
     </div>
   </div>`;
 
-  // Task rows
+  // ── TASK ROWS ──
   let leftRows='',rightRows='';
   rows.forEach(({t,depth})=>{
-    const gd=groupDates(t),gp=groupPct(t);
+    const gd=gDates(t),pctR=gPct(t),pctP=tPlan(gd),dv=pctR-pctP;
     const tX=dx(gd.i),tW=Math.max(4,dx(gd.f)-tX);
-    const tPlan=gd.i&&gd.f?Math.round(Math.min(100,Math.max(0,((new Date()-new Date(gd.i))/(new Date(gd.f)-new Date(gd.i)))*100))):0;
-    const tDev=gp-tPlan;
-    const barCls=t.is_group?'grp-bar':'task-bar';
-    const progCls=gp>=tPlan?'green':gp>=tPlan-15?'yellow':'red';
-    const toggle=t.is_group?`<span class="gtoggle ${collapsed.has(t.id)?'':'open'}" onclick="event.stopPropagation();toggleG(${t.id})">▶</span>`:'<span style="width:14px;display:inline-block;flex-shrink:0;"></span>';
-    const indent=depth*14;
-    const rowCls=`grow ${t.is_group?'ggroup':''}`;
+    const lvl=t.is_group?'lvl-group':'lvl-task';
+    const barCls=t.is_group?'bar-group':'bar-task';
+    const pc=pctR>=pctP?'prog-green':pctR>=pctP-15?'prog-yellow':'prog-red';
+    const indent=depth*14+8;
+    const toggle=t.is_group
+      ?`<span class="gtoggle ${collapsed.has(t.id)?'':'open'}" onclick="toggleG(${t.id})">▶</span>`
+      :`<span class="g-spacer"></span>`;
 
-    leftRows+=`<div class="${rowCls}">
-      <div class="grow-left" style="width:${leftW}px;">
-        <div class="grow-cell name-cell ${t.is_group?'grp':''}" style="width:${COL_W[0]}px;flex-shrink:0;padding-left:${8+indent}px;">${toggle}<span style="overflow:hidden;text-overflow:ellipsis;">${t.nombre||'Sin nombre'}</span></div>
-        <div class="grow-cell mono" style="width:${COL_W[1]}px;flex-shrink:0;font-size:9px;">${fd(gd.i)}</div>
-        <div class="grow-cell mono" style="width:${COL_W[2]}px;flex-shrink:0;font-size:9px;">${fd(gd.f)}</div>
-        <div class="grow-cell" style="width:${COL_W[3]}px;flex-shrink:0;">${pbar(gp,gp>=tPlan?'green':'yellow')}</div>
-        <div class="grow-cell" style="width:${COL_W[4]}px;flex-shrink:0;">${pbar(tPlan,'blue')}</div>
-        <div class="grow-cell" style="width:${COL_W[5]}px;flex-shrink:0;">${devHtml(tDev)}</div>
+    // Inline real% input (editable)
+    const realCell=`<div class="pct-inline">
+      <input class="pct-inp" id="pct-${t.id}" value="${pctR}" type="number" min="0" max="100" onkeydown="if(event.key==='Enter')savePct(${t.id})">
+      <button class="pct-save-btn" onclick="savePct(${t.id})">✓</button>
+    </div>`;
+
+    function cellVal(key){
+      if(key==='inicio')return`<span style="font-family:var(--mono);font-size:9px;">${fd(gd.i)}</span>`;
+      if(key==='fin')return`<span style="font-family:var(--mono);font-size:9px;">${fd(gd.f)}</span>`;
+      if(key==='real')return canEdit()?realCell:pbar(pctR,pctR>=pctP?'green':'yellow',38);
+      if(key==='plan')return pbar(pctP,'blue',38);
+      if(key==='desv')return devH(dv);
+      if(key==='resp')return`<span style="font-size:10px;overflow:hidden;text-overflow:ellipsis;">${t.responsable||'—'}</span>`;
+      return'';
+    }
+
+    leftRows+=`<div class="grow ${lvl}" id="grow-${t.id}">
+      <div class="grow-left" style="width:${lw}px;">
+        <div class="gcell name-cell" style="width:${COL_NAME_W}px;flex-shrink:0;padding-left:${indent}px;">
+          ${toggle}
+          <span class="gcell-name-text" title="${t.nombre||''}">${t.nombre||'Sin nombre'}</span>
+          ${canEdit()?`<div class="row-actions">
+            <button class="row-act" onclick="openEditTask(${t.id})" title="Editar">✏️</button>
+            <button class="row-act del" onclick="askDeleteTask(${t.id},'${(t.nombre||'').replace(/'/g,"\\'")}')" title="Eliminar">🗑</button>
+          </div>`:''}
+        </div>
+        ${vcols.map(c=>`<div class="gcell" style="width:${c.w}px;flex-shrink:0;">${cellVal(c.key)}</div>`).join('')}
       </div>
     </div>`;
 
-    rightRows+=`<div class="${rowCls}" style="position:relative;">
-      <div class="grow-right" style="width:${totalW}px;min-height:34px;">
-        ${weeks.map((_,i)=>`<div class="grid-line" style="left:${i*WCOL}px;"></div>`).join('')}
-        ${tX>=0&&tW>0?`<div class="gbar-wrap" style="left:${tX}px;width:${tW}px;">
-          <div class="gbar ${barCls}" style="width:100%;"><div class="gbar-prog ${progCls}" style="width:${gp}%;"></div><span class="gbar-lbl">${gp}%</span></div>
-        </div>`:''}
+    rightRows+=`<div class="grow ${lvl}">
+      <div class="grow-right" style="width:${totalW}px;min-height:${t.is_group?34:32}px;">
+        ${weeks.map((_,i)=>`<div class="grid-vline" style="left:${i*WEEK_W}px;"></div>`).join('')}
+        ${tX>=0&&tW>0?`<div class="gbar-wrap" style="left:${tX}px;width:${tW}px;"><div class="gbar ${barCls}" style="width:100%;"><div class="gbar-prog ${pc}" style="width:${pctR}%;"></div><span class="gbar-lbl">${pctR}%</span></div></div>`:''}
         <div class="today-line" style="left:${todayX}px;"></div>
       </div>
     </div>`;
   });
 
-  document.getElementById('gantt-content').innerHTML=`
-    <div style="display:flex;border-bottom:2px solid var(--border2);background:var(--surface);flex-shrink:0;position:sticky;top:0;z-index:10;">
-      <div style="width:${leftW}px;flex-shrink:0;border-right:1px solid var(--border);display:flex;">
-        ${lHdr}
+  document.getElementById('gantt-body').innerHTML=`
+    <div class="gantt-left-panel" style="width:${lw}px;">
+      <div class="gantt-left-head" style="height:36px;">
+        <div style="display:flex;align-items:stretch;width:100%;">${lHdrHtml}</div>
       </div>
-      <div style="overflow:hidden;flex:1;">
-        <div style="display:flex;width:${totalW}px;">${weeksHtml}</div>
-      </div>
-    </div>
-    <div style="display:flex;flex:1;overflow:hidden;">
-      <div style="width:${leftW}px;flex-shrink:0;border-right:1px solid var(--border);overflow-y:auto;overflow-x:hidden;" id="gl">
+      <div class="gantt-left-scroll" id="gl">
         ${projRowLeft}${leftRows}
       </div>
-      <div style="flex:1;overflow:auto;" id="gr">
+    </div>
+    <div class="gantt-right-panel">
+      <div class="gantt-right-head" style="height:36px;">${rHdrHtml}</div>
+      <div class="gantt-right-scroll" id="gr">
         ${projRowRight}${rightRows}
       </div>
     </div>
   `;
+
   // Sync scroll
   const gl=document.getElementById('gl'),gr=document.getElementById('gr');
-  if(gl&&gr){ gl.addEventListener('scroll',()=>gr.scrollTop=gl.scrollTop); gr.addEventListener('scroll',()=>gl.scrollTop=gr.scrollTop); }
+  if(gl&&gr){
+    gl.addEventListener('scroll',()=>{gr.scrollTop=gl.scrollTop;});
+    gr.addEventListener('scroll',()=>{gl.scrollTop=gr.scrollTop;});
+  }
 }
 
-function toggleG(id){ collapsed.has(id)?collapsed.delete(id):collapsed.add(id); renderGantt(); }
-
-function openAddTask(type){
-  if(!canEdit()){toast('Sin permisos','⚠️');return;}
-  addingTaskType=type;
-  document.getElementById('mtask-ttl').textContent=type==='group'?'Nueva Tarea Resumen':'Nueva Tarea';
-  document.getElementById('tf-nombre').value='';
-  document.getElementById('tf-inicio').value=currentProj.inicio||'';
-  document.getElementById('tf-fin').value='';
-  document.getElementById('tf-pct').value='0';
-  document.getElementById('tf-resp').value=currentProj.jp||'';
-  const sel=document.getElementById('tf-parent');
-  const grps=currentTasks.filter(t=>t.is_group);
-  sel.innerHTML='<option value="">— Sin padre (nivel raíz) —</option>'+grps.map(g=>`<option value="${g.id}">${g.nombre}</option>`).join('');
-  openModal('modal-task');
+function toggleCol(key){
+  visibleCols[key]=!visibleCols[key];
+  renderGantt();
 }
-async function saveTask(){
+function toggleG(id){collapsed.has(id)?collapsed.delete(id):collapsed.add(id);buildGanttContent();}
+
+// ── QUICK ADD TASK ──
+async function quickAddTask(){
+  if(!canEdit())return;
+  const nombre=document.getElementById('nt-nombre')?.value.trim()||'Nueva Tarea';
+  const ini=document.getElementById('nt-ini')?.value||null;
+  const fin=document.getElementById('nt-fin')?.value||null;
+  const tipo=document.getElementById('nt-tipo')?.value||'task';
+  const pid=parseInt(document.getElementById('nt-parent')?.value)||null;
   const t={
-    proyecto_id:currentProj.id,
-    nombre:document.getElementById('tf-nombre').value.trim()||'Nueva Tarea',
-    inicio:document.getElementById('tf-inicio').value||null,
-    fin:document.getElementById('tf-fin').value||null,
-    pct:parseInt(document.getElementById('tf-pct').value)||0,
-    responsable:document.getElementById('tf-resp').value||null,
-    is_group:addingTaskType==='group',
-    parent_id:parseInt(document.getElementById('tf-parent').value)||null,
-    orden:currentTasks.length+1
+    proyecto_id:curProj.id,
+    nombre,inicio:ini,fin,pct:0,
+    responsable:curProj.jp||null,
+    is_group:tipo==='group',
+    nivel:pid?2:1,
+    parent_id:pid,
+    orden:curTasks.length+1
   };
   try{
     const saved=await apiSaveTask(t);
-    if(saved&&!DEMO_MODE) currentTasks.push(saved);
-    closeModal('modal-task');
+    if(saved&&!DEMO)curTasks.push(saved);
+    if(document.getElementById('nt-nombre'))document.getElementById('nt-nombre').value='';
     renderGantt();
-    toast('Tarea guardada','✓');
-  }catch(e){ toast('Error: '+e.message,'❌'); }
+    toast(`Tarea "${nombre}" agregada`,'✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
 }
 
-// ═══════════════════════════════════════════════
+// ── INLINE % SAVE ──
+async function savePct(taskId){
+  const inp=document.getElementById('pct-'+taskId);
+  if(!inp)return;
+  const val=Math.min(100,Math.max(0,parseInt(inp.value)||0));
+  const t=curTasks.find(x=>x.id===taskId);
+  if(!t)return;
+  t.pct=val;
+  try{
+    await apiSaveTask(t);
+    buildGanttContent();
+    toast(`Avance actualizado: ${val}%`,'✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
+}
+
+// ── EDIT TASK MODAL ──
+function openEditTask(id){
+  editingTaskId=id;
+  const t=curTasks.find(x=>x.id===id);if(!t)return;
+  document.getElementById('te-ttl').textContent=t.is_group?'Editar Tarea Resumen':'Editar Tarea';
+  document.getElementById('te-nombre').value=t.nombre||'';
+  document.getElementById('te-ini').value=t.inicio||'';
+  document.getElementById('te-fin').value=t.fin||'';
+  document.getElementById('te-pct').value=t.pct||0;
+  document.getElementById('te-resp').value=t.responsable||'';
+  openM('m-task-edit');
+}
+async function saveTaskEdit(){
+  const t=curTasks.find(x=>x.id===editingTaskId);if(!t)return;
+  t.nombre=document.getElementById('te-nombre').value.trim()||t.nombre;
+  t.inicio=document.getElementById('te-ini').value||t.inicio;
+  t.fin=document.getElementById('te-fin').value||t.fin;
+  t.pct=parseInt(document.getElementById('te-pct').value)||0;
+  t.responsable=document.getElementById('te-resp').value||null;
+  try{
+    await apiSaveTask(t);
+    closeM('m-task-edit');
+    renderGantt();
+    toast('Tarea actualizada','✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
+}
+
+// ── DELETE TASK ──
+function askDeleteTask(id,name){
+  pendingDelTaskId=id;
+  const t=curTasks.find(x=>x.id===id);
+  document.getElementById('confirm-task-msg').innerHTML=`¿Eliminar la tarea <strong>"${name}"</strong>?`;
+  const children=curTasks.filter(x=>x.parent_id===id);
+  document.getElementById('confirm-task-sub').textContent=t?.is_group&&children.length
+    ?`Se eliminarán también ${children.length} subtarea(s) asociadas.`
+    :'Esta acción no se puede deshacer.';
+  openM('m-confirm-task');
+}
+async function confirmDeleteTask(){
+  if(!pendingDelTaskId)return;
+  closeM('m-confirm-task');
+  try{
+    await apiDeleteTask(pendingDelTaskId);
+    renderGantt();
+    toast('Tarea eliminada','🗑');
+  }catch(e){toast('Error: '+e.message,'❌');}
+  pendingDelTaskId=null;
+}
+
+// ═══════════════════════════════════════
 //  AVANCE SEMANAL
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 function renderAvance(){
-  const p=currentProj;
+  const p=curProj;
   document.getElementById('av-ttl').textContent=`Avance Semanal — ${p.nombre||'Proyecto'}`;
-  document.getElementById('av-sub').textContent=`${p.fr||''} · ${currentInformes.length} informe(s)`;
-  document.getElementById('btn-informe').style.display=canEdit()?'flex':'none';
-  const list=document.getElementById('informes-list');
-  if(!currentInformes.length){
-    list.innerHTML=`<div class="empty"><div class="empty-icon">📝</div><div class="empty-ttl">Sin informes de avance</div><div class="empty-sub">Registra el primer informe semanal.</div>${canEdit()?'<button class="btn-primary" onclick="openNewInforme()">+ Registrar Informe</button>':''}</div>`;
+  document.getElementById('av-sub').textContent=`${p.fr||''} · ${curInformes.length} informe(s)`;
+  document.getElementById('btn-inf').style.display=canEdit()?'flex':'none';
+  const list=document.getElementById('inf-list');
+  if(!curInformes.length){
+    list.innerHTML=`<div class="empty"><div class="empty-icon">📝</div><div class="empty-ttl">Sin informes</div><div class="empty-sub">Registra el primer informe semanal.</div>${canEdit()?'<button class="btn-primary" onclick="openNewInforme()">+ Registrar Informe</button>':''}</div>`;
     return;
   }
-  list.innerHTML=[...currentInformes].sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')).map(inf=>{
+  list.innerHTML=[...curInformes].sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')).map(inf=>{
     const pct=inf.pct||0,pc=pct>=80?'green':pct>=50?'yellow':'red';
     const wn=inf.fecha?getWeekNum(new Date(inf.fecha)):'?';
-    return `<div class="inf-card">
+    return`<div class="inf-card">
       <div class="inf-hdr" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">
         <span class="inf-week">S${wn}</span>
         <div><div style="font-size:12px;font-weight:600;">${inf.responsable||'—'}</div><div style="font-size:10px;color:var(--text3);">${inf.estado||''} · ${fd(inf.fecha)}</div></div>
@@ -1294,10 +1348,10 @@ function renderAvance(){
       <div class="inf-body">
         <div class="inf-grid">
           <div class="inf-field"><div class="inf-flbl">Responsable</div><div class="inf-fval">${inf.responsable||'—'}</div></div>
-          <div class="inf-field"><div class="inf-flbl">Fecha Informe</div><div class="inf-fval" style="font-family:var(--mono)">${fd(inf.fecha)}</div></div>
+          <div class="inf-field"><div class="inf-flbl">Fecha</div><div class="inf-fval" style="font-family:var(--mono)">${fd(inf.fecha)}</div></div>
           <div class="inf-field"><div class="inf-flbl">% Avance</div><div class="inf-fval">${pbar(pct,pc)}</div></div>
         </div>
-        <div class="inf-field"><div class="inf-flbl">📋 Detalle del Avance</div><div class="inf-fval">${inf.detalle||'—'}</div></div>
+        <div class="inf-field"><div class="inf-flbl">📋 Detalle</div><div class="inf-fval">${inf.detalle||'—'}</div></div>
         ${inf.proximos?`<div class="inf-field"><div class="inf-flbl">➡️ Próximos Pasos</div><div class="inf-fval">${inf.proximos}</div></div>`:''}
         ${inf.obstaculos?`<div class="inf-field"><div class="inf-flbl">⚠️ Obstáculos</div><div class="inf-fval">${inf.obstaculos}</div></div>`:''}
       </div>
@@ -1306,157 +1360,118 @@ function renderAvance(){
 }
 function openNewInforme(){
   if(!canEdit()){toast('Sin permisos','⚠️');return;}
-  document.getElementById('minf-sub').textContent=currentProj.nombre||'';
-  document.getElementById('if-resp').value=currentProj.jp||'';
+  document.getElementById('minf-sub').textContent=curProj.nombre||'';
+  document.getElementById('if-resp').value=curProj.jp||'';
   document.getElementById('if-fecha').value=new Date().toISOString().split('T')[0];
-  document.getElementById('if-pct').value=currentProj.real||'';
-  document.getElementById('if-detalle').value='';
+  document.getElementById('if-pct').value=curProj.real||'';
+  document.getElementById('if-det').value='';
   document.getElementById('if-prox').value='';
   document.getElementById('if-obs').value='';
-  openModal('modal-inf');
+  openM('m-inf');
 }
 async function saveInforme(){
   const pct=parseInt(document.getElementById('if-pct').value)||0;
   const inf={
-    proyecto_id:currentProj.id,
-    responsable:document.getElementById('if-resp').value||null,
-    fecha:document.getElementById('if-fecha').value||null,
-    pct,
+    proyecto_id:curProj.id,responsable:document.getElementById('if-resp').value||null,
+    fecha:document.getElementById('if-fecha').value||null,pct,
     estado:document.getElementById('if-estado').value,
-    detalle:document.getElementById('if-detalle').value||null,
+    detalle:document.getElementById('if-det').value||null,
     proximos:document.getElementById('if-prox').value||null,
     obstaculos:document.getElementById('if-obs').value||null
   };
   try{
     const saved=await apiSaveInforme(inf);
-    if(!DEMO_MODE&&saved) currentInformes.unshift(saved);
-    // Update real % on project
-    currentProj.real=pct;
-    const pi=projects.findIndex(x=>x.id===currentProj.id);
-    if(pi>=0) projects[pi].real=pct;
-    if(!DEMO_MODE){ try{ await sbFetch('proyectos','PATCH',{real:pct},`?id=eq.${currentProj.id}`); }catch(e){} }
-    closeModal('modal-inf');
-    renderAvance();
-    renderStats();
+    if(!DEMO&&saved)curInformes.unshift(saved);
+    curProj.real=pct;
+    const pi=projects.findIndex(x=>x.id===curProj.id);
+    if(pi>=0)projects[pi].real=pct;
+    if(!DEMO)try{await sbFetch('proyectos','PATCH',{real:pct},`?id=eq.${curProj.id}`);}catch(_){}
+    closeM('m-inf');renderAvance();renderStats();
     toast('Informe guardado','✓');
-  }catch(e){ toast('Error: '+e.message,'❌'); }
+  }catch(e){toast('Error: '+e.message,'❌');}
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  INFORMACIÓN
-// ═══════════════════════════════════════════════
-let infoData={riesgos:[],docs:[],comentarios:[]};
+// ═══════════════════════════════════════
+let infoD={riesgos:[],docs:[],comentarios:[]};
 async function loadInfoData(){
-  if(DEMO_MODE){
-    const demoR={1:[{nivel:'Alta',descripcion:'Dependencia de proveedor externo.',responsable:'Ana González'},{nivel:'Media',descripcion:'Resistencia al cambio por usuarios.',responsable:'Diego Muñoz'}],2:[{nivel:'Baja',descripcion:'Posibles cambios de alcance.',responsable:'Carlos Rojas'}],3:[{nivel:'Alta',descripcion:'Riesgo de indisponibilidad durante migración.',responsable:'Marcela Torres'}]};
-    const demoD={1:[{nombre:'TDR_ERP_v2.pdf',tipo:'📄',tamano:'2.3 MB'},{nombre:'Plan_Proyecto_v4.xlsx',tipo:'📊',tamano:'890 KB'}],2:[{nombre:'Backlog_Sprint.xlsx',tipo:'📊',tamano:'1.1 MB'}],3:[{nombre:'Arquitectura_Cloud.pdf',tipo:'📄',tamano:'5.2 MB'}]};
-    infoData={riesgos:demoR[currentProj.id]||[],docs:demoD[currentProj.id]||[],comentarios:[]};
-    return;
+  if(DEMO){
+    const dr={1:[{nivel:'Alta',descripcion:'Dependencia proveedor externo.',responsable:'Ana González'},{nivel:'Media',descripcion:'Resistencia al cambio.',responsable:'Diego Muñoz'}],2:[{nivel:'Baja',descripcion:'Posibles cambios de alcance.',responsable:'Carlos Rojas'}],3:[{nivel:'Alta',descripcion:'Riesgo indisponibilidad migración.',responsable:'Marcela Torres'}]};
+    const dd={1:[{nombre:'TDR_ERP_v2.pdf',tipo:'📄',tamano:'2.3 MB'},{nombre:'Plan_Proyecto.xlsx',tipo:'📊',tamano:'890 KB'}],2:[{nombre:'Backlog_Sprint.xlsx',tipo:'📊',tamano:'1.1 MB'}],3:[{nombre:'Arquitectura_Cloud.pdf',tipo:'📄',tamano:'5.2 MB'}]};
+    infoD={riesgos:dr[curProj.id]||[],docs:dd[curProj.id]||[],comentarios:[]};return;
   }
   try{
-    const [r,d,c]=await Promise.all([
-      sbFetch('riesgos','GET',null,`?proyecto_id=eq.${currentProj.id}&select=*`),
-      sbFetch('documentos','GET',null,`?proyecto_id=eq.${currentProj.id}&select=*`),
-      sbFetch('comentarios','GET',null,`?proyecto_id=eq.${currentProj.id}&select=*&order=created_at.desc`)
+    const[r,d,c]=await Promise.all([
+      sbFetch('riesgos','GET',null,`?proyecto_id=eq.${curProj.id}&select=*`),
+      sbFetch('documentos','GET',null,`?proyecto_id=eq.${curProj.id}&select=*`),
+      sbFetch('comentarios','GET',null,`?proyecto_id=eq.${curProj.id}&select=*&order=created_at.desc`)
     ]);
-    infoData={riesgos:r||[],docs:d||[],comentarios:c||[]};
-  }catch(e){ infoData={riesgos:[],docs:[],comentarios:[]}; }
+    infoD={riesgos:r||[],docs:d||[],comentarios:c||[]};
+  }catch(e){infoD={riesgos:[],docs:[],comentarios:[]};}
 }
 function renderInfo(){
-  const {riesgos,docs,comentarios}=infoData;
+  const{riesgos,docs,comentarios}=infoD;
   document.getElementById('info-content').innerHTML=`
     <div class="info-panel">
       <div class="ip-ttl">⚠️ Riesgos ${canEdit()?`<button class="btn-add" style="margin-left:auto;padding:3px 8px;font-size:10px;" onclick="addRiesgo()">+ Agregar</button>`:''}</div>
-      ${!riesgos.length?'<div style="color:var(--text3);font-size:12px;">Sin riesgos registrados.</div>':riesgos.map((r,i)=>`<div class="risk-item"><span class="badge b-${(r.nivel||'').toLowerCase()}" style="flex-shrink:0;">${r.nivel||'—'}</span><div><div class="risk-desc">${r.descripcion||r.desc||'—'}</div><div class="risk-owner">Responsable: ${r.responsable||'—'}</div></div>${canEdit()?`<button class="act-btn" onclick="removeRiesgo(${i})" style="margin-left:auto;flex-shrink:0;">✕</button>`:''}</div>`).join('')}
+      ${!riesgos.length?'<div style="color:var(--text3);font-size:12px;">Sin riesgos.</div>':riesgos.map((r,i)=>`<div class="risk-item"><span class="badge b-${(r.nivel||'').toLowerCase()}" style="flex-shrink:0;">${r.nivel||'—'}</span><div style="flex:1;"><div style="font-size:12px;color:var(--text2);line-height:1.5;">${r.descripcion||r.desc||'—'}</div><div style="font-size:10px;color:var(--text3);">Resp: ${r.responsable||'—'}</div></div>${canEdit()?`<button class="act-btn danger" onclick="removeRiesgo(${i})" style="flex-shrink:0;">✕</button>`:''}</div>`).join('')}
     </div>
     <div class="info-panel">
       <div class="ip-ttl">📎 Documentos ${canEdit()?`<button class="btn-add" style="margin-left:auto;padding:3px 8px;font-size:10px;" onclick="addDoc()">+ Agregar</button>`:''}</div>
-      ${!docs.length?'<div style="color:var(--text3);font-size:12px;">Sin documentos.</div>':docs.map((d,i)=>`<div class="doc-item"><span style="font-size:16px;">${d.tipo||'📄'}</span><div><div class="doc-name">${d.nombre||'—'}</div><div style="font-size:10px;color:var(--text3);">${d.tamano||''}</div></div>${canEdit()?`<button class="act-btn" onclick="removeDoc(${i})" style="margin-left:auto;">✕</button>`:''}</div>`).join('')}
+      ${!docs.length?'<div style="color:var(--text3);font-size:12px;">Sin documentos.</div>':docs.map((d,i)=>`<div class="doc-item"><span style="font-size:15px;">${d.tipo||'📄'}</span><div><div style="font-size:12px;font-weight:500;">${d.nombre||'—'}</div><div style="font-size:10px;color:var(--text3);">${d.tamano||''}</div></div>${canEdit()?`<button class="act-btn danger" onclick="removeDoc(${i})" style="margin-left:auto;">✕</button>`:''}</div>`).join('')}
     </div>
     <div class="info-panel" style="grid-column:1/-1;">
-      <div class="ip-ttl">💬 Comentarios y Notas</div>
-      ${!comentarios.length?'<div style="color:var(--text3);font-size:12px;margin-bottom:12px;">Sin comentarios.</div>':comentarios.map(c=>`<div class="comment-item"><div class="cm-meta"><span class="cm-author">${c.autor||'—'}</span><span class="cm-date">${fd(c.created_at?.split('T')[0])}</span></div><div class="cm-text">${c.texto||'—'}</div></div>`).join('')}
-      ${canEdit()?`<div style="margin-top:12px;"><textarea class="ftextarea" id="cm-inp" placeholder="Escribe un comentario..." style="min-height:55px;"></textarea><button class="btn-sec" style="margin-top:6px;" onclick="addComment()">💬 Comentar</button></div>`:''}
+      <div class="ip-ttl">💬 Comentarios</div>
+      ${!comentarios.length?'<div style="color:var(--text3);font-size:12px;margin-bottom:10px;">Sin comentarios.</div>':comentarios.map(c=>`<div class="comment-item"><div class="cm-meta"><span class="cm-author">${c.autor||'—'}</span><span class="cm-date">${fd((c.created_at||'').split('T')[0])}</span></div><div style="font-size:12px;color:var(--text2);line-height:1.5;">${c.texto||'—'}</div></div>`).join('')}
+      ${canEdit()?`<div style="margin-top:10px;"><textarea class="ftextarea" id="cm-inp" placeholder="Escribe un comentario..." style="min-height:52px;"></textarea><button class="btn-xs primary" style="margin-top:6px;" onclick="addComment()">💬 Comentar</button></div>`:''}
     </div>
   `;
 }
-async function addRiesgo(){
-  const nivel=prompt('Nivel del riesgo (Alta / Media / Baja):')||'Media';
-  const desc=prompt('Descripción del riesgo:'); if(!desc)return;
-  const owner=prompt('Responsable:')||'';
-  const r={nivel,descripcion:desc,responsable:owner,proyecto_id:currentProj.id};
-  if(!DEMO_MODE){ try{ const s=await sbFetch('riesgos','POST',r); infoData.riesgos.push(Array.isArray(s)?s[0]:s); }catch(e){ toast('Error: '+e.message,'❌');return; } }
-  else infoData.riesgos.push(r);
-  renderInfo(); toast('Riesgo agregado','⚠️');
-}
-async function removeRiesgo(i){
-  const r=infoData.riesgos[i];
-  if(r.id&&!DEMO_MODE){ try{ await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`); }catch(e){ toast('Error','❌');return; } }
-  infoData.riesgos.splice(i,1); renderInfo(); toast('Eliminado','🗑');
-}
-async function addDoc(){
-  const nombre=prompt('Nombre del documento:'); if(!nombre)return;
-  const size=prompt('Tamaño (ej: 1.2 MB):')||'';
-  const tipo=nombre.endsWith('.pdf')?'📄':nombre.endsWith('.xlsx')||nombre.endsWith('.xls')?'📊':'📝';
-  const d={nombre,tipo,tamano:size,proyecto_id:currentProj.id};
-  if(!DEMO_MODE){ try{ const s=await sbFetch('documentos','POST',d); infoData.docs.push(Array.isArray(s)?s[0]:s); }catch(e){ toast('Error','❌');return; } }
-  else infoData.docs.push(d);
-  renderInfo(); toast('Documento agregado','📎');
-}
-async function removeDoc(i){
-  const d=infoData.docs[i];
-  if(d.id&&!DEMO_MODE){ try{ await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`); }catch(e){ toast('Error','❌');return; } }
-  infoData.docs.splice(i,1); renderInfo(); toast('Eliminado','🗑');
-}
-async function addComment(){
-  const txt=document.getElementById('cm-inp')?.value.trim(); if(!txt)return;
-  const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:currentProj.id};
-  if(!DEMO_MODE){ try{ const s=await sbFetch('comentarios','POST',c); infoData.comentarios.unshift(Array.isArray(s)?s[0]:s); }catch(e){ toast('Error','❌');return; } }
-  else{ c.created_at=new Date().toISOString(); infoData.comentarios.unshift(c); }
-  renderInfo(); toast('Comentario agregado','💬');
-}
+async function addRiesgo(){const niv=prompt('Nivel (Alta/Media/Baja):')||'Media';const desc=prompt('Descripción:');if(!desc)return;const own=prompt('Responsable:')||'';const r={nivel:niv,descripcion:desc,responsable:own,proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('riesgos','POST',r);infoD.riesgos.push(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else infoD.riesgos.push(r);renderInfo();toast('Riesgo agregado','⚠️');}
+async function removeRiesgo(i){const r=infoD.riesgos[i];if(r.id&&!DEMO)try{await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`);}catch(e){toast('Error','❌');return;}infoD.riesgos.splice(i,1);renderInfo();toast('Eliminado','🗑');}
+async function addDoc(){const n=prompt('Nombre del documento:');if(!n)return;const s=prompt('Tamaño (ej: 1.2 MB):')||'';const t=n.endsWith('.pdf')?'📄':n.endsWith('.xlsx')||n.endsWith('.xls')?'📊':'📝';const d={nombre:n,tipo:t,tamano:s,proyecto_id:curProj.id};if(!DEMO){try{const sv=await sbFetch('documentos','POST',d);infoD.docs.push(Array.isArray(sv)?sv[0]:sv);}catch(e){toast('Error','❌');return;}}else infoD.docs.push(d);renderInfo();toast('Documento agregado','📎');}
+async function removeDoc(i){const d=infoD.docs[i];if(d.id&&!DEMO)try{await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`);}catch(e){toast('Error','❌');return;}infoD.docs.splice(i,1);renderInfo();toast('Eliminado','🗑');}
+async function addComment(){const txt=document.getElementById('cm-inp')?.value.trim();if(!txt)return;const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('comentarios','POST',c);infoD.comentarios.unshift(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else{c.created_at=new Date().toISOString();infoD.comentarios.unshift(c);}renderInfo();toast('Comentario agregado','💬');}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  REPORTERÍA
-// ═══════════════════════════════════════════════
-function renderReporte(){
+// ═══════════════════════════════════════
+function renderReport(){
   document.getElementById('rpt-date').textContent=new Date().toLocaleDateString('es-CL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   const t=projects.length;
-  if(!t){ document.getElementById('rpt-content').innerHTML=`<div class="empty"><div class="empty-icon">📈</div><div class="empty-ttl">Sin datos</div></div>`; return; }
+  if(!t){document.getElementById('rpt-content').innerHTML=`<div class="empty"><div class="empty-icon">📈</div><div class="empty-ttl">Sin datos</div></div>`;return;}
   const avg=Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t);
   const ep=projects.filter(p=>calcDev(p)>=0).length;
   const at=projects.filter(p=>calcDev(p)<0).length;
-  const totalP=projects.reduce((s,p)=>s+(p.presupuesto||0),0);
-  const byC={Alta:0,Media:0,Baja:0};
-  const byF={Completo:0,Básico:0,Ágil:0};
-  projects.forEach(p=>{ if(p.complejidad)byC[p.complejidad]=(byC[p.complejidad]||0)+1; if(p.flujo)byF[p.flujo]=(byF[p.flujo]||0)+1; });
+  const tp=projects.reduce((s,p)=>s+(p.presupuesto||0),0);
+  const byC={Alta:0,Media:0,Baja:0};const byF={Completo:0,Básico:0,Ágil:0};
+  projects.forEach(p=>{if(p.complejidad)byC[p.complejidad]=(byC[p.complejidad]||0)+1;if(p.flujo)byF[p.flujo]=(byF[p.flujo]||0)+1;});
   document.getElementById('rpt-content').innerHTML=`
     <div class="rpt-kpis">
-      <div class="kpi"><div class="kpi-lbl">Total Proyectos</div><div class="kpi-val" style="color:var(--accent2)">${t}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Avance Promedio</div><div class="kpi-val" style="color:var(--green)">${avg}%</div></div>
+      <div class="kpi"><div class="kpi-lbl">Total</div><div class="kpi-val" style="color:var(--accent2)">${t}</div></div>
+      <div class="kpi"><div class="kpi-lbl">Avance Prom.</div><div class="kpi-val" style="color:var(--green)">${avg}%</div></div>
       <div class="kpi"><div class="kpi-lbl">En Plazo</div><div class="kpi-val" style="color:var(--green)">${ep}</div></div>
       <div class="kpi"><div class="kpi-lbl">Con Atraso</div><div class="kpi-val" style="color:var(--red)">${at}</div></div>
-      <div class="kpi"><div class="kpi-lbl">Presupuesto Total</div><div class="kpi-val" style="font-size:14px;margin-top:8px;">${fmoney(totalP)}</div></div>
+      <div class="kpi"><div class="kpi-lbl">Presupuesto Total</div><div class="kpi-val" style="font-size:12px;margin-top:6px;">${fmoney(tp)}</div></div>
     </div>
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:16px;">
-      <div class="rpt-chart"><div class="rpt-chart-ttl">Por Complejidad</div>${Object.entries(byC).map(([k,v])=>`<div class="chart-bar-row"><span class="chart-bar-lbl">${k}</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${t?(v/t*100):0}%;background:${k==='Alta'?'var(--red)':k==='Media'?'var(--yellow)':'var(--green)'}"></div></div><span class="chart-bar-val">${v}</span></div>`).join('')}</div>
-      <div class="rpt-chart"><div class="rpt-chart-ttl">Por Flujo</div>${Object.entries(byF).map(([k,v])=>`<div class="chart-bar-row"><span class="chart-bar-lbl">${k}</span><div class="chart-bar-track"><div class="chart-bar-fill" style="width:${t?(v/t*100):0}%;background:var(--accent)"></div></div><span class="chart-bar-val">${v}</span></div>`).join('')}</div>
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:14px;">
+      <div class="rpt-chart"><div class="rpt-chart-ttl">Por Complejidad</div>${Object.entries(byC).map(([k,v])=>`<div class="cbar-row"><span class="cbar-lbl">${k}</span><div class="cbar-track"><div class="cbar-fill" style="width:${t?(v/t*100):0}%;background:${k==='Alta'?'var(--red)':k==='Media'?'var(--yellow)':'var(--green)'}"></div></div><span class="cbar-val">${v}</span></div>`).join('')}</div>
+      <div class="rpt-chart"><div class="rpt-chart-ttl">Por Flujo</div>${Object.entries(byF).map(([k,v])=>`<div class="cbar-row"><span class="cbar-lbl">${k}</span><div class="cbar-track"><div class="cbar-fill" style="width:${t?(v/t*100):0}%;background:var(--accent)"></div></div><span class="cbar-val">${v}</span></div>`).join('')}</div>
     </div>
     <div style="background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);overflow:hidden;">
-      <div style="padding:12px 16px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;">Estado de Proyectos</div>
+      <div style="padding:10px 14px;border-bottom:1px solid var(--border);font-size:12px;font-weight:700;">Estado Consolidado</div>
       <table style="width:100%;border-collapse:collapse;">
-        <thead><tr>
-          ${['FR','Nombre','JP','Real','Plan.','Desv.','Flujo'].map(h=>`<th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);">${h}</th>`).join('')}
-        </tr></thead>
-        <tbody>${projects.map(p=>{const pl=calcPlan(p),dv=calcDev(p);return`<tr style="border-bottom:1px solid var(--border);">
-          <td style="padding:8px 10px;font-family:var(--mono);font-size:11px;color:var(--accent2);">${p.fr||'—'}</td>
-          <td style="padding:8px 10px;font-size:12px;font-weight:600;">${p.nombre||'—'}</td>
-          <td style="padding:8px 10px;font-size:11px;">${p.jp||'—'}</td>
-          <td style="padding:8px 10px;">${pbar(p.real||0,p.real>=pl?'green':'yellow')}</td>
-          <td style="padding:8px 10px;">${pbar(pl,'blue')}</td>
-          <td style="padding:8px 10px;">${devHtml(dv)}</td>
-          <td style="padding:8px 10px;">${badgeFlujo(p.flujo)}</td>
-        </tr>`}).join('')}</tbody>
+        <thead><tr>${['FR','Nombre','JP','Real','Plan.','Desv.','Flujo'].map(h=>`<th style="padding:7px 10px;text-align:left;font-family:var(--mono);font-size:10px;color:var(--text3);background:var(--surface2);border-bottom:1px solid var(--border);">${h}</th>`).join('')}</tr></thead>
+        <tbody>${projects.map(p=>{const pl=calcPlan(p),dv=calcDev(p);return`<tr style="border-bottom:1px solid var(--border);cursor:pointer;" onclick="openProj(${p.id})">
+          <td style="padding:7px 10px;font-family:var(--mono);font-size:11px;color:var(--accent2);">${p.fr||'—'}</td>
+          <td style="padding:7px 10px;font-size:12px;font-weight:600;">${p.nombre||'—'}</td>
+          <td style="padding:7px 10px;font-size:11px;">${p.jp||'—'}</td>
+          <td style="padding:7px 10px;">${pbar(p.real||0,p.real>=pl?'green':'yellow',36)}</td>
+          <td style="padding:7px 10px;">${pbar(pl,'blue',36)}</td>
+          <td style="padding:7px 10px;">${devH(dv)}</td>
+          <td style="padding:7px 10px;">${bFlujo(p.flujo)}</td>
+        </tr>`;}).join('')}</tbody>
       </table>
     </div>
   `;
@@ -1465,84 +1480,48 @@ function exportCSV(){
   const h=['FR','Nombre','JP','Área','Inicio','Fin','% Real','% Planificado','% Desviación','Complejidad','Flujo','Presupuesto'];
   const rows=projects.map(p=>[p.fr,p.nombre,p.jp,p.area,p.inicio,p.fin,p.real,calcPlan(p),calcDev(p),p.complejidad,p.flujo,p.presupuesto]);
   const csv=[h,...rows].map(r=>r.map(v=>`"${v??''}"`).join(',')).join('\n');
-  const a=document.createElement('a');
-  a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);
-  a.download=`portafolio_${new Date().toISOString().split('T')[0]}.csv`;
-  a.click(); toast('CSV exportado','⬇');
+  const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download=`portafolio_${new Date().toISOString().split('T')[0]}.csv`;a.click();toast('CSV exportado','⬇');
 }
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  SUPABASE CONFIG
-// ═══════════════════════════════════════════════
-function saveCfgTemp(){
+// ═══════════════════════════════════════
+async function connectSB(){
   SB_URL=document.getElementById('cfg-url').value.trim();
   SB_KEY=document.getElementById('cfg-key').value.trim();
-}
-async function connectSupabase(){
-  SB_URL=document.getElementById('cfg-url').value.trim();
-  SB_KEY=document.getElementById('cfg-key').value.trim();
-  if(!SB_URL||!SB_KEY){ document.getElementById('cfg-result').textContent='⚠️ Completa ambos campos.'; return; }
-  document.getElementById('cfg-result').textContent='Probando conexión...';
-  try{
-    const data=await sbFetch('proyectos','GET',null,'?select=id&limit=1');
-    localStorage.setItem('sb_url',SB_URL);
-    localStorage.setItem('sb_key',SB_KEY);
-    DEMO_MODE=false;
-    setDBStatus(true);
-    document.getElementById('cfg-result').textContent='✅ Conexión exitosa!';
-    toast('Conectado a Supabase correctamente','✅');
-    await loadProjects();
-  }catch(e){
-    document.getElementById('cfg-result').textContent='❌ Error: '+e.message.substring(0,80);
-    setDBStatus(false,'error');
-    toast('Error de conexión: '+e.message.substring(0,60),'❌');
-  }
-}
-async function testConnection(){
-  saveCfgTemp();
-  document.getElementById('cfg-result').textContent='Probando...';
+  if(!SB_URL||!SB_KEY){document.getElementById('cfg-res').textContent='⚠️ Completa ambos campos.';return;}
+  document.getElementById('cfg-res').textContent='Probando...';
   try{
     await sbFetch('proyectos','GET',null,'?select=id&limit=1');
-    document.getElementById('cfg-result').textContent='✅ Conexión OK';
-    toast('Conexión exitosa','✅');
-  }catch(e){
-    document.getElementById('cfg-result').textContent='❌ '+e.message.substring(0,80);
-    toast('Error: '+e.message.substring(0,60),'❌');
-  }
+    localStorage.setItem('sb_url',SB_URL);localStorage.setItem('sb_key',SB_KEY);
+    DEMO=false;setDB(true);
+    document.getElementById('cfg-res').textContent='✅ Conectado!';
+    toast('Conectado a Supabase','✅');
+    await loadProjects();
+  }catch(e){document.getElementById('cfg-res').textContent='❌ '+e.message.substring(0,80);setDB(false,true);toast('Error de conexión','❌');}
 }
-function useDemoMode(){
-  DEMO_MODE=true; SB_URL=''; SB_KEY='';
-  localStorage.removeItem('sb_url'); localStorage.removeItem('sb_key');
-  setDBStatus(false,'');
-  document.getElementById('cfg-result').textContent='🎭 Modo Demo activado (datos no se guardan)';
-  toast('Modo Demo activado','🎭');
-  loadProjects();
-  goView('centro');
+async function testSB(){
+  SB_URL=document.getElementById('cfg-url').value.trim();
+  SB_KEY=document.getElementById('cfg-key').value.trim();
+  try{await sbFetch('proyectos','GET',null,'?select=id&limit=1');document.getElementById('cfg-res').textContent='✅ Conexión OK';toast('Conexión exitosa','✅');}
+  catch(e){document.getElementById('cfg-res').textContent='❌ '+e.message.substring(0,80);toast('Error: '+e.message.substring(0,60),'❌');}
 }
+function useDemo(){DEMO=true;SB_URL='';SB_KEY='';localStorage.removeItem('sb_url');localStorage.removeItem('sb_key');setDB(false);document.getElementById('cfg-res').textContent='🎭 Modo Demo activo';toast('Modo Demo activado','🎭');loadProjects();goView('centro');}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  ROL
-// ═══════════════════════════════════════════════
-function cycleRole(){
-  roleIdx=(roleIdx+1)%ROLES.length;
-  document.getElementById('role-lbl').textContent=ROLES[roleIdx];
-  toast(`Rol: ${ROLES[roleIdx]}`,'👤');
-  renderTable();
-}
+// ═══════════════════════════════════════
+function cycleRole(){roleIdx=(roleIdx+1)%ROLES.length;document.getElementById('role-lbl').textContent=ROLES[roleIdx];toast(`Rol: ${ROLES[roleIdx]}`,'👤');renderTable();}
 
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 //  INIT
-// ═══════════════════════════════════════════════
+// ═══════════════════════════════════════
 document.addEventListener('DOMContentLoaded',async()=>{
   if(SB_URL&&SB_KEY){
-    DEMO_MODE=false;
-    document.getElementById('db-label').textContent='Conectando...';
-    try{
-      await sbFetch('proyectos','GET',null,'?select=id&limit=1');
-      setDBStatus(true);
-      DEMO_MODE=false;
-    }catch(e){ DEMO_MODE=true; setDBStatus(false,''); }
-  } else { DEMO_MODE=true; setDBStatus(false,''); }
+    DEMO=false;document.getElementById('db-lbl').textContent='Conectando...';
+    try{await sbFetch('proyectos','GET',null,'?select=id&limit=1');setDB(true);DEMO=false;}
+    catch(e){DEMO=true;setDB(false);}
+  }else{DEMO=true;setDB(false);}
   await loadProjects();
 });
 </script>
