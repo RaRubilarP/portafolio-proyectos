@@ -179,8 +179,9 @@ tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
 
 /* Inline real % editor */
 .pct-inline{display:flex;align-items:center;gap:4px;width:100%}
-.pct-inp{width:36px;background:var(--surface3);border:1px solid var(--border2);border-radius:3px;color:var(--text);font-family:var(--mono);font-size:10px;padding:2px 4px;outline:none;text-align:center}
+.pct-inp{width:42px;background:var(--surface3);border:1px solid var(--border2);border-radius:3px;color:var(--text);font-family:var(--mono);font-size:10px;padding:2px 4px;outline:none;text-align:center;-moz-appearance:textfield}
 .pct-inp:focus{border-color:var(--accent)}
+.pct-inp::-webkit-outer-spin-button,.pct-inp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .pct-save-btn{background:var(--green-dim);border:1px solid rgba(34,197,94,.3);color:var(--green);border-radius:3px;font-size:9px;padding:2px 5px;cursor:pointer;font-family:var(--mono);white-space:nowrap}
 .pct-save-btn:hover{background:rgba(34,197,94,.2)}
 
@@ -303,7 +304,15 @@ tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
 .cbar-fill{height:100%;border-radius:3px;transition:width .5s}
 .cbar-val{font-family:var(--mono);font-size:10px;color:var(--text2);width:30px;flex-shrink:0}
 
-/* ── CONFIRM MODAL ── */
+/* ── CHECKLIST ── */
+.chk-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:14px 20px;border-bottom:1px solid var(--border);flex-shrink:0}
+.chk-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r2);padding:12px 14px;display:flex;align-items:center;justify-content:space-between;gap:10px}
+.chk-label{font-size:12px;color:var(--text2);font-weight:500}
+.chk-btns{display:flex;gap:4px;flex-shrink:0}
+.chk-btn{font-family:var(--mono);font-size:10px;font-weight:700;padding:3px 10px;border-radius:20px;border:1px solid var(--border2);background:none;color:var(--text3);cursor:pointer;transition:all .15s}
+.chk-btn:hover{border-color:var(--accent2);color:var(--accent2)}
+.chk-btn.yes.active{background:var(--green-dim);color:var(--green);border-color:rgba(34,197,94,.4)}
+.chk-btn.no.active{background:var(--red-dim);color:var(--red);border-color:rgba(239,68,68,.4)}
 .confirm-body{padding:20px;text-align:center}
 .confirm-icon{font-size:40px;margin-bottom:10px}
 .confirm-msg{font-size:14px;color:var(--text2);line-height:1.6;margin-bottom:6px}
@@ -456,7 +465,7 @@ tbody td{padding:10px 10px;font-size:12px;color:var(--text2);white-space:nowrap}
     </div>
     <div class="cfg-panel" style="border-color:var(--border2);margin-top:0;">
       <div class="cfg-ttl" style="color:var(--accent2)">📋 Script SQL — ejecutar en Supabase → SQL Editor</div>
-      <pre style="background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:12px;font-family:var(--mono);font-size:10px;color:var(--text2);overflow-x:auto;line-height:1.7;white-space:pre-wrap;">CREATE TABLE IF NOT EXISTS proyectos (id BIGSERIAL PRIMARY KEY,fr TEXT,nombre TEXT,inicio DATE,fin DATE,real INTEGER DEFAULT 0,complejidad TEXT DEFAULT 'Media',flujo TEXT DEFAULT 'Completo',jp TEXT,area TEXT,descripcion TEXT,presupuesto BIGINT DEFAULT 0,created_at TIMESTAMPTZ DEFAULT NOW(),updated_at TIMESTAMPTZ DEFAULT NOW());
+      <pre style="background:var(--bg);border:1px solid var(--border);border-radius:var(--r);padding:12px;font-family:var(--mono);font-size:10px;color:var(--text2);overflow-x:auto;line-height:1.7;white-space:pre-wrap;">CREATE TABLE IF NOT EXISTS proyectos (id BIGSERIAL PRIMARY KEY,fr TEXT,nombre TEXT,inicio DATE,fin DATE,real INTEGER DEFAULT 0,complejidad TEXT DEFAULT 'Media',flujo TEXT DEFAULT 'Completo',jp TEXT,area TEXT,descripcion TEXT,presupuesto BIGINT DEFAULT 0,tiene_ia BOOLEAN,es_estrategico BOOLEAN,consume_nube BOOLEAN,es_pci BOOLEAN,created_at TIMESTAMPTZ DEFAULT NOW(),updated_at TIMESTAMPTZ DEFAULT NOW());
 CREATE TABLE IF NOT EXISTS tareas (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,nombre TEXT,inicio DATE,fin DATE,pct INTEGER DEFAULT 0,responsable TEXT,is_group BOOLEAN DEFAULT FALSE,nivel INTEGER DEFAULT 1,parent_id BIGINT REFERENCES tareas(id) ON DELETE SET NULL,orden INTEGER DEFAULT 0,created_at TIMESTAMPTZ DEFAULT NOW());
 CREATE TABLE IF NOT EXISTS informes (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,responsable TEXT,fecha DATE,pct INTEGER DEFAULT 0,estado TEXT,detalle TEXT,proximos TEXT,obstaculos TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
 CREATE TABLE IF NOT EXISTS riesgos (id BIGSERIAL PRIMARY KEY,proyecto_id BIGINT REFERENCES proyectos(id) ON DELETE CASCADE,nivel TEXT,descripcion TEXT,responsable TEXT,created_at TIMESTAMPTZ DEFAULT NOW());
@@ -922,9 +931,46 @@ async function confirmDelete(){
 // ═══════════════════════════════════════
 //  DETALLE
 // ═══════════════════════════════════════
+
+// Checklist questions stored per project in memory (+ Supabase via proyecto fields)
+const CHK_KEYS=['tiene_ia','es_estrategico','consume_nube','es_pci'];
+const CHK_LABELS=['¿El proyecto tiene IA?','¿El proyecto es estratégico?','¿El proyecto consume Nube?','¿El proyecto es PCI?'];
+const CHK_ICONS=['🤖','⭐','☁️','🔒'];
+
+function getChkVal(key){return curProj[key]===true||curProj[key]==='true'||curProj[key]==='si'?'si':curProj[key]===false||curProj[key]==='false'||curProj[key]==='no'?'no':null;}
+
+async function toggleChk(key,val){
+  if(!canEdit()){toast('Sin permisos','⚠️');return;}
+  // Toggle: if already this value, clear it; otherwise set it
+  const cur=getChkVal(key);
+  const newVal=cur===val?null:val;
+  curProj[key]=newVal;
+  const pi=projects.findIndex(x=>x.id===curProj.id);
+  if(pi>=0)projects[pi][key]=newVal;
+  if(!DEMO){
+    try{await sbFetch('proyectos','PATCH',{[key]:newVal==='si'?true:newVal==='no'?false:null},`?id=eq.${curProj.id}`);}
+    catch(e){toast('Error guardando: '+e.message,'❌');}
+  }
+  renderDetalle();
+}
+
 function renderDetalle(){
   const p=curProj;
-  const pl=calcPlan(p),dv=calcDev(p),dc=dv>=0?'var(--green)':'var(--red)';
+  const realFromGantt=calcRealFromTasks();
+  const realDisplay=realFromGantt!==null?realFromGantt:(p.real||0);
+  const pl=calcPlan(p),dv=realDisplay-pl,dc=dv>=0?'var(--green)':'var(--red)';
+
+  const chkHtml=CHK_KEYS.map((key,i)=>{
+    const val=getChkVal(key);
+    return`<div class="chk-item">
+      <span class="chk-label">${CHK_ICONS[i]} ${CHK_LABELS[i]}</span>
+      <div class="chk-btns">
+        <button class="chk-btn yes ${val==='si'?'active':''}" onclick="toggleChk('${key}','si')">Sí</button>
+        <button class="chk-btn no ${val==='no'?'active':''}" onclick="toggleChk('${key}','no')">No</button>
+      </div>
+    </div>`;
+  }).join('');
+
   document.getElementById('det-content').innerHTML=`
     <div class="det-hero">
       <div style="flex:1;min-width:220px;">
@@ -939,13 +985,15 @@ function renderDetalle(){
       </div>
     </div>
     <div class="det-kpis">
-      <div class="kpi"><div class="kpi-lbl">% Avance Real</div><div class="kpi-val" style="color:${p.real>=pl?'var(--green)':'var(--yellow)'}">${p.real||0}%</div>${pbar(p.real||0,p.real>=pl?'green':'yellow')}</div>
+      <div class="kpi"><div class="kpi-lbl">% Avance Real</div><div class="kpi-val" style="color:${realDisplay>=pl?'var(--green)':'var(--yellow)'}">${realDisplay}%</div>${pbar(realDisplay,realDisplay>=pl?'green':'yellow')}${realFromGantt!==null?'<div style="font-size:9px;color:var(--text3);margin-top:2px;font-family:var(--mono);">↑ desde Gantt</div>':''}</div>
       <div class="kpi"><div class="kpi-lbl">% Planificado</div><div class="kpi-val" style="color:var(--accent2)">${pl}%</div>${pbar(pl,'blue')}</div>
       <div class="kpi"><div class="kpi-lbl">% Desviación</div><div class="kpi-val" style="color:${dc}">${dv>=0?'+':''}${dv}%</div><div style="font-size:10px;color:var(--text3);margin-top:3px;">${dv>=0?'Adelantado':'Con atraso'}</div></div>
       <div class="kpi"><div class="kpi-lbl">Fecha Inicio</div><div class="kpi-val" style="font-size:15px;margin-top:6px;">${fd(p.inicio)}</div></div>
       <div class="kpi"><div class="kpi-lbl">Fecha Fin</div><div class="kpi-val" style="font-size:15px;margin-top:6px;">${fd(p.fin)}</div></div>
       <div class="kpi"><div class="kpi-lbl">Presupuesto</div><div class="kpi-val" style="font-size:12px;margin-top:6px;">${fmoney(p.presupuesto)}</div></div>
     </div>
+    <div style="padding:10px 20px 6px;border-bottom:1px solid var(--border);font-size:11px;font-weight:700;color:var(--text2);letter-spacing:.03em;">🔍 Atributos del Proyecto</div>
+    <div class="chk-grid">${chkHtml}</div>
     <div class="det-grid">
       <div class="det-sec"><div class="sec-ttl">📋 Información General</div>
         <div class="frow"><div class="flbl">Código FR</div><div class="fval" style="font-family:var(--mono);color:var(--accent2)">${p.fr||'—'}</div></div>
@@ -968,6 +1016,42 @@ function renderDetalle(){
 // ═══════════════════════════════════════
 //  GANTT v4
 // ═══════════════════════════════════════
+
+// ── Calculates real% of a task recursively across ALL levels ──
+function calcTaskPct(taskId){
+  const t=curTasks.find(x=>x.id===taskId);
+  if(!t)return 0;
+  if(!t.is_group)return t.pct||0;
+  // find all direct children
+  const children=curTasks.filter(x=>(x.parent_id||null)===(t.id||null));
+  if(!children.length)return t.pct||0;
+  // recurse
+  const avg=children.reduce((s,c)=>s+calcTaskPct(c.id),0)/children.length;
+  return Math.round(avg);
+}
+
+// ── Calculates project-level real from root-level tasks ──
+function calcRealFromTasks(){
+  if(!curTasks||!curTasks.length)return null;
+  const roots=curTasks.filter(t=>(t.parent_id||null)===null);
+  if(!roots.length)return null;
+  const avg=roots.reduce((s,t)=>s+calcTaskPct(t.id),0)/roots.length;
+  return Math.round(avg);
+}
+
+// ── Propagate real% up to project and refresh table/stats ──
+async function propagateRealToProject(){
+  const newReal=calcRealFromTasks();
+  if(newReal===null)return;
+  curProj.real=newReal;
+  const pi=projects.findIndex(x=>x.id===curProj.id);
+  if(pi>=0)projects[pi].real=newReal;
+  if(!DEMO){
+    try{await sbFetch('proyectos','PATCH',{real:newReal},`?id=eq.${curProj.id}`);}catch(_){}
+  }
+  renderStats();
+  renderSidebar();
+}
 function getVisibleCols(){
   const cols=[];
   if(visibleCols.inicio)cols.push({key:'inicio',label:'INICIO',w:COL_W.inicio});
@@ -1071,12 +1155,8 @@ function buildGanttContent(){
 
   function dx(d){if(!d)return 0;const diff=(new Date(d)-minD)/(1000*60*60*24);return(diff/7)*WEEK_W;}
 
-  // Group stats
-  function gPct(t){
-    if(!t.is_group)return t.pct||0;
-    const ch=curTasks.filter(x=>(x.parent_id||null)===(t.id||null)&&!x.is_group);
-    return ch.length?Math.round(ch.reduce((s,x)=>s+(x.pct||0),0)/ch.length):t.pct||0;
-  }
+  // Group stats — uses recursive calcTaskPct defined above
+  function gPct(t){return calcTaskPct(t.id);}
   function gDates(t){
     if(!t.is_group)return{i:t.inicio,f:t.fin};
     const ch=curTasks.filter(x=>(x.parent_id||null)===(t.id||null));
@@ -1092,12 +1172,13 @@ function buildGanttContent(){
     return Math.round(((h-i)/(f-i))*100);
   }
 
-  // Build visible rows
+  // Build visible rows — supports infinite nesting levels
   function buildRows(parentId,depth){
     const rows=[];
     curTasks.filter(t=>(t.parent_id||null)===(parentId||null))
       .sort((a,b)=>(a.orden||0)-(b.orden||0))
       .forEach(t=>{
+        // Determine visual level class: depth 0 = lvl-group, deeper = lvl-task (with more indent)
         rows.push({t,depth});
         if(t.is_group&&!collapsed.has(t.id))rows.push(...buildRows(t.id,depth+1));
       });
@@ -1118,7 +1199,9 @@ function buildGanttContent(){
 
   // ── PROJECT ROW ──
   const pGd={i:p.inicio,f:p.fin};
-  const pPct=p.real||0,pPl=calcPlan(p),pDv=calcDev(p);
+  const pPctRaw=calcRealFromTasks();
+  const pPct=pPctRaw!==null?pPctRaw:(p.real||0);
+  const pPl=calcPlan(p),pDv=pPct-pPl;
   const pX=dx(p.inicio),pW=Math.max(6,dx(p.fin)-dx(p.inicio));
   const progCls=pPct>=pPl?'prog-green':pPct>=pPl-15?'prog-yellow':'prog-red';
 
@@ -1155,19 +1238,22 @@ function buildGanttContent(){
   rows.forEach(({t,depth})=>{
     const gd=gDates(t),pctR=gPct(t),pctP=tPlan(gd),dv=pctR-pctP;
     const tX=dx(gd.i),tW=Math.max(4,dx(gd.f)-tX);
-    const lvl=t.is_group?'lvl-group':'lvl-task';
+    // Level styling: depth0+group=lvl-group, depth0+task=lvl-task, depth1+=lvl-task with more indent
+    const lvl=t.is_group&&depth===0?'lvl-group':'lvl-task';
     const barCls=t.is_group?'bar-group':'bar-task';
     const pc=pctR>=pctP?'prog-green':pctR>=pctP-15?'prog-yellow':'prog-red';
-    const indent=depth*14+8;
+    const indent=depth*18+8;
     const toggle=t.is_group
       ?`<span class="gtoggle ${collapsed.has(t.id)?'':'open'}" onclick="toggleG(${t.id})">▶</span>`
       :`<span class="g-spacer"></span>`;
 
-    // Inline real% input (editable)
-    const realCell=`<div class="pct-inline">
-      <input class="pct-inp" id="pct-${t.id}" value="${pctR}" type="number" min="0" max="100" onkeydown="if(event.key==='Enter')savePct(${t.id})">
-      <button class="pct-save-btn" onclick="savePct(${t.id})">✓</button>
-    </div>`;
+    // Inline real% input — only for leaf tasks; groups are read-only computed
+    const realCell=t.is_group
+      ?pbar(pctR,pctR>=pctP?'green':'yellow',38)
+      :`<div class="pct-inline">
+          <input class="pct-inp" id="pct-${t.id}" value="${t.pct||0}" type="number" min="0" max="100" onkeydown="if(event.key==='Enter')savePct(${t.id})">
+          <button class="pct-save-btn" onclick="savePct(${t.id})">✓</button>
+        </div>`;
 
     function cellVal(key){
       if(key==='inicio')return`<span style="font-family:var(--mono);font-size:9px;">${fd(gd.i)}</span>`;
@@ -1266,9 +1352,12 @@ async function savePct(taskId){
   const val=Math.min(100,Math.max(0,parseInt(inp.value)||0));
   const t=curTasks.find(x=>x.id===taskId);
   if(!t)return;
+  // Only leaf tasks (non-group) can be edited directly; group % is computed
+  if(t.is_group){toast('Las tareas resumen se calculan automáticamente','ℹ️');return;}
   t.pct=val;
   try{
     await apiSaveTask(t);
+    await propagateRealToProject();
     buildGanttContent();
     toast(`Avance actualizado: ${val}%`,'✓');
   }catch(e){toast('Error: '+e.message,'❌');}
@@ -1295,6 +1384,7 @@ async function saveTaskEdit(){
   t.responsable=document.getElementById('te-resp').value||null;
   try{
     await apiSaveTask(t);
+    await propagateRealToProject();
     closeM('m-task-edit');
     renderGantt();
     toast('Tarea actualizada','✓');
