@@ -553,10 +553,21 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
 
 // ── 1. CÁLCULO (definidas PRIMERO, sin depender de nada) ──
 
-/** Convierte cualquier valor a número, null si es null/undefined */
-const N = x => (x == null ? null : Number(x));
+/** Convierte cualquier valor a número, null si es null/undefined/NaN */
+const N = x => {
+  if (x === null || x === undefined || x === '') return null;
+  const n = Number(x);
+  return isNaN(n) ? null : n;
+};
 
-/** % planificado dado un rango de fechas {i,f} ambos como strings 'YYYY-MM-DD' */
+/** Normaliza parent_id: null/undefined/''/NaN → null, else Number */
+const NP = x => {
+  if (x === null || x === undefined || x === '') return null;
+  const n = Number(x);
+  return isNaN(n) ? null : n;
+};
+
+/** % planificado dado un rango de fechas ini/fin como strings 'YYYY-MM-DD' */
 function pctPlan(ini, fin) {
   if (!ini || !fin) return 0;
   const now = Date.now();
@@ -568,24 +579,25 @@ function pctPlan(ini, fin) {
   return Math.round(((now - i) / (f - i)) * 100);
 }
 
-/** % real de una tarea: si tiene hijos → promedio recursivo de hijos */
+/** % real de una tarea: si tiene hijos → promedio recursivo */
 function tPctReal(taskId, allTasks) {
-  const id = N(taskId);
-  const t = allTasks.find(x => N(x.id) === id);
+  const id = Number(taskId);
+  const t = allTasks.find(x => Number(x.id) === id);
   if (!t) return 0;
-  const children = allTasks.filter(x => N(x.parent_id) === id);
+  const children = allTasks.filter(x => NP(x.parent_id) === id);
   if (children.length === 0) return t.pct || 0;
   const avg = children.reduce((s, c) => s + tPctReal(c.id, allTasks), 0) / children.length;
   return Math.round(avg);
 }
 
-/** Fechas efectivas de una tarea: mínimo inicio y máximo fin de ella y todos sus descendientes */
+/** Fechas efectivas de una tarea (abarca todos los descendientes) */
 function tDates(taskId, allTasks) {
-  const id = N(taskId);
-  const t = allTasks.find(x => N(x.id) === id);
+  const id = Number(taskId);
+  const t = allTasks.find(x => Number(x.id) === id);
   if (!t) return { ini: null, fin: null };
   function allDesc(tid) {
-    const children = allTasks.filter(x => N(x.parent_id) === N(tid));
+    const n = Number(tid);
+    const children = allTasks.filter(x => NP(x.parent_id) === n);
     return children.flatMap(c => [c, ...allDesc(c.id)]);
   }
   const all = [t, ...allDesc(id)];
@@ -596,13 +608,14 @@ function tDates(taskId, allTasks) {
 
 /** ¿Tiene una tarea hijos directos? */
 function hasKids(taskId, allTasks) {
-  return allTasks.some(x => N(x.parent_id) === N(taskId));
+  const id = Number(taskId);
+  return allTasks.some(x => NP(x.parent_id) === id);
 }
 
-/** % real del proyecto calculado desde las tareas raíz */
+/** % real del proyecto calculado desde raíces */
 function projPctReal(allTasks) {
-  if (!allTasks.length) return null;
-  const roots = allTasks.filter(x => N(x.parent_id) === null);
+  if (!allTasks || !allTasks.length) return null;
+  const roots = allTasks.filter(x => NP(x.parent_id) === null);
   if (!roots.length) return null;
   return Math.round(roots.reduce((s, t) => s + tPctReal(t.id, allTasks), 0) / roots.length);
 }
@@ -610,12 +623,17 @@ function projPctReal(allTasks) {
 /** Construye lista ordenada de filas del EDT (DFS) */
 function buildEDT(allTasks, parentId = null, depth = 0) {
   const rows = [];
+  const pidN = parentId === null ? null : Number(parentId);
   allTasks
-    .filter(t => N(t.parent_id) === N(parentId))
+    .filter(t => {
+      const tp = t.parent_id === null || t.parent_id === undefined ? null : Number(t.parent_id);
+      return tp === pidN;
+    })
     .sort((a, b) => (a.orden || 0) - (b.orden || 0))
     .forEach(t => {
       rows.push({ t, depth });
-      if (hasKids(t.id, allTasks) && !collapsed.has(N(t.id))) {
+      const tid = Number(t.id);
+      if (hasKids(t.id, allTasks) && !collapsed.has(tid)) {
         rows.push(...buildEDT(allTasks, t.id, depth + 1));
       }
     });
@@ -725,14 +743,28 @@ async function dbDelProj(id) {
   projects=projects.filter(p=>N(p.id)!==N(id));
 }
 async function loadTasks(pid) {
-  if (DEMO) { curTasks=(DD_TASKS[N(pid)]||[]).map(t=>({...t})); return; }
-  try { curTasks=await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`)||[]; }
-  catch(e) { curTasks=[]; }
+  if (DEMO) { curTasks=(DD_TASKS[Number(pid)]||[]).map(t=>({...t})); return; }
+  try {
+    const raw = await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`)||[];
+    // Normalize parent_id: Supabase returns numbers but ensure consistency
+    curTasks = raw.map(t=>({
+      ...t,
+      id: Number(t.id),
+      parent_id: (t.parent_id===null||t.parent_id===undefined) ? null : Number(t.parent_id)
+    }));
+  } catch(e) { curTasks=[]; }
 }
 async function dbSaveTask(t) {
+  // Always normalize parent_id to Number|null before saving
+  t.parent_id = (t.parent_id === null || t.parent_id === undefined || t.parent_id === '') ? null : Number(t.parent_id);
   if (DEMO) {
-    if (t.id) { const i=curTasks.findIndex(x=>N(x.id)===N(t.id)); if(i>=0) curTasks[i]={...t}; }
-    else { t.id=Date.now(); curTasks.push(t); }
+    if (t.id) {
+      const i=curTasks.findIndex(x=>Number(x.id)===Number(t.id));
+      if(i>=0) curTasks[i]={...t};
+    } else {
+      t.id=Date.now();
+      curTasks.push({...t});
+    }
     return t;
   }
   if (t.id) {
@@ -742,14 +774,21 @@ async function dbSaveTask(t) {
   } else {
     const{id,...rest}=t;
     const r=await sbFetch('tareas','POST',rest);
-    return Array.isArray(r)?r[0]:r;
+    const saved=Array.isArray(r)?r[0]:r;
+    // Normalize parent_id on returned object too
+    if(saved) saved.parent_id=(saved.parent_id===null||saved.parent_id===undefined)?null:Number(saved.parent_id);
+    return saved;
   }
 }
 async function dbDelTask(id) {
-  // Collect all descendant IDs recursively
+  // Collect all descendant IDs recursively using Number comparison
   function collectIds(tid) {
-    const n=N(tid);
-    return [n, ...curTasks.filter(t=>N(t.parent_id)===n).flatMap(c=>collectIds(c.id))];
+    const n = Number(tid);
+    const children = curTasks.filter(t => {
+      const p = (t.parent_id === null || t.parent_id === undefined) ? null : Number(t.parent_id);
+      return p === n;
+    });
+    return [n, ...children.flatMap(c => collectIds(c.id))];
   }
   const ids = collectIds(id);
   if (!DEMO) {
@@ -757,7 +796,7 @@ async function dbDelTask(id) {
       try { await sbFetch('tareas','DELETE',null,`?id=eq.${i}`); } catch(_) {}
     }
   }
-  curTasks = curTasks.filter(t=>!ids.includes(N(t.id)));
+  curTasks = curTasks.filter(t => !ids.includes(Number(t.id)));
 }
 async function loadInfs(pid) {
   if (DEMO) { curInfs=(pid===1?[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH.',proximos:'Go-Live.',obstaculos:'Sin obstáculos.'}]:[]); return; }
@@ -788,11 +827,19 @@ async function loadInfoData(pid) {
 // Sync project real% after any task change
 async function syncProjReal() {
   const nr = projPctReal(curTasks);
-  if (nr === null) return;
-  curProj.real = nr;
-  const pi = projects.findIndex(x=>N(x.id)===N(curProj.id));
-  if (pi>=0) projects[pi].real = nr;
-  if (!DEMO) try { await sbFetch('proyectos','PATCH',{real:nr},`?id=eq.${curProj.id}`); } catch(_) {}
+  const derivedFin = curProj.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
+  const derivedIni = curProj.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
+  if (nr !== null) {
+    curProj.real = nr;
+    const pi = projects.findIndex(x=>Number(x.id)===Number(curProj.id));
+    if (pi>=0) {
+      projects[pi].real = nr;
+      // Cache derived dates for centro display (prefixed with _ so not saved to DB)
+      projects[pi]._fin = derivedFin;
+      projects[pi]._ini = derivedIni;
+    }
+    if (!DEMO) try { await sbFetch('proyectos','PATCH',{real:nr},`?id=eq.${curProj.id}`); } catch(_) {}
+  }
   drawSbar(); drawSidebar();
 }
 
@@ -890,8 +937,9 @@ function drawAll() {
 function drawSbar() {
   const t=projects.length;
   const avg=t?Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t):0;
-  const ep=projects.filter(p=>(p.real||0)>=pctPlan(p.inicio,p.fin)).length;
-  const at=projects.filter(p=>(p.real||0)<pctPlan(p.inicio,p.fin)-10).length;
+  const gp=p=>{const fi=p.fin||p._fin||null,ii=p.inicio||p._ini||null;return pctPlan(ii,fi);};
+  const ep=projects.filter(p=>(p.real||0)>=gp(p)).length;
+  const at=projects.filter(p=>(p.real||0)<gp(p)-10).length;
   const hc=projects.filter(p=>p.complejidad==='Alta').length;
   document.getElementById('sbar').innerHTML=`
     <div class="sv"><div class="svv" style="color:var(--ac2)">${t}</div><div class="svl">Total</div></div>
@@ -938,7 +986,9 @@ function drawTable() {
   if(!list.length){tbody.innerHTML='';empt.style.display='flex';return;}
   empt.style.display='none';
   tbody.innerHTML=list.map(p=>{
-    const pl=pctPlan(p.inicio,p.fin);
+    const efin = p.fin || p._fin || null;
+    const eini = p.inicio || p._ini || null;
+    const pl=pctPlan(eini, efin);
     const real=p.real||0;
     const dv=real-pl;
     const rc=real>=pl?'gn':real>=pl-10?'yw':'rd';
@@ -946,8 +996,8 @@ function drawTable() {
       <td class="tdc">${p.fr||'—'}</td>
       <td class="tdn" title="${p.nombre||''}">${p.nombre||'Sin nombre'}</td>
       <td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;">${p.jp||'—'}</td>
-      <td style="font-family:var(--mo);font-size:11px">${fd(p.inicio)}</td>
-      <td style="font-family:var(--mo);font-size:11px">${fd(p.fin)}</td>
+      <td style="font-family:var(--mo);font-size:11px">${fd(eini)}</td>
+      <td style="font-family:var(--mo);font-size:11px">${fd(efin)}</td>
       <td>${pbar(real,rc,42)}</td>
       <td>${pbar(pl,'ac',42)}</td>
       <td>${devH(dv)}</td>
@@ -1047,7 +1097,10 @@ async function toggleChk(k,v){
 }
 function drawDet(){
   const p=curProj;
-  const pl=pctPlan(p.inicio,p.fin);
+  // Derive dates from tasks if project dates are missing
+  const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
+  const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
+  const pl=pctPlan(derivedIni, derivedFin);
   const real=p.real||0;
   const dv=real-pl;
   const dc=dv>=0?'var(--gn)':'var(--rd)';
@@ -1078,10 +1131,10 @@ function drawDet(){
     </div>
     <div class="dkpis">
       <div class="kpi"><div class="kpil">% Avance Real</div><div class="kpiv" style="color:${real>=pl?'var(--gn)':'var(--yw)'}">${real}%</div>${pbar(real,real>=pl?'gn':'yw')}</div>
-      <div class="kpi"><div class="kpil">% Planificado</div><div class="kpiv" style="color:var(--ac2)">${pl}%</div>${pbar(pl,'ac')}</div>
+      <div class="kpi"><div class="kpil">% Planificado</div><div class="kpiv" style="color:var(--ac2)">${pl}%</div>${pbar(pl,'ac')}${!p.fin&&derivedFin?'<div style="font-size:9px;color:var(--tx3);margin-top:2px">calculado desde tareas</div>':''}</div>
       <div class="kpi"><div class="kpil">% Desviación</div><div class="kpiv" style="color:${dc}">${dv>=0?'+':''}${dv}%</div><div style="font-size:10px;color:var(--tx3);margin-top:2px">${dv>=0?'Adelantado':'Con atraso'}</div></div>
-      <div class="kpi"><div class="kpil">Fecha Inicio</div><div class="kpiv" style="font-size:14px;margin-top:5px">${fd(p.inicio)}</div></div>
-      <div class="kpi"><div class="kpil">Fecha Fin</div><div class="kpiv" style="font-size:14px;margin-top:5px">${fd(p.fin)}</div></div>
+      <div class="kpi"><div class="kpil">Fecha Inicio</div><div class="kpiv" style="font-size:14px;margin-top:5px">${fd(derivedIni)}</div></div>
+      <div class="kpi"><div class="kpil">Fecha Fin</div><div class="kpiv" style="font-size:14px;margin-top:5px">${fd(derivedFin)}${!p.fin&&derivedFin?'<span style="font-size:9px;display:block;color:var(--yw)">↑ desde tareas</span>':''}</div></div>
       <div class="kpi"><div class="kpil">Presupuesto</div><div class="kpiv" style="font-size:11px;margin-top:5px">${fmoney(p.presupuesto)}</div></div>
     </div>
     <div style="padding:9px 18px 5px;border-bottom:1px solid var(--bd);font-size:11px;font-weight:700;color:var(--tx2)">🔍 Atributos del Proyecto</div>
@@ -1095,11 +1148,12 @@ function drawDet(){
         <div class="fr"><div class="fl">Flujo</div><div class="fv">${bflujo(p.flujo)||'—'}</div></div>
       </div>
       <div class="dsec"><div class="sttl">📅 Cronograma</div>
-        <div class="fr"><div class="fl">Fecha Inicio</div><div class="fv">${fd(p.inicio)}</div></div>
-        <div class="fr"><div class="fl">Fecha Fin</div><div class="fv">${fd(p.fin)}</div></div>
-        <div class="fr"><div class="fl">Duración</div><div class="fv" style="font-family:var(--mo)">${p.inicio&&p.fin?Math.ceil((new Date(p.fin)-new Date(p.inicio))/86400000)+' días':'—'}</div></div>
-        <div class="fr"><div class="fl">Días Restantes</div><div class="fv" style="font-family:var(--mo);color:${p.fin&&new Date(p.fin)<new Date()?'var(--rd)':'var(--tx2)'}">${p.fin?Math.max(0,Math.ceil((new Date(p.fin)-new Date())/86400000))+' días':'—'}</div></div>
-        <div class="fr"><div class="fl">Tiempo Transcurrido</div><div class="fv">${pbar(pl,'ac')}</div></div>
+        <div class="fr"><div class="fl">Fecha Inicio</div><div class="fv" style="font-family:var(--mo);color:${derivedIni?'var(--tx2)':'var(--rd)'}">${derivedIni?fd(derivedIni):'⚠️ Sin definir'}</div></div>
+        <div class="fr"><div class="fl">Fecha Fin</div><div class="fv" style="font-family:var(--mo);color:${derivedFin?'var(--tx2)':'var(--rd)'}">${derivedFin?fd(derivedFin)+(p.fin?'':' <span style="font-size:9px;color:var(--yw)">(desde tareas)</span>'):'⚠️ Sin definir'}</div></div>
+        <div class="fr"><div class="fl">Duración</div><div class="fv" style="font-family:var(--mo)">${derivedIni&&derivedFin?Math.ceil((new Date(derivedFin)-new Date(derivedIni))/86400000)+' días':'— (requiere inicio y fin)'}</div></div>
+        <div class="fr"><div class="fl">Días Restantes</div><div class="fv" style="font-family:var(--mo);color:${!derivedFin?'var(--tx3)':new Date(derivedFin)<new Date()?'var(--rd)':'var(--tx2)'}">${derivedFin?Math.max(0,Math.ceil((new Date(derivedFin)-new Date())/86400000))+' días':'— (sin fecha fin)'}</div></div>
+        <div class="fr"><div class="fl">% Tiempo Transcurrido</div><div class="fv">${derivedIni&&derivedFin?pbar(pl,'ac'):'<span style="font-size:11px;color:var(--tx3)">Requiere inicio y fin</span>'}</div></div>
+        ${(!p.fin&&derivedFin)?`<div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--yw)">💡 La fecha fin se está calculando desde las tareas. Edita el proyecto para fijarla manualmente.</div>`:(!p.inicio&&!p.fin)?`<div style="background:var(--rdd);border:1px solid rgba(239,68,68,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--rd)">⚠️ Edita el proyecto y completa las fechas de inicio y fin.</div>`:''}
       </div>
     </div>
   `;
@@ -1199,15 +1253,18 @@ function buildGanttGrid() {
   const rHdr=`<div style="display:flex;width:${TW}px">${weeks.map(w=>`<div class="wkh" style="min-width:${WK_W}px;width:${WK_W}px">S${getWeekNum(w)}<span style="font-size:8px;opacity:.5">${w.getDate()} ${w.toLocaleDateString('es-CL',{month:'short'}).toUpperCase()}</span></div>`).join('')}</div>`;
 
   // Project row
+  // If project has no fin, derive from tasks (max task fin)
+  const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
+  const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
   const pReal=projPctReal(curTasks)??p.real??0;
-  const pPlan=pctPlan(p.inicio,p.fin);
+  const pPlan=pctPlan(derivedIni, derivedFin);
   const pDev=pReal-pPlan;
-  const pX=dx(p.inicio), pW=Math.max(6,dx(p.fin)-dx(p.inicio));
+  const pX=dx(derivedIni), pW=Math.max(6,dx(derivedFin)-dx(derivedIni));
   const ppc=pReal>=pPlan?'pg':pReal>=pPlan-15?'py':'pr';
 
   function projCell(k){
-    if(k==='ini')return `<span style="font-family:var(--mo);font-size:9px">${fd(p.inicio)}</span>`;
-    if(k==='fin')return `<span style="font-family:var(--mo);font-size:9px">${fd(p.fin)}</span>`;
+    if(k==='ini')return `<span style="font-family:var(--mo);font-size:9px">${fd(derivedIni)}</span>`;
+    if(k==='fin')return `<span style="font-family:var(--mo);font-size:9px">${derivedFin?fd(derivedFin):'<span style="color:var(--yw)">—</span>'}</span>`;
     if(k==='real')return pbar(pReal,pReal>=pPlan?'gn':'yw',38);
     if(k==='plan')return pbar(pPlan,'ac',38);
     if(k==='dev')return devH(pDev);
@@ -1317,22 +1374,40 @@ function buildGanttGrid() {
 }
 
 function toggleGcol(k){gcols[k]=!gcols[k];buildGanttGrid();}
-function toggleG(id){const n=N(id);collapsed.has(n)?collapsed.delete(n):collapsed.add(n);buildGanttGrid();}
+function toggleG(id){
+  const n=Number(id);  // always Number, never string
+  if(collapsed.has(n)) collapsed.delete(n);
+  else collapsed.add(n);
+  buildGanttGrid();
+}
 
 async function addTask(){
   if(!canEdit())return;
   const nb=document.getElementById('nt-nb')?.value.trim();
-  if(!nb){toast('Escribe un nombre','⚠️');return;}
+  if(!nb){toast('Escribe un nombre para la actividad','⚠️');return;}
   const ini=document.getElementById('nt-in')?.value||null;
   const fin=document.getElementById('nt-fi')?.value||null;
   const prRaw=document.getElementById('nt-pr')?.value;
-  const parent_id=prRaw&&prRaw!==''?Number(prRaw):null;
-  const t={proyecto_id:curProj.id,nombre:nb,inicio:ini,fin,pct:0,responsable:curProj.jp||null,parent_id,orden:curTasks.length+1};
+  // CRITICAL: parent_id must be Number or null — never string
+  const parent_id = (prRaw && prRaw !== '') ? Number(prRaw) : null;
+  const t = {
+    proyecto_id: curProj.id,
+    nombre: nb,
+    inicio: ini,
+    fin: fin,
+    pct: 0,
+    responsable: curProj.jp || null,
+    parent_id: parent_id,  // Number or null
+    orden: curTasks.length + 1
+  };
   try{
-    const s=await dbSaveTask(t);
-    if(s&&!DEMO) curTasks.push(s);
+    const s = await dbSaveTask(t);
+    // dbSaveTask already pushes to curTasks in DEMO mode
+    // In Supabase mode, push the returned object with real id
+    if(s && !DEMO) curTasks.push(s);
     document.getElementById('nt-nb').value='';
-    drawGantt(); toast(`"${nb}" agregada`,'✓');
+    drawGantt();
+    toast(`"${nb}" agregada`,'✓');
   }catch(e){toast('Error: '+e.message,'❌');}
 }
 
