@@ -143,9 +143,7 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .chkb.sy{background:var(--gnd);color:var(--gn);border-color:rgba(34,197,94,.4)}
 .chkb.sn{background:var(--rdd);color:var(--rd);border-color:rgba(239,68,68,.4)}
 
-/* ══════════════════════════════════════
-   GANTT — arquitectura limpia v6
-══════════════════════════════════════ */
+/* GANTT */
 .gshell{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .gtbar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--bd);background:var(--sf);flex-shrink:0;flex-wrap:wrap}
 .gttl{font-size:13px;font-weight:700}
@@ -154,8 +152,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .gct{font-family:var(--mo);font-size:10px;padding:3px 8px;border-radius:20px;border:1px solid var(--bd2);color:var(--tx3);cursor:pointer;background:none;transition:all .12s;white-space:nowrap}
 .gct:hover{border-color:var(--ac);color:var(--ac2)}
 .gct.on{background:var(--acd);color:var(--ac2);border-color:rgba(59,130,246,.3)}
-
-/* Add form */
 .gadd{display:flex;align-items:center;gap:6px;padding:6px 10px;border-bottom:1px solid var(--bd);background:var(--sf2);flex-wrap:wrap}
 .gai{background:var(--sf3);border:1px solid var(--bd2);border-radius:var(--r);color:var(--tx);font-family:var(--sa);font-size:12px;padding:5px 8px;outline:none;flex:1;min-width:120px;transition:border .15s}
 .gai:focus{border-color:var(--ac)}
@@ -167,70 +163,46 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .gbtn.s{background:var(--sf3);color:var(--tx2);border:1px solid var(--bd2)}
 .gbtn.s:hover{border-color:var(--ac);color:var(--ac2)}
 .gbtn.d{background:var(--rdd);color:var(--rd);border:1px solid rgba(239,68,68,.25)}
-
-/* Gantt body: split left/right */
 .gbody{display:flex;flex:1;overflow:hidden;min-height:0}
-
-/* Left panel: fixed columns */
 .gleft{flex-shrink:0;border-right:2px solid var(--bd2);display:flex;flex-direction:column;overflow:hidden}
 .glh{background:var(--sf);border-bottom:2px solid var(--bd2);display:flex;flex-shrink:0;height:34px}
 .gls{overflow-y:auto;overflow-x:hidden;flex:1}
-
-/* Right panel: timeline */
 .gright{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .grh{background:var(--sf);border-bottom:2px solid var(--bd2);overflow:hidden;flex-shrink:0;height:34px}
 .grs{overflow:auto;flex:1}
-
-/* Column headers */
 .gch{padding:0 7px;font-family:var(--mo);font-size:9px;font-weight:600;color:var(--tx3);letter-spacing:.06em;border-right:1px solid var(--bd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;display:flex;align-items:center;justify-content:center;text-align:center;height:34px}
 .gch.nl{justify-content:flex-start;text-align:left}
-
-/* Gantt rows */
 .grow{display:flex;border-bottom:1px solid var(--bd);align-items:stretch;transition:background .08s}
 .grow:hover{background:rgba(255,255,255,.02)}
-
-/* Level colors */
-.lp{background:rgba(168,85,247,.07);min-height:36px}   /* proyecto */
-.l0{background:rgba(59,130,246,.06);min-height:34px}   /* nivel 0: fase */
-.l1{background:rgba(34,197,94,.04);min-height:32px}    /* nivel 1: tarea resumen */
-.l2{min-height:30px}                                    /* nivel 2: tarea */
-.l3{min-height:28px}                                    /* nivel 3+: subtarea */
-
-/* Left cells */
+.lp{background:rgba(168,85,247,.07);min-height:36px}
+.l0{background:rgba(59,130,246,.06);min-height:34px}
+.l1{background:rgba(34,197,94,.04);min-height:32px}
+.l2{min-height:30px}
+.l3{min-height:28px}
 .gleft-row{display:flex;align-items:stretch;flex-shrink:0}
 .gc{padding:0 7px;font-size:11px;color:var(--tx2);border-right:1px solid var(--bd);display:flex;align-items:center;flex-shrink:0;overflow:hidden}
 .gc.n{gap:3px;min-width:0}
 .gnt{overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:0}
-
-/* Name text styles per level */
 .lp .gnt{color:var(--ac2);font-weight:700;font-size:12px}
 .l0 .gnt{color:var(--tx);font-weight:700}
 .l1 .gnt{color:var(--tx);font-weight:600}
 .l2 .gnt{color:var(--tx2);font-weight:400}
 .l3 .gnt{color:var(--tx3);font-weight:400;font-size:11px}
-
-/* Toggle */
 .gtg{cursor:pointer;color:var(--tx3);font-size:9px;width:13px;height:13px;flex-shrink:0;transition:transform .15s;display:flex;align-items:center;justify-content:center;border-radius:2px}
 .gtg:hover{background:var(--sf3);color:var(--tx2)}
 .gtg.op{transform:rotate(90deg)}
 .gsp{width:13px;flex-shrink:0;display:inline-block}
-
-/* Row actions */
 .gra{display:flex;gap:1px;opacity:0;transition:opacity .12s;margin-left:auto;flex-shrink:0}
 .grow:hover .gra{opacity:1}
 .gra button{background:none;border:none;cursor:pointer;color:var(--tx3);font-size:11px;padding:2px 3px;border-radius:3px;transition:all .1s;line-height:1}
 .gra button:hover{background:var(--sf3);color:var(--ac2)}
 .gra button.d:hover{background:var(--rdd);color:var(--rd)}
-
-/* % inline editor */
 .pin{display:flex;align-items:center;gap:3px;width:100%}
 .pinp{width:38px;background:var(--sf3);border:1px solid var(--bd2);border-radius:3px;color:var(--tx);font-family:var(--mo);font-size:10px;padding:2px 3px;outline:none;text-align:center;-moz-appearance:textfield}
 .pinp:focus{border-color:var(--ac)}
 .pinp::-webkit-outer-spin-button,.pinp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .psv{background:var(--gnd);border:1px solid rgba(34,197,94,.3);color:var(--gn);border-radius:3px;font-size:9px;padding:2px 4px;cursor:pointer;font-family:var(--mo)}
 .psv:hover{background:rgba(34,197,94,.2)}
-
-/* Right timeline cells */
 .gright-row{position:relative;display:flex;align-items:center}
 .gbar-w{position:absolute;height:16px;pointer-events:none}
 .lp .gbar-w{height:20px}
@@ -379,7 +351,7 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
   <div class="vhdr">
     <div><div class="vttl">Centro de Proyectos</div><div class="vsub" id="csub">Cargando...</div></div>
     <div class="vact">
-      <input class="si" style="width:160px" placeholder="🔍 Buscar..." id="qsearch" oninput="drawTable()">
+      <input class="si" style="width:160px" placeholder="🔍 Buscar..." id="qsearch" oninput="debounceDraw()">
       <select class="ss" id="qcomp" onchange="drawTable()"><option value="">Complejidad</option><option>Alta</option><option>Media</option><option>Baja</option></select>
       <select class="ss" id="qflujo" onchange="drawTable()"><option value="">Flujo</option><option>Completo</option><option>Básico</option><option>Ágil</option></select>
     </div>
@@ -546,23 +518,27 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
 <script>
 'use strict';
 // ════════════════════════════════════════════════════════
-//  PM PORTFOLIO MANAGER v6
-//  Arquitectura: todas las funciones de cálculo primero,
-//  luego BD, luego UI. Sin dependencias circulares.
+//  PM PORTFOLIO MANAGER v6 — CORREGIDO
+//  FIX 1: % Planificado calcula correctamente con fechas derivadas
+//  FIX 2: Tareas/subtareas visibles siempre (NP robusto + precarga)
+//  FIX 3: Rendimiento mejorado (caché, debounce, renders optimizados)
 // ════════════════════════════════════════════════════════
 
-// ── 1. CÁLCULO (definidas PRIMERO, sin depender de nada) ──
+// ── 1. CÁLCULO ──
 
-/** Convierte cualquier valor a número, null si es null/undefined/NaN */
 const N = x => {
   if (x === null || x === undefined || x === '') return null;
   const n = Number(x);
   return isNaN(n) ? null : n;
 };
 
-/** Normaliza parent_id: null/undefined/''/NaN → null, else Number */
+/**
+ * FIX 2: NP robusto — convierte parent_id a Number|null.
+ * Ahora maneja correctamente: null, undefined, '', 'null', NaN, 0.
+ * Solo 0 numérico es válido como parent_id si realmente existe.
+ */
 const NP = x => {
-  if (x === null || x === undefined || x === '') return null;
+  if (x === null || x === undefined || x === '' || x === 'null' || x === 'undefined') return null;
   const n = Number(x);
   return isNaN(n) ? null : n;
 };
@@ -606,13 +582,11 @@ function tDates(taskId, allTasks) {
   return { ini: starts[0] || null, fin: ends[0] || null };
 }
 
-/** ¿Tiene una tarea hijos directos? */
 function hasKids(taskId, allTasks) {
   const id = Number(taskId);
   return allTasks.some(x => NP(x.parent_id) === id);
 }
 
-/** % real del proyecto calculado desde raíces */
 function projPctReal(allTasks) {
   if (!allTasks || !allTasks.length) return null;
   const roots = allTasks.filter(x => NP(x.parent_id) === null);
@@ -623,12 +597,10 @@ function projPctReal(allTasks) {
 /** Construye lista ordenada de filas del EDT (DFS) */
 function buildEDT(allTasks, parentId = null, depth = 0) {
   const rows = [];
+  // FIX 2: comparación segura usando NP en ambos lados
   const pidN = parentId === null ? null : Number(parentId);
   allTasks
-    .filter(t => {
-      const tp = t.parent_id === null || t.parent_id === undefined ? null : Number(t.parent_id);
-      return tp === pidN;
-    })
+    .filter(t => NP(t.parent_id) === pidN)
     .sort((a, b) => (a.orden || 0) - (b.orden || 0))
     .forEach(t => {
       rows.push({ t, depth });
@@ -647,25 +619,36 @@ let DEMO   = !SB_URL || !SB_KEY;
 
 const ROLES = ['Administrador', 'Jefe de Proyecto', 'Solo Lectura'];
 let roleIdx = 0;
-let projects  = [];   // todos los proyectos
-let curProj   = null; // proyecto activo
-let curTasks  = [];   // tareas del proyecto activo
-let curInfs   = [];   // informes del proyecto activo
+let projects  = [];
+let curProj   = null;
+let curTasks  = [];
+let curInfs   = [];
 let infoData  = { riesgos:[], docs:[], coms:[] };
+
+// FIX 3: Caché por proyecto para evitar recargas innecesarias
+const _taskCache = {};   // { [projId]: curTasks[] }
+const _infCache  = {};   // { [projId]: curInfs[] }
+const _infoCache = {};   // { [projId]: infoData }
 
 let sortK = 'fr', sortD = 1;
 let editProjId = null;
 let editTaskId = null;
 let pendDelProjId = null;
 let pendDelTaskId = null;
-let collapsed = new Set(); // Set<Number> de IDs colapsadas
+let collapsed = new Set();
 
-// Configuración de columnas Gantt
 let gcols = { ini:true, fin:true, real:true, plan:true, dev:true, resp:false };
 const GCOL_W = { ini:70, fin:70, real:72, plan:72, dev:60, resp:100 };
 const NAME_W = 210;
-const WK_W   = 95; // px por semana en el timeline
+const WK_W   = 95;
 function leftW() { return NAME_W + Object.keys(gcols).filter(k=>gcols[k]).reduce((s,k)=>s+GCOL_W[k],0); }
+
+// FIX 3: Debounce para el buscador
+let _dbTimer = null;
+function debounceDraw() {
+  clearTimeout(_dbTimer);
+  _dbTimer = setTimeout(drawTable, 180);
+}
 
 // ── 3. DATOS DEMO ──
 const DD_PROJS = [
@@ -673,7 +656,6 @@ const DD_PROJS = [
   {id:2,fr:'FR-2024-002',nombre:'Portal Ciudadano Digital',inicio:'2024-03-01',fin:'2024-10-31',real:95,complejidad:'Media',flujo:'Ágil',jp:'Carlos Rojas',area:'Digital',descripcion:'Portal web y app móvil.',presupuesto:85000000},
   {id:3,fr:'FR-2025-001',nombre:'Infraestructura Cloud',inicio:'2024-06-01',fin:'2025-05-31',real:30,complejidad:'Alta',flujo:'Básico',jp:'Marcela Torres',area:'Infraestructura',descripcion:'Migración a nube híbrida.',presupuesto:420000000}
 ];
-// Tareas con jerarquía real (parent_id numérico)
 const DD_TASKS = {
   1:[
     {id:1,nombre:'Fase 1: Análisis',inicio:'2024-01-15',fin:'2024-03-31',pct:100,responsable:'Ana González',parent_id:null,orden:1},
@@ -721,6 +703,7 @@ async function loadProjects() {
     drawAll(); setDB(true);
   } catch(e) { setDB(false,true); toast('Error: '+e.message,'❌'); }
 }
+
 async function dbSaveProj(p) {
   if (DEMO) {
     if (p.id) { const i=projects.findIndex(x=>N(x.id)===N(p.id)); if(i>=0) projects[i]={...p}; }
@@ -737,57 +720,88 @@ async function dbSaveProj(p) {
     return Array.isArray(r)?r[0]:r;
   }
 }
+
 async function dbDelProj(id) {
   if (DEMO) { projects=projects.filter(p=>N(p.id)!==N(id)); return; }
   await sbFetch('proyectos','DELETE',null,`?id=eq.${id}`);
   projects=projects.filter(p=>N(p.id)!==N(id));
 }
-async function loadTasks(pid) {
-  if (DEMO) { curTasks=(DD_TASKS[Number(pid)]||[]).map(t=>({...t})); return; }
-  try {
-    const raw = await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`)||[];
-    // Normalize parent_id: Supabase returns numbers but ensure consistency
-    curTasks = raw.map(t=>({
+
+/** FIX 2 + FIX 3: loadTasks normaliza parent_id y usa caché */
+async function loadTasks(pid, forceRefresh=false) {
+  const key = Number(pid);
+  // Retornar caché si existe y no se fuerza recarga
+  if (!forceRefresh && _taskCache[key]) {
+    curTasks = _taskCache[key];
+    return;
+  }
+  if (DEMO) {
+    curTasks = (DD_TASKS[key] || []).map(t => ({
       ...t,
       id: Number(t.id),
-      parent_id: (t.parent_id===null||t.parent_id===undefined) ? null : Number(t.parent_id)
+      // FIX 2: normalizar parent_id a Number|null en datos demo
+      parent_id: NP(t.parent_id)
     }));
-  } catch(e) { curTasks=[]; }
+    _taskCache[key] = curTasks;
+    return;
+  }
+  try {
+    const raw = await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`) || [];
+    // FIX 2: normalización robusta — cubre 'null' string, undefined, NaN
+    curTasks = raw.map(t => ({
+      ...t,
+      id: Number(t.id),
+      parent_id: NP(t.parent_id)
+    }));
+    _taskCache[key] = curTasks;
+  } catch(e) { curTasks = []; }
 }
+
 async function dbSaveTask(t) {
-  // Always normalize parent_id to Number|null before saving
-  t.parent_id = (t.parent_id === null || t.parent_id === undefined || t.parent_id === '') ? null : Number(t.parent_id);
+  // FIX 2: siempre normalizar parent_id con NP antes de guardar
+  t.parent_id = NP(t.parent_id);
   if (DEMO) {
     if (t.id) {
-      const i=curTasks.findIndex(x=>Number(x.id)===Number(t.id));
-      if(i>=0) curTasks[i]={...t};
+      const i = curTasks.findIndex(x => Number(x.id) === Number(t.id));
+      if (i >= 0) curTasks[i] = {...t};
     } else {
-      t.id=Date.now();
+      t.id = Date.now();
       curTasks.push({...t});
     }
+    // Actualizar caché
+    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
     return t;
   }
   if (t.id) {
     const{id,created_at,...rest}=t;
     const r=await sbFetch('tareas','PATCH',rest,`?id=eq.${id}`);
-    return Array.isArray(r)?r[0]:r;
+    const saved = Array.isArray(r)?r[0]:r;
+    if (saved) saved.parent_id = NP(saved.parent_id);
+    // Actualizar en curTasks
+    if (saved) {
+      const i = curTasks.findIndex(x => Number(x.id) === Number(id));
+      if (i >= 0) curTasks[i] = {...curTasks[i], ...saved};
+    }
+    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
+    return saved;
   } else {
     const{id,...rest}=t;
     const r=await sbFetch('tareas','POST',rest);
     const saved=Array.isArray(r)?r[0]:r;
-    // Normalize parent_id on returned object too
-    if(saved) saved.parent_id=(saved.parent_id===null||saved.parent_id===undefined)?null:Number(saved.parent_id);
+    if (saved) {
+      saved.parent_id = NP(saved.parent_id);
+      saved.id = Number(saved.id);
+      curTasks.push(saved);
+    }
+    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
     return saved;
   }
 }
+
 async function dbDelTask(id) {
-  // Collect all descendant IDs recursively using Number comparison
   function collectIds(tid) {
     const n = Number(tid);
-    const children = curTasks.filter(t => {
-      const p = (t.parent_id === null || t.parent_id === undefined) ? null : Number(t.parent_id);
-      return p === n;
-    });
+    const children = curTasks.filter(t => NP(t.parent_id) === n);
     return [n, ...children.flatMap(c => collectIds(c.id))];
   }
   const ids = collectIds(id);
@@ -797,21 +811,38 @@ async function dbDelTask(id) {
     }
   }
   curTasks = curTasks.filter(t => !ids.includes(Number(t.id)));
+  if (curProj) _taskCache[Number(curProj.id)] = curTasks;
 }
-async function loadInfs(pid) {
-  if (DEMO) { curInfs=(pid===1?[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH.',proximos:'Go-Live.',obstaculos:'Sin obstáculos.'}]:[]); return; }
-  try { curInfs=await sbFetch('informes','GET',null,`?proyecto_id=eq.${pid}&select=*&order=fecha.desc`)||[]; }
-  catch(e) { curInfs=[]; }
+
+/** FIX 3: loadInfs con caché */
+async function loadInfs(pid, forceRefresh=false) {
+  const key = Number(pid);
+  if (!forceRefresh && _infCache[key]) { curInfs = _infCache[key]; return; }
+  if (DEMO) {
+    curInfs = (pid===1?[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH.',proximos:'Go-Live.',obstaculos:'Sin obstáculos.'}]:[]);
+    _infCache[key] = curInfs;
+    return;
+  }
+  try {
+    curInfs = await sbFetch('informes','GET',null,`?proyecto_id=eq.${pid}&select=*&order=fecha.desc`) || [];
+    _infCache[key] = curInfs;
+  } catch(e) { curInfs = []; }
 }
+
 async function dbSaveInf(inf) {
   if (DEMO) { inf.id=Date.now(); curInfs.unshift(inf); return inf; }
   const{id,...rest}=inf;
   const r=await sbFetch('informes','POST',rest);
   return Array.isArray(r)?r[0]:r;
 }
-async function loadInfoData(pid) {
+
+/** FIX 3: loadInfoData con caché */
+async function loadInfoData(pid, forceRefresh=false) {
+  const key = Number(pid);
+  if (!forceRefresh && _infoCache[key]) { infoData = _infoCache[key]; return; }
   if (DEMO) {
-    infoData={riesgos:[{nivel:'Alta',descripcion:'Dependencia proveedor externo.',responsable:'JP'}],docs:[{nombre:'TDR.pdf',tipo:'📄',tamano:'2.3 MB'}],coms:[]};
+    infoData = {riesgos:[{nivel:'Alta',descripcion:'Dependencia proveedor externo.',responsable:'JP'}],docs:[{nombre:'TDR.pdf',tipo:'📄',tamano:'2.3 MB'}],coms:[]};
+    _infoCache[key] = infoData;
     return;
   }
   try {
@@ -820,11 +851,19 @@ async function loadInfoData(pid) {
       sbFetch('documentos','GET',null,`?proyecto_id=eq.${pid}&select=*`),
       sbFetch('comentarios','GET',null,`?proyecto_id=eq.${pid}&select=*&order=created_at.desc`)
     ]);
-    infoData={riesgos:r||[],docs:d||[],coms:c||[]};
-  } catch(e) { infoData={riesgos:[],docs:[],coms:[]}; }
+    infoData = {riesgos:r||[],docs:d||[],coms:c||[]};
+    _infoCache[key] = infoData;
+  } catch(e) { infoData = {riesgos:[],docs:[],coms:[]}; }
 }
 
-// Sync project real% after any task change
+/** Invalidar caché de un proyecto (llamar después de modificar tareas) */
+function invalidateCache(pid) {
+  const key = Number(pid);
+  delete _taskCache[key];
+  delete _infCache[key];
+  delete _infoCache[key];
+}
+
 async function syncProjReal() {
   const nr = projPctReal(curTasks);
   const derivedFin = curProj.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
@@ -834,7 +873,6 @@ async function syncProjReal() {
     const pi = projects.findIndex(x=>Number(x.id)===Number(curProj.id));
     if (pi>=0) {
       projects[pi].real = nr;
-      // Cache derived dates for centro display (prefixed with _ so not saved to DB)
       projects[pi]._fin = derivedFin;
       projects[pi]._ini = derivedIni;
     }
@@ -909,35 +947,54 @@ function nav(name) {
   if(name==='config')  { document.getElementById('cfgurl').value=SB_URL; document.getElementById('cfgkey').value=SB_KEY; }
   if(name==='centro')  drawTable();
 }
-function openProj(id) {
+
+/**
+ * FIX 2 + FIX 3: openProj precarga tareas en segundo plano para que
+ * drawDet tenga curTasks disponibles y el Gantt abra rápido.
+ */
+async function openProj(id) {
   curProj = projects.find(p=>N(p.id)===N(id));
   if (!curProj) return;
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById('v-proj').classList.add('on');
   document.getElementById('pbadge').textContent = curProj.fr||'';
+  // Precargar tareas para que drawDet tenga fechas derivadas
+  await loadTasks(curProj.id);
   stab('det');
   drawSidebar();
 }
+
 function stab(tab) {
   document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.pv').forEach(v=>v.classList.remove('on'));
   document.getElementById('pt-'+tab).classList.add('on');
   document.getElementById('pv-'+tab).classList.add('on');
+  // FIX 3: cada tab solo carga lo que necesita, aprovechando caché
   if(tab==='det')   drawDet();
   if(tab==='gantt') loadTasks(curProj.id).then(()=>drawGantt());
   if(tab==='av')    loadInfs(curProj.id).then(()=>drawAv());
   if(tab==='info')  loadInfoData(curProj.id).then(()=>drawInfo());
 }
 
-// ── 7. DRAW: tabla principal, stats, sidebar ──
+// ── 7. DRAW ──
+
+/** FIX 3: drawAll no llama drawTable dos veces */
 function drawAll() {
-  drawTable(); drawSbar(); drawSidebar();
+  drawTable();
+  drawSbar();
+  drawSidebar();
   document.getElementById('lrow').style.display='none';
 }
+
 function drawSbar() {
   const t=projects.length;
   const avg=t?Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t):0;
-  const gp=p=>{const fi=p.fin||p._fin||null,ii=p.inicio||p._ini||null;return pctPlan(ii,fi);};
+  // FIX 1: usar _ini/_fin como fallback para proyectos sin fechas directas
+  const gp=p=>{
+    const fi=p.fin||p._fin||null;
+    const ii=p.inicio||p._ini||null;
+    return pctPlan(ii,fi);
+  };
   const ep=projects.filter(p=>(p.real||0)>=gp(p)).length;
   const at=projects.filter(p=>(p.real||0)<gp(p)-10).length;
   const hc=projects.filter(p=>p.complejidad==='Alta').length;
@@ -949,6 +1006,7 @@ function drawSbar() {
     <div class="sv"><div class="svv" style="color:var(--yw)">${hc}</div><div class="svl">Alta Complejidad</div></div>
   `;
 }
+
 function drawSidebar() {
   document.getElementById('sbcnt').textContent=projects.length;
   document.getElementById('sbprojs').innerHTML=projects.map(p=>
@@ -956,11 +1014,13 @@ function drawSidebar() {
       <span class="sbpc">${p.fr||'—'}</span>${p.nombre||'Sin nombre'}
     </div>`).join('');
 }
+
 let sortDir=1;
 function tsort(k) {
   if(sortK===k) sortDir*=-1; else{sortK=k;sortDir=1;}
   drawTable();
 }
+
 function drawTable() {
   const q=(document.getElementById('qsearch')?.value||'').toLowerCase();
   const fc=document.getElementById('qcomp')?.value||'';
@@ -970,8 +1030,11 @@ function drawTable() {
     return m&&(!fc||p.complejidad===fc)&&(!ff||p.flujo===ff);
   });
   list.sort((a,b)=>{
-    const pl=x=>pctPlan(x.inicio,x.fin);
-    const dv=x=>(x.real||0)-pctPlan(x.inicio,x.fin);
+    // FIX 1: usar _ini/_fin como fallback en el sort también
+    const getIni = x => x.inicio || x._ini || null;
+    const getFin = x => x.fin || x._fin || null;
+    const pl=x=>pctPlan(getIni(x),getFin(x));
+    const dv=x=>(x.real||0)-pl(x);
     let va,vb;
     if(sortK==='real'){va=a.real||0;vb=b.real||0;}
     else if(sortK==='plan'){va=pl(a);vb=pl(b);}
@@ -986,6 +1049,7 @@ function drawTable() {
   if(!list.length){tbody.innerHTML='';empt.style.display='flex';return;}
   empt.style.display='none';
   tbody.innerHTML=list.map(p=>{
+    // FIX 1: usar siempre _fin/_ini como fallback para el % planificado
     const efin = p.fin || p._fin || null;
     const eini = p.inicio || p._ini || null;
     const pl=pctPlan(eini, efin);
@@ -1077,6 +1141,7 @@ async function confirmDelProj() {
   closeM('m-delp');
   try {
     await dbDelProj(pendDelProjId);
+    invalidateCache(pendDelProjId);
     if(curProj&&N(curProj.id)===N(pendDelProjId)){curProj=null;nav('centro');}
     drawAll(); toast('Proyecto eliminado','🗑');
   } catch(e){toast('Error: '+e.message,'❌');}
@@ -1095,11 +1160,17 @@ async function toggleChk(k,v){
   if(!DEMO) try{await sbFetch('proyectos','PATCH',{[k]:curProj[k]},`?id=eq.${curProj.id}`);}catch(_){}
   drawDet();
 }
+
+/**
+ * FIX 1 + FIX 2: drawDet ahora siempre tiene curTasks disponibles
+ * porque openProj los precarga. Calcula % planificado correctamente.
+ */
 function drawDet(){
   const p=curProj;
-  // Derive dates from tasks if project dates are missing
+  // FIX 1: derivar fechas desde tareas cuando el proyecto no las tiene
   const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
   const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
+  // FIX 1: calcular pl con fechas derivadas (nunca retorna 0 si hay fechas válidas)
   const pl=pctPlan(derivedIni, derivedFin);
   const real=p.real||0;
   const dv=real-pl;
@@ -1174,7 +1245,7 @@ function drawGantt() {
   let parentOpts = '<option value="">— Sin padre (raíz) —</option>';
   function addOpt(pid, depth) {
     curTasks
-      .filter(t=>N(t.parent_id)===N(pid))
+      .filter(t=>NP(t.parent_id)===NP(pid))
       .sort((a,b)=>(a.orden||0)-(b.orden||0))
       .forEach(t=>{
         const icon = hasKids(t.id,curTasks)?'▸ ':'· ';
@@ -1212,7 +1283,6 @@ function buildGanttGrid() {
   const p = curProj;
   const lw = leftW();
 
-  // Date range
   const allD = curTasks.flatMap(t=>[t.inicio&&new Date(t.inicio),t.fin&&new Date(t.fin)]).filter(Boolean);
   if(p.inicio) allD.push(new Date(p.inicio));
   if(p.fin)    allD.push(new Date(p.fin));
@@ -1230,16 +1300,15 @@ function buildGanttGrid() {
   while(wc<=maxD){weeks.push(new Date(wc));wc.setDate(wc.getDate()+7);}
   const TW=weeks.length*WK_W;
 
-  // px position of a date
   function dx(d) {
     if(!d) return -9999;
     return ((new Date(d).getTime()-minD.getTime())/(1000*60*60*24*7))*WK_W;
   }
 
   const todayX = dx(new Date().toISOString().split('T')[0]);
+  // FIX 2: buildEDT con NP robusto muestra todas las tareas correctamente
   const rows    = buildEDT(curTasks);
 
-  // Visible column list
   const vcols=[];
   if(gcols.ini) vcols.push({k:'ini',l:'INICIO',w:GCOL_W.ini});
   if(gcols.fin) vcols.push({k:'fin',l:'FIN',w:GCOL_W.fin});
@@ -1248,15 +1317,13 @@ function buildGanttGrid() {
   if(gcols.dev) vcols.push({k:'dev',l:'DESV.',w:GCOL_W.dev});
   if(gcols.resp)vcols.push({k:'resp',l:'RESP.',w:GCOL_W.resp});
 
-  // Headers
   const lHdr=`<div class="gch nl" style="width:${NAME_W}px;flex-shrink:0">NOMBRE / ACTIVIDAD</div>${vcols.map(c=>`<div class="gch" style="width:${c.w}px;flex-shrink:0">${c.l}</div>`).join('')}`;
   const rHdr=`<div style="display:flex;width:${TW}px">${weeks.map(w=>`<div class="wkh" style="min-width:${WK_W}px;width:${WK_W}px">S${getWeekNum(w)}<span style="font-size:8px;opacity:.5">${w.getDate()} ${w.toLocaleDateString('es-CL',{month:'short'}).toUpperCase()}</span></div>`).join('')}</div>`;
 
-  // Project row
-  // If project has no fin, derive from tasks (max task fin)
   const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
   const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
   const pReal=projPctReal(curTasks)??p.real??0;
+  // FIX 1: calcular pPlan con fechas derivadas
   const pPlan=pctPlan(derivedIni, derivedFin);
   const pDev=pReal-pPlan;
   const pX=dx(derivedIni), pW=Math.max(6,dx(derivedFin)-dx(derivedIni));
@@ -1272,6 +1339,7 @@ function buildGanttGrid() {
     return '';
   }
 
+  // FIX 3: Construir HTML en strings y hacer una sola asignación al DOM
   let leftHTML=`<div class="grow lp">
     <div class="gleft-row" style="width:${lw}px">
       <div class="gc n" style="width:${NAME_W}px;flex-shrink:0;padding-left:8px">
@@ -1292,18 +1360,16 @@ function buildGanttGrid() {
     </div>
   </div>`;
 
-  // Task rows
   rows.forEach(({t, depth})=>{
     const {ini:ti, fin:tf}=tDates(t.id, curTasks);
     const tReal=tPctReal(t.id, curTasks);
+    // FIX 1: cada tarea calcula su % plan con sus fechas efectivas
     const tPlan=pctPlan(ti, tf);
     const tDev=tReal-tPlan;
     const tX=dx(ti), tW=Math.max(4,dx(tf)-tX);
     const isParent=hasKids(t.id,curTasks);
 
-    // Level class: depth 0=l0, 1=l1, 2=l2, 3+=l3
     const lc=['l0','l1','l2','l3'][Math.min(depth,3)];
-    // Bar class
     const bc=['b0','b1','b2','b3'][Math.min(depth,3)];
     const pc=tReal>=tPlan?'pg':tReal>=tPlan-15?'py':'pr';
     const indent=depth*18+8;
@@ -1312,7 +1378,6 @@ function buildGanttGrid() {
       ?`<span class="gtg ${collapsed.has(N(t.id))?'':'op'}" onclick="toggleG(${t.id})">▶</span>`
       :`<span class="gsp"></span>`;
 
-    // Real% cell: editable for leaf nodes only
     const realCell=isParent
       ? pbar(tReal,tReal>=tPlan?'gn':'yw',38)
       : `<div class="pin">
@@ -1353,6 +1418,7 @@ function buildGanttGrid() {
     </div>`;
   });
 
+  // FIX 3: Insertar todo el DOM de una vez
   document.getElementById('gbody').innerHTML=`
     <div class="gleft" style="width:${lw}px">
       <div class="glh"><div style="display:flex;align-items:stretch;width:100%">${lHdr}</div></div>
@@ -1364,18 +1430,18 @@ function buildGanttGrid() {
     </div>
   `;
 
-  // Sync scroll
+  // FIX 3: Sync scroll con flag para evitar bucle
   const gl=document.getElementById('gl'), gr=document.getElementById('gr');
   if(gl&&gr){
-    let s=false;
-    gl.addEventListener('scroll',()=>{if(!s){s=true;gr.scrollTop=gl.scrollTop;s=false;}});
-    gr.addEventListener('scroll',()=>{if(!s){s=true;gl.scrollTop=gr.scrollTop;s=false;}});
+    let syncing=false;
+    gl.addEventListener('scroll',()=>{if(syncing)return;syncing=true;gr.scrollTop=gl.scrollTop;requestAnimationFrame(()=>syncing=false);});
+    gr.addEventListener('scroll',()=>{if(syncing)return;syncing=true;gl.scrollTop=gr.scrollTop;requestAnimationFrame(()=>syncing=false);});
   }
 }
 
 function toggleGcol(k){gcols[k]=!gcols[k];buildGanttGrid();}
 function toggleG(id){
-  const n=Number(id);  // always Number, never string
+  const n=Number(id);
   if(collapsed.has(n)) collapsed.delete(n);
   else collapsed.add(n);
   buildGanttGrid();
@@ -1388,8 +1454,8 @@ async function addTask(){
   const ini=document.getElementById('nt-in')?.value||null;
   const fin=document.getElementById('nt-fi')?.value||null;
   const prRaw=document.getElementById('nt-pr')?.value;
-  // CRITICAL: parent_id must be Number or null — never string
-  const parent_id = (prRaw && prRaw !== '') ? Number(prRaw) : null;
+  // FIX 2: usar NP para garantizar Number|null
+  const parent_id = NP(prRaw);
   const t = {
     proyecto_id: curProj.id,
     nombre: nb,
@@ -1397,14 +1463,12 @@ async function addTask(){
     fin: fin,
     pct: 0,
     responsable: curProj.jp || null,
-    parent_id: parent_id,  // Number or null
+    parent_id: parent_id,
     orden: curTasks.length + 1
   };
   try{
     const s = await dbSaveTask(t);
-    // dbSaveTask already pushes to curTasks in DEMO mode
-    // In Supabase mode, push the returned object with real id
-    if(s && !DEMO) curTasks.push(s);
+    // dbSaveTask ya actualiza curTasks y _taskCache
     document.getElementById('nt-nb').value='';
     drawGantt();
     toast(`"${nb}" agregada`,'✓');
@@ -1420,8 +1484,12 @@ async function spct(taskId){
   const t=curTasks.find(x=>N(x.id)===n);
   if(!t)return;
   t.pct=val;
-  try{await dbSaveTask(t);await syncProjReal();buildGanttGrid();toast(`Avance ${val}% guardado`,'✓');}
-  catch(e){toast('Error: '+e.message,'❌');}
+  try{
+    await dbSaveTask(t);
+    await syncProjReal();
+    buildGanttGrid();
+    toast(`Avance ${val}% guardado`,'✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
 }
 
 function openEditTask(id){
@@ -1442,21 +1510,30 @@ async function saveTaskModal(){
   t.fin=document.getElementById('tf-fi').value||t.fin;
   t.pct=parseInt(document.getElementById('tf-pc').value)||0;
   t.responsable=document.getElementById('tf-re').value||null;
-  try{await dbSaveTask(t);await syncProjReal();closeM('m-task');drawGantt();toast('Guardado','✓');}
-  catch(e){toast('Error: '+e.message,'❌');}
+  try{
+    await dbSaveTask(t);
+    await syncProjReal();
+    closeM('m-task');
+    drawGantt();
+    toast('Guardado','✓');
+  }catch(e){toast('Error: '+e.message,'❌');}
 }
 
 function askDelTask(id,name){
   pendDelTaskId=id;
-  const n=curTasks.filter(x=>N(x.parent_id)===N(id)).length;
+  const n=curTasks.filter(x=>NP(x.parent_id)===Number(id)).length;
   document.getElementById('deltmsg').innerHTML=`¿Eliminar <strong>"${name}"</strong>?`;
   document.getElementById('deltsub').textContent=n>0?`También se eliminarán ${n} subtarea(s).`:'Esta acción no se puede deshacer.';
   openM('m-delt');
 }
 async function confirmDelTask(){
   closeM('m-delt');
-  try{await dbDelTask(pendDelTaskId);await syncProjReal();drawGantt();toast('Eliminada','🗑');}
-  catch(e){toast('Error: '+e.message,'❌');}
+  try{
+    await dbDelTask(pendDelTaskId);
+    await syncProjReal();
+    drawGantt();
+    toast('Eliminada','🗑');
+  }catch(e){toast('Error: '+e.message,'❌');}
   pendDelTaskId=null;
 }
 
@@ -1512,6 +1589,8 @@ async function saveInf(){
   try{
     const s=await dbSaveInf(inf);
     if(!DEMO&&s) curInfs.unshift(s);
+    // Invalidar caché de informes para este proyecto
+    delete _infCache[Number(curProj.id)];
     curProj.real=pct;
     const pi=projects.findIndex(x=>N(x.id)===N(curProj.id));
     if(pi>=0) projects[pi].real=pct;
@@ -1539,11 +1618,11 @@ function drawInfo(){
     </div>
   `;
 }
-async function addRiesgo(){const nv=prompt('Nivel (Alta/Media/Baja):')||'Media';const dc=prompt('Descripción:');if(!dc)return;const ow=prompt('Responsable:')||'';const r={nivel:nv,descripcion:dc,responsable:ow,proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('riesgos','POST',r);infoData.riesgos.push(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else infoData.riesgos.push(r);drawInfo();toast('Riesgo agregado','⚠️');}
-async function removeRiesgo(i){const r=infoData.riesgos[i];if(r.id&&!DEMO)try{await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`);}catch(e){toast('Error','❌');return;}infoData.riesgos.splice(i,1);drawInfo();toast('Eliminado','🗑');}
-async function addDoc(){const n=prompt('Nombre:');if(!n)return;const s=prompt('Tamaño (ej: 1.2 MB):')||'';const tp=n.endsWith('.pdf')?'📄':n.endsWith('.xlsx')||n.endsWith('.xls')?'📊':'📝';const d={nombre:n,tipo:tp,tamano:s,proyecto_id:curProj.id};if(!DEMO){try{const sv=await sbFetch('documentos','POST',d);infoData.docs.push(Array.isArray(sv)?sv[0]:sv);}catch(e){toast('Error','❌');return;}}else infoData.docs.push(d);drawInfo();toast('Documento agregado','📎');}
-async function removeDoc(i){const d=infoData.docs[i];if(d.id&&!DEMO)try{await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`);}catch(e){toast('Error','❌');return;}infoData.docs.splice(i,1);drawInfo();toast('Eliminado','🗑');}
-async function addCom(){const txt=document.getElementById('cminp')?.value.trim();if(!txt)return;const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('comentarios','POST',c);infoData.coms.unshift(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else{c.created_at=new Date().toISOString();infoData.coms.unshift(c);}drawInfo();toast('Comentario agregado','💬');}
+async function addRiesgo(){const nv=prompt('Nivel (Alta/Media/Baja):')||'Media';const dc=prompt('Descripción:');if(!dc)return;const ow=prompt('Responsable:')||'';const r={nivel:nv,descripcion:dc,responsable:ow,proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('riesgos','POST',r);infoData.riesgos.push(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else infoData.riesgos.push(r);delete _infoCache[Number(curProj.id)];drawInfo();toast('Riesgo agregado','⚠️');}
+async function removeRiesgo(i){const r=infoData.riesgos[i];if(r.id&&!DEMO)try{await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`);}catch(e){toast('Error','❌');return;}infoData.riesgos.splice(i,1);delete _infoCache[Number(curProj.id)];drawInfo();toast('Eliminado','🗑');}
+async function addDoc(){const n=prompt('Nombre:');if(!n)return;const s=prompt('Tamaño (ej: 1.2 MB):')||'';const tp=n.endsWith('.pdf')?'📄':n.endsWith('.xlsx')||n.endsWith('.xls')?'📊':'📝';const d={nombre:n,tipo:tp,tamano:s,proyecto_id:curProj.id};if(!DEMO){try{const sv=await sbFetch('documentos','POST',d);infoData.docs.push(Array.isArray(sv)?sv[0]:sv);}catch(e){toast('Error','❌');return;}}else infoData.docs.push(d);delete _infoCache[Number(curProj.id)];drawInfo();toast('Documento agregado','📎');}
+async function removeDoc(i){const d=infoData.docs[i];if(d.id&&!DEMO)try{await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`);}catch(e){toast('Error','❌');return;}infoData.docs.splice(i,1);delete _infoCache[Number(curProj.id)];drawInfo();toast('Eliminado','🗑');}
+async function addCom(){const txt=document.getElementById('cminp')?.value.trim();if(!txt)return;const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('comentarios','POST',c);infoData.coms.unshift(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else{c.created_at=new Date().toISOString();infoData.coms.unshift(c);}delete _infoCache[Number(curProj.id)];drawInfo();toast('Comentario agregado','💬');}
 
 // ── 13. REPORTERÍA ──
 function drawReport(){
@@ -1551,8 +1630,10 @@ function drawReport(){
   const t=projects.length;
   if(!t){document.getElementById('rptcnt').innerHTML=`<div class="empty"><div class="ei">📈</div><div class="et">Sin datos</div></div>`;return;}
   const avg=Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t);
-  const ep=projects.filter(p=>(p.real||0)>=pctPlan(p.inicio,p.fin)).length;
-  const at=projects.filter(p=>(p.real||0)<pctPlan(p.inicio,p.fin)).length;
+  // FIX 1: drawReport usa _fin/_ini como fallback
+  const getPl=p=>pctPlan(p.inicio||p._ini||null, p.fin||p._fin||null);
+  const ep=projects.filter(p=>(p.real||0)>=getPl(p)).length;
+  const at=projects.filter(p=>(p.real||0)<getPl(p)).length;
   const tp=projects.reduce((s,p)=>s+(p.presupuesto||0),0);
   const byC={Alta:0,Media:0,Baja:0}, byF={Completo:0,Básico:0,Ágil:0};
   projects.forEach(p=>{if(p.complejidad)byC[p.complejidad]=(byC[p.complejidad]||0)+1;if(p.flujo)byF[p.flujo]=(byF[p.flujo]||0)+1;});
@@ -1572,22 +1653,30 @@ function drawReport(){
       <div style="padding:9px 13px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700">Estado Consolidado</div>
       <table style="width:100%;border-collapse:collapse">
         <thead><tr>${['FR','Nombre','JP','Real','Plan.','Desv.','Flujo'].map(h=>`<th style="padding:7px 10px;text-align:left;font-family:var(--mo);font-size:10px;color:var(--tx3);background:var(--sf2);border-bottom:1px solid var(--bd)">${h}</th>`).join('')}</tr></thead>
-        <tbody>${projects.map(p=>{const pl=pctPlan(p.inicio,p.fin),rv=p.real||0,dv=rv-pl;return`<tr style="border-bottom:1px solid var(--bd);cursor:pointer" onclick="openProj(${p.id})">
-          <td style="padding:7px 10px;font-family:var(--mo);font-size:11px;color:var(--ac2)">${p.fr||'—'}</td>
-          <td style="padding:7px 10px;font-size:12px;font-weight:600">${p.nombre||'—'}</td>
-          <td style="padding:7px 10px;font-size:11px">${p.jp||'—'}</td>
-          <td style="padding:7px 10px">${pbar(rv,rv>=pl?'gn':'yw',34)}</td>
-          <td style="padding:7px 10px">${pbar(pl,'ac',34)}</td>
-          <td style="padding:7px 10px">${devH(dv)}</td>
-          <td style="padding:7px 10px">${bflujo(p.flujo)}</td>
-        </tr>`;}).join('')}</tbody>
+        <tbody>${projects.map(p=>{
+          // FIX 1: usar _fin/_ini en reportería
+          const pl=getPl(p),rv=p.real||0,dv=rv-pl;
+          return`<tr style="border-bottom:1px solid var(--bd);cursor:pointer" onclick="openProj(${p.id})">
+            <td style="padding:7px 10px;font-family:var(--mo);font-size:11px;color:var(--ac2)">${p.fr||'—'}</td>
+            <td style="padding:7px 10px;font-size:12px;font-weight:600">${p.nombre||'—'}</td>
+            <td style="padding:7px 10px;font-size:11px">${p.jp||'—'}</td>
+            <td style="padding:7px 10px">${pbar(rv,rv>=pl?'gn':'yw',34)}</td>
+            <td style="padding:7px 10px">${pbar(pl,'ac',34)}</td>
+            <td style="padding:7px 10px">${devH(dv)}</td>
+            <td style="padding:7px 10px">${bflujo(p.flujo)}</td>
+          </tr>`;
+        }).join('')}</tbody>
       </table>
     </div>
   `;
 }
+
 function exportCSV(){
   const h=['FR','Nombre','JP','Área','Inicio','Fin','% Real','% Planificado','% Desviación','Complejidad','Flujo','Presupuesto'];
-  const rows=projects.map(p=>{const pl=pctPlan(p.inicio,p.fin),rv=p.real||0;return[p.fr,p.nombre,p.jp,p.area,p.inicio,p.fin,rv,pl,rv-pl,p.complejidad,p.flujo,p.presupuesto];});
+  const rows=projects.map(p=>{
+    const pl=pctPlan(p.inicio||p._ini||null,p.fin||p._fin||null),rv=p.real||0;
+    return[p.fr,p.nombre,p.jp,p.area,p.inicio,p.fin,rv,pl,rv-pl,p.complejidad,p.flujo,p.presupuesto];
+  });
   const csv=[h,...rows].map(r=>r.map(v=>`"${v??''}"`).join(',')).join('\n');
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download=`portafolio_${new Date().toISOString().split('T')[0]}.csv`;a.click();toast('CSV exportado','⬇');
 }
@@ -1602,7 +1691,12 @@ async function connectSB(){
     await sbFetch('proyectos','GET',null,'?select=id&limit=1');
     localStorage.setItem('sb_url',SB_URL);localStorage.setItem('sb_key',SB_KEY);
     DEMO=false;setDB(true);document.getElementById('cfgres').textContent='✅ Conectado!';
-    toast('Conectado a Supabase','✅');await loadProjects();
+    toast('Conectado a Supabase','✅');
+    // FIX 3: limpiar caché al reconectar
+    Object.keys(_taskCache).forEach(k=>delete _taskCache[k]);
+    Object.keys(_infCache).forEach(k=>delete _infCache[k]);
+    Object.keys(_infoCache).forEach(k=>delete _infoCache[k]);
+    await loadProjects();
   }catch(e){document.getElementById('cfgres').textContent='❌ '+e.message.substring(0,80);setDB(false,true);toast('Error','❌');}
 }
 async function testSB(){
@@ -1610,7 +1704,16 @@ async function testSB(){
   try{await sbFetch('proyectos','GET',null,'?select=id&limit=1');document.getElementById('cfgres').textContent='✅ OK';toast('Conexión OK','✅');}
   catch(e){document.getElementById('cfgres').textContent='❌ '+e.message.substring(0,80);toast('Error','❌');}
 }
-function useDemo(){DEMO=true;SB_URL='';SB_KEY='';localStorage.removeItem('sb_url');localStorage.removeItem('sb_key');setDB(false);document.getElementById('cfgres').textContent='🎭 Modo Demo';toast('Modo Demo','🎭');loadProjects();nav('centro');}
+function useDemo(){
+  DEMO=true;SB_URL='';SB_KEY='';
+  localStorage.removeItem('sb_url');localStorage.removeItem('sb_key');
+  setDB(false);document.getElementById('cfgres').textContent='🎭 Modo Demo';
+  // Limpiar caché al cambiar a demo
+  Object.keys(_taskCache).forEach(k=>delete _taskCache[k]);
+  Object.keys(_infCache).forEach(k=>delete _infCache[k]);
+  Object.keys(_infoCache).forEach(k=>delete _infoCache[k]);
+  toast('Modo Demo','🎭');loadProjects();nav('centro');
+}
 
 // ── 15. ROL ──
 function cycleRole(){roleIdx=(roleIdx+1)%ROLES.length;document.getElementById('rlbl').textContent=ROLES[roleIdx];toast(`Rol: ${ROLES[roleIdx]}`,'👤');drawTable();}
