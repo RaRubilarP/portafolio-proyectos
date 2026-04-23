@@ -6,7 +6,6 @@
 <title>PM · Portfolio Manager v6</title>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <style>
-/* ══ TOKENS ══ */
 :root{
   --bg:#0a0c10;--sf:#111318;--sf2:#181c24;--sf3:#1e2330;
   --bd:#252b38;--bd2:#2e3547;
@@ -21,8 +20,6 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 body{background:var(--bg);color:var(--tx);font-family:var(--sa);font-size:13px;min-height:100vh;display:flex;flex-direction:column}
-
-/* TOPBAR */
 .topbar{display:flex;align-items:center;gap:10px;padding:0 18px;height:50px;border-bottom:1px solid var(--bd);background:var(--sf);position:sticky;top:0;z-index:200;flex-shrink:0}
 .logo{font-family:var(--mo);font-size:12px;font-weight:600;color:var(--ac2);letter-spacing:.05em;white-space:nowrap}
 .tsep{width:1px;height:20px;background:var(--bd);flex-shrink:0}
@@ -39,8 +36,6 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sa);font-size:13px;m
 .rbtn:hover{border-color:var(--ac);color:var(--ac2)}
 .bnew{display:flex;align-items:center;gap:5px;padding:6px 14px;background:var(--ac);color:#fff;border:none;border-radius:var(--r);font-size:12px;font-weight:600;font-family:var(--sa);cursor:pointer;transition:all .15s;white-space:nowrap}
 .bnew:hover{background:var(--ac2)}
-
-/* LAYOUT */
 .layout{display:flex;flex:1;overflow:hidden;height:calc(100vh - 50px)}
 .sidebar{width:200px;flex-shrink:0;border-right:1px solid var(--bd);background:var(--sf);display:flex;flex-direction:column;overflow-y:auto}
 .sbs{padding:12px 8px 4px}
@@ -55,23 +50,17 @@ body{background:var(--bg);color:var(--tx);font-family:var(--sa);font-size:13px;m
 .sbp.on{color:var(--ac2)}
 .sbpc{font-family:var(--mo);font-size:9px;color:var(--tx3);display:block}
 .main{flex:1;overflow:auto;display:flex;flex-direction:column}
-
-/* VIEWS */
 .view{display:none;flex-direction:column;flex:1;min-height:0}
 .view.on{display:flex}
 .vhdr{padding:12px 18px 10px;border-bottom:1px solid var(--bd);display:flex;align-items:center;gap:10px;flex-wrap:wrap;flex-shrink:0;background:var(--sf)}
 .vttl{font-size:14px;font-weight:700}
 .vsub{font-size:11px;color:var(--tx3);font-family:var(--mo)}
 .vact{margin-left:auto;display:flex;gap:8px;align-items:center;flex-wrap:wrap}
-
-/* STATS BAR */
 .sbar{display:flex;border-bottom:1px solid var(--bd);background:var(--sf);flex-shrink:0;overflow-x:auto}
 .sv{flex:1;min-width:80px;padding:10px 14px;border-right:1px solid var(--bd)}
 .sv:last-child{border-right:none}
 .svv{font-family:var(--mo);font-size:18px;font-weight:600;line-height:1}
 .svl{font-size:10px;color:var(--tx3);letter-spacing:.04em;text-transform:uppercase;margin-top:2px}
-
-/* TABLE */
 .twrap{overflow:auto;flex:1}
 table{width:100%;border-collapse:collapse;min-width:900px}
 thead th{position:sticky;top:0;background:var(--sf);border-bottom:1px solid var(--bd);padding:8px 10px;text-align:left;font-family:var(--mo);font-size:10px;font-weight:500;color:var(--tx3);letter-spacing:.06em;white-space:nowrap;cursor:pointer;user-select:none;z-index:2}
@@ -81,8 +70,6 @@ tbody tr:hover{background:var(--sf2)}
 tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .tdc{font-family:var(--mo);font-size:11px;color:var(--ac2)}
 .tdn{font-weight:600;color:var(--tx);max-width:190px;overflow:hidden;text-overflow:ellipsis}
-
-/* BADGES + BARS */
 .badge{display:inline-flex;align-items:center;padding:2px 7px;border-radius:20px;font-size:10px;font-weight:600;font-family:var(--mo)}
 .ba{background:var(--rdd);color:var(--rd);border:1px solid rgba(239,68,68,.25)}
 .bm{background:var(--ywd);color:var(--yw);border:1px solid rgba(245,158,11,.25)}
@@ -92,7 +79,7 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .bag{background:var(--ywd);color:var(--yw);border:1px solid rgba(245,158,11,.25)}
 .pb{display:flex;align-items:center;gap:5px}
 .pbt{height:4px;background:var(--sf3);border-radius:2px;overflow:hidden;flex-shrink:0}
-.pbf{height:100%;border-radius:2px;transition:width .3s}
+.pbf{height:100%;border-radius:2px}
 .pbv{font-family:var(--mo);font-size:11px;flex-shrink:0}
 .dpos{color:var(--gn);font-family:var(--mo);font-size:11px}
 .dneg{color:var(--rd);font-family:var(--mo);font-size:11px}
@@ -106,16 +93,12 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .ss{background:var(--sf2);border:1px solid var(--bd2);border-radius:var(--r);color:var(--tx2);font-size:12px;font-family:var(--sa);padding:5px 9px;cursor:pointer;outline:none}
 .ss:focus{border-color:var(--ac)}
 .ss option{background:var(--sf2)}
-
-/* PROJECT TABS */
 .ptabs{display:flex;border-bottom:1px solid var(--bd);background:var(--sf);padding:0 18px;flex-shrink:0;overflow-x:auto;align-items:center}
 .ptab{padding:10px 13px;font-size:12px;font-weight:500;color:var(--tx3);cursor:pointer;border-bottom:2px solid transparent;transition:all .15s;white-space:nowrap}
 .ptab:hover{color:var(--tx2)}
 .ptab.on{color:var(--ac2);border-bottom-color:var(--ac2)}
 .pv{display:none;flex:1;overflow:hidden;flex-direction:column;min-height:0}
 .pv.on{display:flex}
-
-/* DETALLE */
 .dhero{background:linear-gradient(135deg,var(--sf2),var(--sf));border-bottom:1px solid var(--bd);padding:16px 18px;display:flex;gap:12px;flex-wrap:wrap;flex-shrink:0}
 .dcode{font-family:var(--mo);font-size:11px;color:var(--ac2);background:var(--acd);border:1px solid rgba(59,130,246,.25);padding:3px 9px;border-radius:20px;display:inline-block}
 .dname{font-size:18px;font-weight:700;margin-top:5px}
@@ -133,8 +116,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .fr:last-child{border-bottom:none}
 .fl{font-size:11px;color:var(--tx3);width:120px;flex-shrink:0}
 .fv{font-size:12px;color:var(--tx2);flex:1}
-
-/* CHECKLIST */
 .chkg{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:12px 18px;border-bottom:1px solid var(--bd);flex-shrink:0}
 .chki{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);padding:10px 12px;display:flex;align-items:center;justify-content:space-between;gap:8px}
 .chkl{font-size:12px;color:var(--tx2);font-weight:500}
@@ -142,7 +123,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .chkb{font-family:var(--mo);font-size:10px;font-weight:700;padding:2px 9px;border-radius:20px;border:1px solid var(--bd2);background:none;color:var(--tx3);cursor:pointer;transition:all .15s}
 .chkb.sy{background:var(--gnd);color:var(--gn);border-color:rgba(34,197,94,.4)}
 .chkb.sn{background:var(--rdd);color:var(--rd);border-color:rgba(239,68,68,.4)}
-
 /* GANTT */
 .gshell{display:flex;flex-direction:column;flex:1;overflow:hidden;min-height:0}
 .gtbar{display:flex;align-items:center;gap:8px;padding:8px 12px;border-bottom:1px solid var(--bd);background:var(--sf);flex-shrink:0;flex-wrap:wrap}
@@ -158,27 +138,24 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .gas{background:var(--sf3);border:1px solid var(--bd2);border-radius:var(--r);color:var(--tx2);font-size:11px;font-family:var(--sa);padding:5px 7px;outline:none;cursor:pointer}
 .gas option{background:var(--sf2)}
 .gbtn{font-size:11px;font-weight:600;font-family:var(--sa);padding:5px 10px;border-radius:var(--r);border:none;cursor:pointer;transition:all .15s;white-space:nowrap}
-.gbtn.p{background:var(--ac);color:#fff}
-.gbtn.p:hover{background:var(--ac2)}
-.gbtn.s{background:var(--sf3);color:var(--tx2);border:1px solid var(--bd2)}
-.gbtn.s:hover{border-color:var(--ac);color:var(--ac2)}
+.gbtn.p{background:var(--ac);color:#fff}.gbtn.p:hover{background:var(--ac2)}
+.gbtn.s{background:var(--sf3);color:var(--tx2);border:1px solid var(--bd2)}.gbtn.s:hover{border-color:var(--ac);color:var(--ac2)}
 .gbtn.d{background:var(--rdd);color:var(--rd);border:1px solid rgba(239,68,68,.25)}
 .gbody{display:flex;flex:1;overflow:hidden;min-height:0}
 .gleft{flex-shrink:0;border-right:2px solid var(--bd2);display:flex;flex-direction:column;overflow:hidden}
 .glh{background:var(--sf);border-bottom:2px solid var(--bd2);display:flex;flex-shrink:0;height:34px}
-.gls{overflow-y:auto;overflow-x:hidden;flex:1}
+.gls{overflow-y:auto;overflow-x:hidden;flex:1;will-change:scroll-position}
 .gright{flex:1;display:flex;flex-direction:column;overflow:hidden;min-width:0}
 .grh{background:var(--sf);border-bottom:2px solid var(--bd2);overflow:hidden;flex-shrink:0;height:34px}
-.grs{overflow:auto;flex:1}
+.grs{overflow:auto;flex:1;will-change:scroll-position}
 .gch{padding:0 7px;font-family:var(--mo);font-size:9px;font-weight:600;color:var(--tx3);letter-spacing:.06em;border-right:1px solid var(--bd);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex-shrink:0;display:flex;align-items:center;justify-content:center;text-align:center;height:34px}
 .gch.nl{justify-content:flex-start;text-align:left}
-.grow{display:flex;border-bottom:1px solid var(--bd);align-items:stretch;transition:background .08s}
+.grow{display:flex;border-bottom:1px solid var(--bd);align-items:stretch}
 .grow:hover{background:rgba(255,255,255,.02)}
 .lp{background:rgba(168,85,247,.07);min-height:36px}
 .l0{background:rgba(59,130,246,.06);min-height:34px}
 .l1{background:rgba(34,197,94,.04);min-height:32px}
-.l2{min-height:30px}
-.l3{min-height:28px}
+.l2{min-height:30px}.l3{min-height:28px}
 .gleft-row{display:flex;align-items:stretch;flex-shrink:0}
 .gc{padding:0 7px;font-size:11px;color:var(--tx2);border-right:1px solid var(--bd);display:flex;align-items:center;flex-shrink:0;overflow:hidden}
 .gc.n{gap:3px;min-width:0}
@@ -203,26 +180,22 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .pinp::-webkit-outer-spin-button,.pinp::-webkit-inner-spin-button{-webkit-appearance:none;margin:0}
 .psv{background:var(--gnd);border:1px solid rgba(34,197,94,.3);color:var(--gn);border-radius:3px;font-size:9px;padding:2px 4px;cursor:pointer;font-family:var(--mo)}
 .psv:hover{background:rgba(34,197,94,.2)}
+/* GANTT TIMELINE — usando canvas para las líneas verticales en lugar de divs */
 .gright-row{position:relative;display:flex;align-items:center}
 .gbar-w{position:absolute;height:16px;pointer-events:none}
-.lp .gbar-w{height:20px}
-.l0 .gbar-w{height:18px}
-.l1 .gbar-w{height:16px}
+.lp .gbar-w{height:20px}.l0 .gbar-w{height:18px}.l1 .gbar-w{height:16px}
 .gbar{height:100%;border-radius:3px;position:relative;overflow:visible;min-width:3px}
-.bp{background:var(--pu);opacity:.8}
-.b0{background:var(--ac);opacity:.78}
-.b1{background:var(--gn);opacity:.65}
-.b2{background:var(--sf3);border:1px solid var(--bd2)}
+.bp{background:var(--pu);opacity:.8}.b0{background:var(--ac);opacity:.78}
+.b1{background:var(--gn);opacity:.65}.b2{background:var(--sf3);border:1px solid var(--bd2)}
 .b3{background:var(--sf3);border:1px solid var(--bd2);opacity:.7}
 .bprog{position:absolute;top:0;left:0;height:100%;border-radius:3px;opacity:.9}
 .pg{background:var(--gn)}.py{background:var(--yw)}.pr{background:var(--rd)}
 .blbl{position:absolute;right:0;top:50%;transform:translateY(-50%) translateX(calc(100% + 3px));font-family:var(--mo);font-size:9px;color:var(--tx3);white-space:nowrap}
 .todayl{position:absolute;top:0;bottom:0;width:2px;background:var(--rd);opacity:.65;z-index:5;pointer-events:none}
 .todayb{position:absolute;top:2px;font-family:var(--mo);font-size:8px;color:var(--rd);transform:translateX(-50%);white-space:nowrap;background:var(--bg);padding:0 2px;z-index:6}
-.gvl{position:absolute;top:0;bottom:0;width:1px;background:var(--bd);opacity:.3;pointer-events:none}
+/* Canvas para líneas de grilla — reemplaza los divs .gvl */
+.gcvs{position:absolute;top:0;left:0;pointer-events:none;opacity:.3}
 .wkh{padding:0 5px;border-right:1px solid var(--bd);font-family:var(--mo);font-size:9px;color:var(--tx3);text-align:center;white-space:nowrap;display:flex;flex-direction:column;align-items:center;justify-content:center;height:34px}
-
-/* AVANCE SEMANAL */
 .avwrap{flex:1;padding:14px 18px;overflow-y:auto}
 .ic{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);margin-bottom:8px;overflow:hidden}
 .ih{display:flex;align-items:center;gap:8px;padding:9px 12px;background:var(--sf2);cursor:pointer}
@@ -232,8 +205,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .igr{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin-bottom:8px}
 .ifl{font-size:10px;color:var(--tx3);text-transform:uppercase;letter-spacing:.05em;margin-bottom:2px;font-family:var(--mo)}
 .ifv{font-size:12px;color:var(--tx2);line-height:1.5}
-
-/* INFO */
 .infowrap{flex:1;overflow-y:auto}
 .infogrid{display:grid;grid-template-columns:1fr 1fr}
 .ip{padding:12px 16px;border-bottom:1px solid var(--bd);border-right:1px solid var(--bd)}
@@ -248,23 +219,17 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .cmm{display:flex;gap:7px;align-items:center;margin-bottom:3px}
 .cma{font-size:11px;font-weight:600;color:var(--ac2)}
 .cmd{font-family:var(--mo);font-size:10px;color:var(--tx3)}
-
-/* REPORT */
 .rkpis{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:9px;margin-bottom:16px}
 .rch{background:var(--sf);border:1px solid var(--bd);border-radius:var(--r2);padding:12px;margin-bottom:12px}
 .rcttl{font-size:12px;font-weight:700;color:var(--tx2);margin-bottom:9px}
 .cbr{display:flex;align-items:center;gap:7px;margin-bottom:6px}
 .cbl{font-size:11px;color:var(--tx2);width:80px;text-align:right;flex-shrink:0}
 .cbt{flex:1;background:var(--sf3);border-radius:3px;height:10px;overflow:hidden}
-.cbf{height:100%;border-radius:3px;transition:width .5s}
+.cbf{height:100%;border-radius:3px}
 .cbv{font-family:var(--mo);font-size:10px;color:var(--tx2);width:24px;flex-shrink:0}
-
-/* CONFIG */
 .cfgp{background:var(--sf);border:1px solid var(--yw);border-radius:var(--r2);padding:16px;margin:14px;max-width:700px}
 .cfgttl{font-size:13px;font-weight:700;color:var(--yw);margin-bottom:5px}
 .cfgsub{font-size:12px;color:var(--tx2);margin-bottom:12px;line-height:1.75}
-
-/* MODALS */
 .ov{display:none;position:fixed;inset:0;background:rgba(0,0,0,.75);backdrop-filter:blur(4px);z-index:300;align-items:center;justify-content:center}
 .ov.on{display:flex}
 .modal{background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r2);width:520px;max-width:96vw;max-height:92vh;overflow-y:auto;box-shadow:0 24px 60px rgba(0,0,0,.6)}
@@ -290,17 +255,17 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 .bdf:hover{background:rgba(239,68,68,.2)}
 .cob{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:18px}
 .coi{font-size:36px;opacity:.8}
-
-/* EMPTY / TOAST / LOADER */
 .empty{display:flex;flex-direction:column;align-items:center;justify-content:center;flex:1;gap:10px;padding:44px 18px;text-align:center}
-.ei{font-size:36px;opacity:.2}
-.et{font-size:14px;font-weight:700;color:var(--tx2)}
+.ei{font-size:36px;opacity:.2}.et{font-size:14px;font-weight:700;color:var(--tx2)}
 .es{font-size:12px;color:var(--tx3);max-width:280px;line-height:1.6}
 .toast{position:fixed;bottom:16px;right:16px;background:var(--sf);border:1px solid var(--bd2);border-radius:var(--r2);padding:9px 14px;font-size:13px;color:var(--tx2);box-shadow:0 8px 30px rgba(0,0,0,.5);z-index:400;transform:translateY(50px);opacity:0;transition:all .28s;display:flex;align-items:center;gap:7px;max-width:320px}
 .toast.on{transform:translateY(0);opacity:1}
 .ldr{display:inline-block;width:13px;height:13px;border:2px solid var(--bd2);border-top-color:var(--ac);border-radius:50%;animation:spin .7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
 .lrow{display:flex;align-items:center;justify-content:center;padding:40px;gap:10px;color:var(--tx3);font-size:13px}
+/* LOADING OVERLAY para proyecto — evita clicks múltiples */
+.proj-loading{position:absolute;inset:0;background:rgba(10,12,16,.7);display:flex;align-items:center;justify-content:center;z-index:50;backdrop-filter:blur(2px)}
+.proj-loading.hidden{display:none}
 ::-webkit-scrollbar{width:5px;height:5px}
 ::-webkit-scrollbar-track{background:transparent}
 ::-webkit-scrollbar-thumb{background:var(--bd2);border-radius:3px}
@@ -308,7 +273,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 </style>
 </head>
 <body>
-
 <div class="topbar">
   <div class="logo">PM<span style="color:var(--tx3);font-weight:400">·</span>PORTFOLIO <span style="font-size:9px;color:var(--tx3);margin-left:2px">v6</span></div>
   <div class="tsep"></div>
@@ -323,7 +287,6 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
     <button class="bnew" onclick="openNewProj()">+ Nuevo Proyecto</button>
   </div>
 </div>
-
 <div class="layout">
 <div class="sidebar">
   <div class="sbs">
@@ -336,8 +299,9 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
   <div class="sbs"><div class="sbl">Proyectos</div></div>
   <div id="sbprojs" style="padding:0 8px 14px;"></div>
 </div>
-
-<div class="main" id="main">
+<div class="main" id="main" style="position:relative">
+<!-- LOADING OVERLAY global -->
+<div class="proj-loading hidden" id="gloading"><div class="ldr"></div></div>
 
 <!-- CENTRO -->
 <div class="view on" id="v-centro">
@@ -359,17 +323,11 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
   <div class="twrap">
     <table>
       <thead><tr>
-        <th onclick="tsort('fr')">FR</th>
-        <th onclick="tsort('nombre')">NOMBRE</th>
-        <th onclick="tsort('jp')">JEFE DE PROYECTO</th>
-        <th onclick="tsort('inicio')">INICIO</th>
-        <th onclick="tsort('fin')">FIN</th>
-        <th onclick="tsort('real')">% REAL</th>
-        <th onclick="tsort('plan')">% PLAN.</th>
-        <th onclick="tsort('dev')">DESV.</th>
-        <th>COMPLEJIDAD</th>
-        <th>FLUJO</th>
-        <th style="width:70px"></th>
+        <th onclick="tsort('fr')">FR</th><th onclick="tsort('nombre')">NOMBRE</th>
+        <th onclick="tsort('jp')">JEFE DE PROYECTO</th><th onclick="tsort('inicio')">INICIO</th>
+        <th onclick="tsort('fin')">FIN</th><th onclick="tsort('real')">% REAL</th>
+        <th onclick="tsort('plan')">% PLAN.</th><th onclick="tsort('dev')">DESV.</th>
+        <th>COMPLEJIDAD</th><th>FLUJO</th><th style="width:70px"></th>
       </tr></thead>
       <tbody id="tbody"></tbody>
     </table>
@@ -404,10 +362,7 @@ tbody td{padding:9px 10px;font-size:12px;color:var(--tx2);white-space:nowrap}
 <div class="view" id="v-reporte">
   <div class="vhdr">
     <div><div class="vttl">Reportería del Portafolio</div><div class="vsub" id="rptdate"></div></div>
-    <div class="vact">
-      <button class="bs2" onclick="exportCSV()">⬇ CSV</button>
-      <button class="bs2" onclick="window.print()">🖨 Imprimir</button>
-    </div>
+    <div class="vact"><button class="bs2" onclick="exportCSV()">⬇ CSV</button><button class="bs2" onclick="window.print()">🖨 Imprimir</button></div>
   </div>
   <div style="padding:14px 18px;overflow-y:auto;flex:1" id="rptcnt"></div>
 </div>
@@ -448,7 +403,6 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     </div>
   </div>
 </div>
-
 </div><!-- main -->
 </div><!-- layout -->
 
@@ -470,7 +424,6 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     <div class="mft"><button class="bs2" onclick="closeM('m-proj')">Cancelar</button><button class="bp2" id="mpbtn" onclick="saveProj()">✓ Guardar</button></div>
   </div>
 </div>
-
 <div class="ov" id="m-delp">
   <div class="modal sm">
     <div class="mhdr"><div class="mttl" style="color:var(--rd)">⚠️ Eliminar Proyecto</div><button class="mx" onclick="closeM('m-delp')">✕</button></div>
@@ -478,7 +431,6 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     <div class="mft"><button class="bs2" onclick="closeM('m-delp')">Cancelar</button><button class="bdf" onclick="confirmDelProj()">🗑 Eliminar</button></div>
   </div>
 </div>
-
 <div class="ov" id="m-delt">
   <div class="modal sm">
     <div class="mhdr"><div class="mttl" style="color:var(--rd)">⚠️ Eliminar Tarea</div><button class="mx" onclick="closeM('m-delt')">✕</button></div>
@@ -486,7 +438,6 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     <div class="mft"><button class="bs2" onclick="closeM('m-delt')">Cancelar</button><button class="bdf" onclick="confirmDelTask()">🗑 Eliminar</button></div>
   </div>
 </div>
-
 <div class="ov" id="m-task">
   <div class="modal">
     <div class="mhdr"><div class="mttl" id="mttask">Editar Tarea</div><button class="mx" onclick="closeM('m-task')">✕</button></div>
@@ -498,7 +449,6 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     <div class="mft"><button class="bs2" onclick="closeM('m-task')">Cancelar</button><button class="bp2" onclick="saveTaskModal()">✓ Guardar</button></div>
   </div>
 </div>
-
 <div class="ov" id="m-inf">
   <div class="modal">
     <div class="mhdr"><div><div class="mttl">Nuevo Informe de Avance</div><div style="font-size:11px;color:var(--tx3)" id="infsub"></div></div><button class="mx" onclick="closeM('m-inf')">✕</button></div>
@@ -512,429 +462,328 @@ CREATE POLICY "ap" ON proyectos FOR ALL USING(true)WITH CHECK(true);CREATE POLIC
     <div class="mft"><button class="bs2" onclick="closeM('m-inf')">Cancelar</button><button class="bp2" onclick="saveInf()">✓ Guardar</button></div>
   </div>
 </div>
-
 <div class="toast" id="toast"><span id="tico">✓</span><span id="tmsg">OK</span></div>
 
 <script>
 'use strict';
-// ════════════════════════════════════════════════════════
-//  PM PORTFOLIO MANAGER v6 — CORREGIDO
-//  FIX 1: % Planificado calcula correctamente con fechas derivadas
-//  FIX 2: Tareas/subtareas visibles siempre (NP robusto + precarga)
-//  FIX 3: Rendimiento mejorado (caché, debounce, renders optimizados)
-// ════════════════════════════════════════════════════════
+// ═══════════════════════════════════════════════════════
+//  PM PORTFOLIO MANAGER v6 — OPTIMIZADO
+//  Cambios de rendimiento:
+//  1. Lookups O(1) con Maps en lugar de O(n) find/filter
+//  2. Canvas para líneas de grilla (antes miles de divs)
+//  3. Scroll sync sin reflow forzado
+//  4. openProj no bloquea UI — muestra vista inmediatamente
+//  5. Caché por proyecto para tareas/informes/info
+//  6. Debounce en búsqueda
+//  7. Guard contra clics múltiples (isLoading)
+//  8. drawAll no duplica renders
+// ═══════════════════════════════════════════════════════
 
-// ── 1. CÁLCULO ──
+// ── 1. UTILIDADES ──
+const N  = x => { if(x===null||x===undefined||x==='') return null; const n=Number(x); return isNaN(n)?null:n; };
+// NP: normaliza parent_id — maneja 'null' string que Supabase a veces devuelve
+const NP = x => { if(x===null||x===undefined||x===''||x==='null'||x==='undefined') return null; const n=Number(x); return isNaN(n)?null:n; };
 
-const N = x => {
-  if (x === null || x === undefined || x === '') return null;
-  const n = Number(x);
-  return isNaN(n) ? null : n;
-};
+// ── 2. CÁLCULOS (sin dependencias de estado global) ──
+
+function pctPlan(ini, fin) {
+  if(!ini||!fin) return 0;
+  const now=Date.now(), i=new Date(ini).getTime(), f=new Date(fin).getTime();
+  if(isNaN(i)||isNaN(f)||f<=i) return 0;
+  if(now<=i) return 0;
+  if(now>=f) return 100;
+  return Math.round(((now-i)/(f-i))*100);
+}
 
 /**
- * FIX 2: NP robusto — convierte parent_id a Number|null.
- * Ahora maneja correctamente: null, undefined, '', 'null', NaN, 0.
- * Solo 0 numérico es válido como parent_id si realmente existe.
+ * OPTIMIZACIÓN: tPctReal y tDates usan Maps pre-construidos (O(1) lookup)
+ * en lugar de allTasks.find() en cada llamada recursiva (O(n) por nodo).
  */
-const NP = x => {
-  if (x === null || x === undefined || x === '' || x === 'null' || x === 'undefined') return null;
-  const n = Number(x);
-  return isNaN(n) ? null : n;
-};
-
-/** % planificado dado un rango de fechas ini/fin como strings 'YYYY-MM-DD' */
-function pctPlan(ini, fin) {
-  if (!ini || !fin) return 0;
-  const now = Date.now();
-  const i = new Date(ini).getTime();
-  const f = new Date(fin).getTime();
-  if (isNaN(i) || isNaN(f) || f <= i) return 0;
-  if (now <= i) return 0;
-  if (now >= f) return 100;
-  return Math.round(((now - i) / (f - i)) * 100);
-}
-
-/** % real de una tarea: si tiene hijos → promedio recursivo */
-function tPctReal(taskId, allTasks) {
-  const id = Number(taskId);
-  const t = allTasks.find(x => Number(x.id) === id);
-  if (!t) return 0;
-  const children = allTasks.filter(x => NP(x.parent_id) === id);
-  if (children.length === 0) return t.pct || 0;
-  const avg = children.reduce((s, c) => s + tPctReal(c.id, allTasks), 0) / children.length;
-  return Math.round(avg);
-}
-
-/** Fechas efectivas de una tarea (abarca todos los descendientes) */
-function tDates(taskId, allTasks) {
-  const id = Number(taskId);
-  const t = allTasks.find(x => Number(x.id) === id);
-  if (!t) return { ini: null, fin: null };
-  function allDesc(tid) {
-    const n = Number(tid);
-    const children = allTasks.filter(x => NP(x.parent_id) === n);
-    return children.flatMap(c => [c, ...allDesc(c.id)]);
+function buildTaskMaps(allTasks) {
+  const byId       = new Map(); // id → task
+  const childrenOf = new Map(); // parentId → task[]
+  for(const t of allTasks) {
+    byId.set(Number(t.id), t);
+    const p = NP(t.parent_id);
+    const key = p === null ? '__root__' : p;
+    if(!childrenOf.has(key)) childrenOf.set(key, []);
+    childrenOf.get(key).push(t);
   }
-  const all = [t, ...allDesc(id)];
-  const starts = all.map(x => x.inicio).filter(Boolean).sort();
-  const ends   = all.map(x => x.fin).filter(Boolean).sort().reverse();
-  return { ini: starts[0] || null, fin: ends[0] || null };
+  return { byId, childrenOf };
 }
 
-function hasKids(taskId, allTasks) {
+function tPctRealFast(taskId, maps) {
   const id = Number(taskId);
-  return allTasks.some(x => NP(x.parent_id) === id);
+  const t = maps.byId.get(id);
+  if(!t) return 0;
+  const children = maps.childrenOf.get(id) || [];
+  if(!children.length) return t.pct || 0;
+  return Math.round(children.reduce((s,c)=>s+tPctRealFast(c.id,maps),0)/children.length);
+}
+
+function tDatesFast(taskId, maps) {
+  function collect(id) {
+    const t = maps.byId.get(Number(id));
+    if(!t) return [];
+    const items = [t];
+    for(const c of (maps.childrenOf.get(Number(id))||[])) items.push(...collect(c.id));
+    return items;
+  }
+  const all = collect(taskId);
+  const starts = all.map(x=>x.inicio).filter(Boolean).sort();
+  const ends   = all.map(x=>x.fin).filter(Boolean).sort().reverse();
+  return { ini:starts[0]||null, fin:ends[0]||null };
 }
 
 function projPctReal(allTasks) {
-  if (!allTasks || !allTasks.length) return null;
-  const roots = allTasks.filter(x => NP(x.parent_id) === null);
-  if (!roots.length) return null;
-  return Math.round(roots.reduce((s, t) => s + tPctReal(t.id, allTasks), 0) / roots.length);
+  if(!allTasks||!allTasks.length) return null;
+  const maps = buildTaskMaps(allTasks);
+  const roots = maps.childrenOf.get('__root__') || [];
+  if(!roots.length) return null;
+  return Math.round(roots.reduce((s,t)=>s+tPctRealFast(t.id,maps),0)/roots.length);
 }
 
-/** Construye lista ordenada de filas del EDT (DFS) */
-function buildEDT(allTasks, parentId = null, depth = 0) {
+function hasKidsFast(taskId, maps) {
+  return (maps.childrenOf.get(Number(taskId))||[]).length > 0;
+}
+
+/** buildEDT usando Maps — O(n) total en lugar de O(n²) */
+function buildEDT(allTasks, maps, parentKey='__root__', depth=0) {
   const rows = [];
-  // FIX 2: comparación segura usando NP en ambos lados
-  const pidN = parentId === null ? null : Number(parentId);
-  allTasks
-    .filter(t => NP(t.parent_id) === pidN)
-    .sort((a, b) => (a.orden || 0) - (b.orden || 0))
-    .forEach(t => {
-      rows.push({ t, depth });
-      const tid = Number(t.id);
-      if (hasKids(t.id, allTasks) && !collapsed.has(tid)) {
-        rows.push(...buildEDT(allTasks, t.id, depth + 1));
-      }
-    });
+  const children = (maps.childrenOf.get(parentKey) || [])
+    .slice()
+    .sort((a,b)=>(a.orden||0)-(b.orden||0));
+  for(const t of children) {
+    rows.push({ t, depth });
+    const tid = Number(t.id);
+    if(hasKidsFast(tid, maps) && !collapsed.has(tid)) {
+      rows.push(...buildEDT(allTasks, maps, tid, depth+1));
+    }
+  }
   return rows;
 }
 
-// ── 2. ESTADO GLOBAL ──
-let SB_URL = localStorage.getItem('sb_url') || '';
-let SB_KEY = localStorage.getItem('sb_key') || '';
-let DEMO   = !SB_URL || !SB_KEY;
+// ── 3. ESTADO GLOBAL ──
+let SB_URL = localStorage.getItem('sb_url')||'';
+let SB_KEY = localStorage.getItem('sb_key')||'';
+let DEMO   = !SB_URL||!SB_KEY;
 
-const ROLES = ['Administrador', 'Jefe de Proyecto', 'Solo Lectura'];
+const ROLES = ['Administrador','Jefe de Proyecto','Solo Lectura'];
 let roleIdx = 0;
 let projects  = [];
 let curProj   = null;
 let curTasks  = [];
 let curInfs   = [];
-let infoData  = { riesgos:[], docs:[], coms:[] };
+let infoData  = {riesgos:[],docs:[],coms:[]};
+let isLoading = false; // Guard contra clics múltiples
 
-// FIX 3: Caché por proyecto para evitar recargas innecesarias
-const _taskCache = {};   // { [projId]: curTasks[] }
-const _infCache  = {};   // { [projId]: curInfs[] }
-const _infoCache = {};   // { [projId]: infoData }
+// Caché por proyecto
+const _cache = {}; // { [projId]: { tasks, infs, info } }
 
-let sortK = 'fr', sortD = 1;
-let editProjId = null;
-let editTaskId = null;
-let pendDelProjId = null;
-let pendDelTaskId = null;
+let sortK='fr', sortDir=1;
+let editProjId=null, editTaskId=null;
+let pendDelProjId=null, pendDelTaskId=null;
 let collapsed = new Set();
 
-let gcols = { ini:true, fin:true, real:true, plan:true, dev:true, resp:false };
-const GCOL_W = { ini:70, fin:70, real:72, plan:72, dev:60, resp:100 };
-const NAME_W = 210;
-const WK_W   = 95;
-function leftW() { return NAME_W + Object.keys(gcols).filter(k=>gcols[k]).reduce((s,k)=>s+GCOL_W[k],0); }
+let gcols = {ini:true,fin:true,real:true,plan:true,dev:true,resp:false};
+const GCOL_W = {ini:70,fin:70,real:72,plan:72,dev:60,resp:100};
+const NAME_W=210, WK_W=95;
+function leftW(){ return NAME_W+Object.keys(gcols).filter(k=>gcols[k]).reduce((s,k)=>s+GCOL_W[k],0); }
 
-// FIX 3: Debounce para el buscador
-let _dbTimer = null;
-function debounceDraw() {
-  clearTimeout(_dbTimer);
-  _dbTimer = setTimeout(drawTable, 180);
-}
+let _dbTimer=null;
+function debounceDraw(){ clearTimeout(_dbTimer); _dbTimer=setTimeout(drawTable,200); }
 
-// ── 3. DATOS DEMO ──
-const DD_PROJS = [
+// ── 4. DATOS DEMO ──
+const DD_PROJS=[
   {id:1,fr:'FR-2024-001',nombre:'Modernización ERP',inicio:'2024-01-15',fin:'2024-12-31',real:68,complejidad:'Alta',flujo:'Completo',jp:'Ana González',area:'TI',descripcion:'Migración del ERP corporativo.',presupuesto:250000000},
   {id:2,fr:'FR-2024-002',nombre:'Portal Ciudadano Digital',inicio:'2024-03-01',fin:'2024-10-31',real:95,complejidad:'Media',flujo:'Ágil',jp:'Carlos Rojas',area:'Digital',descripcion:'Portal web y app móvil.',presupuesto:85000000},
   {id:3,fr:'FR-2025-001',nombre:'Infraestructura Cloud',inicio:'2024-06-01',fin:'2025-05-31',real:30,complejidad:'Alta',flujo:'Básico',jp:'Marcela Torres',area:'Infraestructura',descripcion:'Migración a nube híbrida.',presupuesto:420000000}
 ];
-const DD_TASKS = {
-  1:[
-    {id:1,nombre:'Fase 1: Análisis',inicio:'2024-01-15',fin:'2024-03-31',pct:100,responsable:'Ana González',parent_id:null,orden:1},
-    {id:2,nombre:'Levantamiento requerimientos',inicio:'2024-01-15',fin:'2024-02-15',pct:100,responsable:'Pedro Martínez',parent_id:1,orden:2},
-    {id:3,nombre:'Diseño arquitectura',inicio:'2024-02-16',fin:'2024-03-31',pct:100,responsable:'Ana González',parent_id:1,orden:3},
-    {id:4,nombre:'Fase 2: Desarrollo',inicio:'2024-04-01',fin:'2024-09-30',pct:80,responsable:'Ana González',parent_id:null,orden:4},
-    {id:5,nombre:'Módulo Finanzas',inicio:'2024-04-01',fin:'2024-06-30',pct:100,responsable:'Luis Pérez',parent_id:4,orden:5},
-    {id:6,nombre:'Módulo RRHH',inicio:'2024-07-01',fin:'2024-09-30',pct:60,responsable:'Carmen Soto',parent_id:4,orden:6},
-    {id:7,nombre:'Fase 3: Implementación',inicio:'2024-10-01',fin:'2024-12-31',pct:20,responsable:'Ana González',parent_id:null,orden:7},
-    {id:8,nombre:'Capacitación',inicio:'2024-10-01',fin:'2024-11-30',pct:30,responsable:'Diego Muñoz',parent_id:7,orden:8},
-    {id:9,nombre:'Go-Live',inicio:'2024-12-01',fin:'2024-12-31',pct:0,responsable:'Ana González',parent_id:7,orden:9}
-  ],
-  2:[
-    {id:10,nombre:'Sprint 1 — UX/UI',inicio:'2024-03-01',fin:'2024-04-15',pct:100,responsable:'María Lagos',parent_id:null,orden:1},
-    {id:11,nombre:'Wireframes',inicio:'2024-03-01',fin:'2024-03-31',pct:100,responsable:'María Lagos',parent_id:10,orden:2},
-    {id:12,nombre:'Sprint 2-4 — Dev',inicio:'2024-04-16',fin:'2024-09-30',pct:100,responsable:'Carlos Rojas',parent_id:null,orden:3},
-    {id:13,nombre:'Backend y APIs',inicio:'2024-04-16',fin:'2024-07-31',pct:100,responsable:'Rodrigo Vega',parent_id:12,orden:4},
-    {id:14,nombre:'Sprint 5 — QA',inicio:'2024-10-01',fin:'2024-10-31',pct:80,responsable:'Carlos Rojas',parent_id:null,orden:5},
-    {id:15,nombre:'Pruebas de carga',inicio:'2024-10-01',fin:'2024-10-20',pct:100,responsable:'Rodrigo Vega',parent_id:14,orden:6}
-  ],
-  3:[
-    {id:16,nombre:'Evaluación inicial',inicio:'2024-06-01',fin:'2024-08-31',pct:100,responsable:'Marcela Torres',parent_id:null,orden:1},
-    {id:17,nombre:'Inventario sistemas',inicio:'2024-06-01',fin:'2024-07-15',pct:100,responsable:'Juan Valdés',parent_id:16,orden:2},
-    {id:18,nombre:'Migración Fase 1',inicio:'2024-09-01',fin:'2024-12-31',pct:35,responsable:'Marcela Torres',parent_id:null,orden:3},
-    {id:19,nombre:'Ambiente dev',inicio:'2024-09-01',fin:'2024-10-31',pct:80,responsable:'Sofía Navarro',parent_id:18,orden:4}
-  ]
+const DD_TASKS={
+  1:[{id:1,nombre:'Fase 1: Análisis',inicio:'2024-01-15',fin:'2024-03-31',pct:100,responsable:'Ana González',parent_id:null,orden:1},{id:2,nombre:'Levantamiento requerimientos',inicio:'2024-01-15',fin:'2024-02-15',pct:100,responsable:'Pedro Martínez',parent_id:1,orden:2},{id:3,nombre:'Diseño arquitectura',inicio:'2024-02-16',fin:'2024-03-31',pct:100,responsable:'Ana González',parent_id:1,orden:3},{id:4,nombre:'Fase 2: Desarrollo',inicio:'2024-04-01',fin:'2024-09-30',pct:80,responsable:'Ana González',parent_id:null,orden:4},{id:5,nombre:'Módulo Finanzas',inicio:'2024-04-01',fin:'2024-06-30',pct:100,responsable:'Luis Pérez',parent_id:4,orden:5},{id:6,nombre:'Módulo RRHH',inicio:'2024-07-01',fin:'2024-09-30',pct:60,responsable:'Carmen Soto',parent_id:4,orden:6},{id:7,nombre:'Fase 3: Implementación',inicio:'2024-10-01',fin:'2024-12-31',pct:20,responsable:'Ana González',parent_id:null,orden:7},{id:8,nombre:'Capacitación',inicio:'2024-10-01',fin:'2024-11-30',pct:30,responsable:'Diego Muñoz',parent_id:7,orden:8},{id:9,nombre:'Go-Live',inicio:'2024-12-01',fin:'2024-12-31',pct:0,responsable:'Ana González',parent_id:7,orden:9}],
+  2:[{id:10,nombre:'Sprint 1 — UX/UI',inicio:'2024-03-01',fin:'2024-04-15',pct:100,responsable:'María Lagos',parent_id:null,orden:1},{id:11,nombre:'Wireframes',inicio:'2024-03-01',fin:'2024-03-31',pct:100,responsable:'María Lagos',parent_id:10,orden:2},{id:12,nombre:'Sprint 2-4 — Dev',inicio:'2024-04-16',fin:'2024-09-30',pct:100,responsable:'Carlos Rojas',parent_id:null,orden:3},{id:13,nombre:'Backend y APIs',inicio:'2024-04-16',fin:'2024-07-31',pct:100,responsable:'Rodrigo Vega',parent_id:12,orden:4},{id:14,nombre:'Sprint 5 — QA',inicio:'2024-10-01',fin:'2024-10-31',pct:80,responsable:'Carlos Rojas',parent_id:null,orden:5},{id:15,nombre:'Pruebas de carga',inicio:'2024-10-01',fin:'2024-10-20',pct:100,responsable:'Rodrigo Vega',parent_id:14,orden:6}],
+  3:[{id:16,nombre:'Evaluación inicial',inicio:'2024-06-01',fin:'2024-08-31',pct:100,responsable:'Marcela Torres',parent_id:null,orden:1},{id:17,nombre:'Inventario sistemas',inicio:'2024-06-01',fin:'2024-07-15',pct:100,responsable:'Juan Valdés',parent_id:16,orden:2},{id:18,nombre:'Migración Fase 1',inicio:'2024-09-01',fin:'2024-12-31',pct:35,responsable:'Marcela Torres',parent_id:null,orden:3},{id:19,nombre:'Ambiente dev',inicio:'2024-09-01',fin:'2024-10-31',pct:80,responsable:'Sofía Navarro',parent_id:18,orden:4}]
 };
 
-// ── 4. SUPABASE ──
-async function sbFetch(table, method='GET', body=null, params='') {
-  const url = `${SB_URL}/rest/v1/${table}${params}`;
-  const h = { 'apikey':SB_KEY, 'Authorization':`Bearer ${SB_KEY}`, 'Content-Type':'application/json' };
-  if (method==='POST')  h['Prefer']='return=representation';
-  if (method==='PATCH') h['Prefer']='return=representation';
-  const r = await fetch(url, { method, headers:h, body:body?JSON.stringify(body):null });
-  if (!r.ok) { const e=await r.text(); throw new Error(e.substring(0,120)); }
-  if (method==='DELETE') return null;
-  const t = await r.text(); return t ? JSON.parse(t) : null;
+// ── 5. SUPABASE ──
+async function sbFetch(table,method='GET',body=null,params=''){
+  const url=`${SB_URL}/rest/v1/${table}${params}`;
+  const h={'apikey':SB_KEY,'Authorization':`Bearer ${SB_KEY}`,'Content-Type':'application/json'};
+  if(method==='POST')  h['Prefer']='return=representation';
+  if(method==='PATCH') h['Prefer']='return=representation';
+  const r=await fetch(url,{method,headers:h,body:body?JSON.stringify(body):null});
+  if(!r.ok){const e=await r.text();throw new Error(e.substring(0,120));}
+  if(method==='DELETE') return null;
+  const t=await r.text(); return t?JSON.parse(t):null;
 }
 
-async function loadProjects() {
-  if (DEMO) { projects = DD_PROJS.map(p=>({...p})); drawAll(); return; }
-  try {
-    projects = (await sbFetch('proyectos','GET',null,'?select=*&order=created_at.desc')) || [];
-    drawAll(); setDB(true);
-  } catch(e) { setDB(false,true); toast('Error: '+e.message,'❌'); }
-}
+function normTask(t){ return {...t, id:Number(t.id), parent_id:NP(t.parent_id)}; }
 
-async function dbSaveProj(p) {
-  if (DEMO) {
-    if (p.id) { const i=projects.findIndex(x=>N(x.id)===N(p.id)); if(i>=0) projects[i]={...p}; }
-    else { p.id=Date.now(); projects.unshift(p); }
+async function loadProjects(){
+  if(DEMO){projects=DD_PROJS.map(p=>({...p}));drawAll();return;}
+  try{
+    projects=(await sbFetch('proyectos','GET',null,'?select=*&order=created_at.desc'))||[];
+    drawAll();setDB(true);
+  }catch(e){setDB(false,true);toast('Error: '+e.message,'❌');}
+}
+async function dbSaveProj(p){
+  if(DEMO){
+    if(p.id){const i=projects.findIndex(x=>N(x.id)===N(p.id));if(i>=0)projects[i]={...p};}
+    else{p.id=Date.now();projects.unshift(p);}
     return p;
   }
-  if (p.id) {
-    const{id,created_at,...rest}=p;
-    const r=await sbFetch('proyectos','PATCH',{...rest,updated_at:new Date().toISOString()},`?id=eq.${id}`);
-    return Array.isArray(r)?r[0]:r;
-  } else {
-    const{id,...rest}=p;
-    const r=await sbFetch('proyectos','POST',rest);
-    return Array.isArray(r)?r[0]:r;
-  }
+  if(p.id){const{id,created_at,...rest}=p;const r=await sbFetch('proyectos','PATCH',{...rest,updated_at:new Date().toISOString()},`?id=eq.${id}`);return Array.isArray(r)?r[0]:r;}
+  else{const{id,...rest}=p;const r=await sbFetch('proyectos','POST',rest);return Array.isArray(r)?r[0]:r;}
 }
-
-async function dbDelProj(id) {
-  if (DEMO) { projects=projects.filter(p=>N(p.id)!==N(id)); return; }
+async function dbDelProj(id){
+  if(DEMO){projects=projects.filter(p=>N(p.id)!==N(id));return;}
   await sbFetch('proyectos','DELETE',null,`?id=eq.${id}`);
   projects=projects.filter(p=>N(p.id)!==N(id));
 }
 
-/** FIX 2 + FIX 3: loadTasks normaliza parent_id y usa caché */
-async function loadTasks(pid, forceRefresh=false) {
-  const key = Number(pid);
-  // Retornar caché si existe y no se fuerza recarga
-  if (!forceRefresh && _taskCache[key]) {
-    curTasks = _taskCache[key];
+/** loadTasks con caché y normalización robusta */
+async function loadTasks(pid, force=false){
+  const key=Number(pid);
+  if(!force && _cache[key]?.tasks){ curTasks=_cache[key].tasks; return; }
+  if(DEMO){
+    curTasks=(DD_TASKS[key]||[]).map(normTask);
+    _cache[key]=_cache[key]||{};
+    _cache[key].tasks=curTasks;
     return;
   }
-  if (DEMO) {
-    curTasks = (DD_TASKS[key] || []).map(t => ({
-      ...t,
-      id: Number(t.id),
-      // FIX 2: normalizar parent_id a Number|null en datos demo
-      parent_id: NP(t.parent_id)
-    }));
-    _taskCache[key] = curTasks;
-    return;
-  }
-  try {
-    const raw = await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`) || [];
-    // FIX 2: normalización robusta — cubre 'null' string, undefined, NaN
-    curTasks = raw.map(t => ({
-      ...t,
-      id: Number(t.id),
-      parent_id: NP(t.parent_id)
-    }));
-    _taskCache[key] = curTasks;
-  } catch(e) { curTasks = []; }
+  try{
+    const raw=await sbFetch('tareas','GET',null,`?proyecto_id=eq.${pid}&select=*&order=orden.asc`)||[];
+    curTasks=raw.map(normTask);
+    _cache[key]=_cache[key]||{};
+    _cache[key].tasks=curTasks;
+  }catch(e){curTasks=[];}
 }
 
-async function dbSaveTask(t) {
-  // FIX 2: siempre normalizar parent_id con NP antes de guardar
-  t.parent_id = NP(t.parent_id);
-  if (DEMO) {
-    if (t.id) {
-      const i = curTasks.findIndex(x => Number(x.id) === Number(t.id));
-      if (i >= 0) curTasks[i] = {...t};
-    } else {
-      t.id = Date.now();
-      curTasks.push({...t});
-    }
-    // Actualizar caché
-    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
+async function dbSaveTask(t){
+  t.parent_id=NP(t.parent_id);
+  const key=N(curProj?.id);
+  if(DEMO){
+    if(t.id){const i=curTasks.findIndex(x=>Number(x.id)===Number(t.id));if(i>=0)curTasks[i]={...t};}
+    else{t.id=Date.now();curTasks.push({...t});}
+    if(key) _cache[key].tasks=curTasks;
     return t;
   }
-  if (t.id) {
+  if(t.id){
     const{id,created_at,...rest}=t;
     const r=await sbFetch('tareas','PATCH',rest,`?id=eq.${id}`);
-    const saved = Array.isArray(r)?r[0]:r;
-    if (saved) saved.parent_id = NP(saved.parent_id);
-    // Actualizar en curTasks
-    if (saved) {
-      const i = curTasks.findIndex(x => Number(x.id) === Number(id));
-      if (i >= 0) curTasks[i] = {...curTasks[i], ...saved};
-    }
-    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
+    const saved=normTask(Array.isArray(r)?r[0]:r);
+    const i=curTasks.findIndex(x=>Number(x.id)===Number(id));
+    if(i>=0) curTasks[i]={...curTasks[i],...saved};
+    if(key) _cache[key].tasks=curTasks;
     return saved;
-  } else {
+  }else{
     const{id,...rest}=t;
     const r=await sbFetch('tareas','POST',rest);
-    const saved=Array.isArray(r)?r[0]:r;
-    if (saved) {
-      saved.parent_id = NP(saved.parent_id);
-      saved.id = Number(saved.id);
-      curTasks.push(saved);
-    }
-    if (curProj) _taskCache[Number(curProj.id)] = curTasks;
+    const saved=normTask(Array.isArray(r)?r[0]:r);
+    curTasks.push(saved);
+    if(key) _cache[key].tasks=curTasks;
     return saved;
   }
 }
 
-async function dbDelTask(id) {
-  function collectIds(tid) {
-    const n = Number(tid);
-    const children = curTasks.filter(t => NP(t.parent_id) === n);
-    return [n, ...children.flatMap(c => collectIds(c.id))];
+async function dbDelTask(id){
+  const key=N(curProj?.id);
+  // Usar Map para colectar descendientes en O(n)
+  const maps=buildTaskMaps(curTasks);
+  function collectIds(tid){
+    const n=Number(tid);
+    return [n,...(maps.childrenOf.get(n)||[]).flatMap(c=>collectIds(c.id))];
   }
-  const ids = collectIds(id);
-  if (!DEMO) {
-    for (const i of ids.reverse()) {
-      try { await sbFetch('tareas','DELETE',null,`?id=eq.${i}`); } catch(_) {}
-    }
-  }
-  curTasks = curTasks.filter(t => !ids.includes(Number(t.id)));
-  if (curProj) _taskCache[Number(curProj.id)] = curTasks;
+  const ids=collectIds(id);
+  if(!DEMO){for(const i of ids.reverse()){try{await sbFetch('tareas','DELETE',null,`?id=eq.${i}`);}catch(_){}}}
+  curTasks=curTasks.filter(t=>!ids.includes(Number(t.id)));
+  if(key) _cache[key].tasks=curTasks;
 }
 
-/** FIX 3: loadInfs con caché */
-async function loadInfs(pid, forceRefresh=false) {
-  const key = Number(pid);
-  if (!forceRefresh && _infCache[key]) { curInfs = _infCache[key]; return; }
-  if (DEMO) {
-    curInfs = (pid===1?[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH.',proximos:'Go-Live.',obstaculos:'Sin obstáculos.'}]:[]);
-    _infCache[key] = curInfs;
-    return;
+async function loadInfs(pid,force=false){
+  const key=Number(pid);
+  if(!force && _cache[key]?.infs){curInfs=_cache[key].infs;return;}
+  if(DEMO){
+    curInfs=(pid===1?[{id:1,responsable:'Ana González',fecha:'2024-11-15',pct:68,estado:'🟢 En Plazo',detalle:'Avance módulo RRHH.',proximos:'Go-Live.',obstaculos:'Sin obstáculos.'}]:[]);
+    _cache[key]=_cache[key]||{};_cache[key].infs=curInfs;return;
   }
-  try {
-    curInfs = await sbFetch('informes','GET',null,`?proyecto_id=eq.${pid}&select=*&order=fecha.desc`) || [];
-    _infCache[key] = curInfs;
-  } catch(e) { curInfs = []; }
+  try{
+    curInfs=await sbFetch('informes','GET',null,`?proyecto_id=eq.${pid}&select=*&order=fecha.desc`)||[];
+    _cache[key]=_cache[key]||{};_cache[key].infs=curInfs;
+  }catch(e){curInfs=[];}
 }
 
-async function dbSaveInf(inf) {
-  if (DEMO) { inf.id=Date.now(); curInfs.unshift(inf); return inf; }
-  const{id,...rest}=inf;
-  const r=await sbFetch('informes','POST',rest);
-  return Array.isArray(r)?r[0]:r;
+async function dbSaveInf(inf){
+  if(DEMO){inf.id=Date.now();curInfs.unshift(inf);return inf;}
+  const{id,...rest}=inf;const r=await sbFetch('informes','POST',rest);return Array.isArray(r)?r[0]:r;
 }
 
-/** FIX 3: loadInfoData con caché */
-async function loadInfoData(pid, forceRefresh=false) {
-  const key = Number(pid);
-  if (!forceRefresh && _infoCache[key]) { infoData = _infoCache[key]; return; }
-  if (DEMO) {
-    infoData = {riesgos:[{nivel:'Alta',descripcion:'Dependencia proveedor externo.',responsable:'JP'}],docs:[{nombre:'TDR.pdf',tipo:'📄',tamano:'2.3 MB'}],coms:[]};
-    _infoCache[key] = infoData;
-    return;
+async function loadInfoData(pid,force=false){
+  const key=Number(pid);
+  if(!force && _cache[key]?.info){infoData=_cache[key].info;return;}
+  if(DEMO){
+    infoData={riesgos:[{nivel:'Alta',descripcion:'Dependencia proveedor externo.',responsable:'JP'}],docs:[{nombre:'TDR.pdf',tipo:'📄',tamano:'2.3 MB'}],coms:[]};
+    _cache[key]=_cache[key]||{};_cache[key].info=infoData;return;
   }
-  try {
+  try{
     const[r,d,c]=await Promise.all([
       sbFetch('riesgos','GET',null,`?proyecto_id=eq.${pid}&select=*`),
       sbFetch('documentos','GET',null,`?proyecto_id=eq.${pid}&select=*`),
       sbFetch('comentarios','GET',null,`?proyecto_id=eq.${pid}&select=*&order=created_at.desc`)
     ]);
-    infoData = {riesgos:r||[],docs:d||[],coms:c||[]};
-    _infoCache[key] = infoData;
-  } catch(e) { infoData = {riesgos:[],docs:[],coms:[]}; }
+    infoData={riesgos:r||[],docs:d||[],coms:c||[]};
+    _cache[key]=_cache[key]||{};_cache[key].info=infoData;
+  }catch(e){infoData={riesgos:[],docs:[],coms:[]};}
 }
 
-/** Invalidar caché de un proyecto (llamar después de modificar tareas) */
-function invalidateCache(pid) {
-  const key = Number(pid);
-  delete _taskCache[key];
-  delete _infCache[key];
-  delete _infoCache[key];
-}
+function clearCache(pid){ if(pid) delete _cache[Number(pid)]; }
+function clearAllCache(){ Object.keys(_cache).forEach(k=>delete _cache[k]); }
 
-async function syncProjReal() {
-  const nr = projPctReal(curTasks);
-  const derivedFin = curProj.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
-  const derivedIni = curProj.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
-  if (nr !== null) {
-    curProj.real = nr;
-    const pi = projects.findIndex(x=>Number(x.id)===Number(curProj.id));
-    if (pi>=0) {
-      projects[pi].real = nr;
-      projects[pi]._fin = derivedFin;
-      projects[pi]._ini = derivedIni;
-    }
-    if (!DEMO) try { await sbFetch('proyectos','PATCH',{real:nr},`?id=eq.${curProj.id}`); } catch(_) {}
+async function syncProjReal(){
+  const nr=projPctReal(curTasks);
+  const derivedFin=curProj.fin||(curTasks.length?curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0]:null);
+  const derivedIni=curProj.inicio||(curTasks.length?curTasks.map(t=>t.inicio).filter(Boolean).sort()[0]:null);
+  if(nr!==null){
+    curProj.real=nr;
+    const pi=projects.findIndex(x=>Number(x.id)===Number(curProj.id));
+    if(pi>=0){projects[pi].real=nr;projects[pi]._fin=derivedFin;projects[pi]._ini=derivedIni;}
+    if(!DEMO) try{await sbFetch('proyectos','PATCH',{real:nr},`?id=eq.${curProj.id}`);}catch(_){}
   }
   drawSbar(); drawSidebar();
 }
 
-// ── 5. HELPERS UI ──
-function fd(d) {
-  if (!d) return '—';
-  const s=(d+'').split('T')[0], [y,m,dd]=s.split('-');
-  return dd?`${dd}/${m}/${y}`:d;
-}
-function fmoney(v) { return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(v||0); }
-function bcomp(c) {
-  if (!c) return '';
-  const m={Alta:'a',Media:'m',Baja:'b'};
-  return `<span class="badge b${m[c]||'m'}">${c}</span>`;
-}
-function bflujo(f) {
-  if (!f) return '';
-  const m={Completo:'c',Básico:'ba',Ágil:'ag'};
-  return `<span class="badge b${m[f]||'c'}">${f}</span>`;
-}
-function pbar(v, col, w=46) {
+// ── 6. HELPERS UI ──
+function fd(d){if(!d)return'—';const s=(d+'').split('T')[0],[y,m,dd]=s.split('-');return dd?`${dd}/${m}/${y}`:d;}
+function fmoney(v){return new Intl.NumberFormat('es-CL',{style:'currency',currency:'CLP',maximumFractionDigits:0}).format(v||0);}
+function bcomp(c){if(!c)return'';const m={Alta:'a',Media:'m',Baja:'b'};return`<span class="badge b${m[c]||'m'}">${c}</span>`;}
+function bflujo(f){if(!f)return'';const m={Completo:'c',Básico:'ba',Ágil:'ag'};return`<span class="badge b${m[f]||'c'}">${f}</span>`;}
+function pbar(v,col,w=46){
   const n=Math.min(100,Math.max(0,v||0));
   const cs={gn:'var(--gn)',ac:'var(--ac)',yw:'var(--yw)',rd:'var(--rd)'};
   const c=cs[col]||cs.ac;
-  return `<div class="pb"><div class="pbt" style="width:${w}px"><div class="pbf" style="width:${n}%;background:${c}"></div></div><span class="pbv" style="color:${c}">${v||0}%</span></div>`;
+  return`<div class="pb"><div class="pbt" style="width:${w}px"><div class="pbf" style="width:${n}%;background:${c}"></div></div><span class="pbv" style="color:${c}">${v||0}%</span></div>`;
 }
-function devH(v) {
-  if (v>0) return `<span class="dpos">+${v}%</span>`;
-  if (v<0) return `<span class="dneg">${v}%</span>`;
-  return `<span class="dz">0%</span>`;
-}
-function getWeekNum(d) {
-  const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));
-  dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));
-  const y=new Date(Date.UTC(dt.getUTCFullYear(),0,1));
-  return Math.ceil((((dt-y)/86400000)+1)/7);
-}
-function canEdit()  { return roleIdx<=1; }
-function canAdmin() { return roleIdx===0; }
-function toast(msg,icon='✓') {
+function devH(v){if(v>0)return`<span class="dpos">+${v}%</span>`;if(v<0)return`<span class="dneg">${v}%</span>`;return`<span class="dz">0%</span>`;}
+function getWeekNum(d){const dt=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));dt.setUTCDate(dt.getUTCDate()+4-(dt.getUTCDay()||7));const y=new Date(Date.UTC(dt.getUTCFullYear(),0,1));return Math.ceil((((dt-y)/86400000)+1)/7);}
+function canEdit(){return roleIdx<=1;} function canAdmin(){return roleIdx===0;}
+function toast(msg,icon='✓'){
   document.getElementById('tmsg').textContent=msg;
   document.getElementById('tico').textContent=icon;
   const t=document.getElementById('toast');
-  t.classList.add('on');
-  setTimeout(()=>t.classList.remove('on'),3000);
+  t.classList.add('on');setTimeout(()=>t.classList.remove('on'),3000);
 }
-function openM(id)  { document.getElementById(id).classList.add('on'); }
-function closeM(id) { document.getElementById(id).classList.remove('on'); }
-function setDB(ok,err=false) {
-  const dot=document.getElementById('dot'), lbl=document.getElementById('dbl');
+function openM(id){document.getElementById(id).classList.add('on');}
+function closeM(id){document.getElementById(id).classList.remove('on');}
+function setDB(ok,err=false){
+  const dot=document.getElementById('dot'),lbl=document.getElementById('dbl');
   if(ok){dot.className='dot ok';lbl.textContent='Supabase';}
   else if(err){dot.className='dot err';lbl.textContent='Error';}
   else{dot.className='dot';lbl.textContent='Demo';}
 }
+function showLoading(show){document.getElementById('gloading').classList.toggle('hidden',!show);}
 
-// ── 6. NAVEGACIÓN ──
-function nav(name) {
+// ── 7. NAVEGACIÓN ──
+function nav(name){
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById('v-'+name).classList.add('on');
   document.querySelectorAll('.ntab').forEach(t=>t.classList.remove('on'));
@@ -944,57 +793,69 @@ function nav(name) {
   const sm={centro:'sb-centro',reporte:'sb-reporte',config:'sb-config'};
   if(sm[name]) document.getElementById(sm[name])?.classList.add('on');
   if(name==='reporte') drawReport();
-  if(name==='config')  { document.getElementById('cfgurl').value=SB_URL; document.getElementById('cfgkey').value=SB_KEY; }
-  if(name==='centro')  drawTable();
+  if(name==='config'){document.getElementById('cfgurl').value=SB_URL;document.getElementById('cfgkey').value=SB_KEY;}
+  if(name==='centro') drawTable();
 }
 
 /**
- * FIX 2 + FIX 3: openProj precarga tareas en segundo plano para que
- * drawDet tenga curTasks disponibles y el Gantt abra rápido.
+ * OPTIMIZACIÓN: openProj muestra la UI de inmediato con los datos disponibles,
+ * luego carga tareas en segundo plano. El usuario ve feedback instantáneo.
+ * Guard isLoading evita clics múltiples que saturan Supabase.
  */
-async function openProj(id) {
-  curProj = projects.find(p=>N(p.id)===N(id));
-  if (!curProj) return;
+async function openProj(id){
+  if(isLoading) return; // evitar doble clic
+  isLoading=true;
+  curProj=projects.find(p=>N(p.id)===N(id));
+  if(!curProj){isLoading=false;return;}
+
+  // Mostrar vista del proyecto inmediatamente
   document.querySelectorAll('.view').forEach(v=>v.classList.remove('on'));
   document.getElementById('v-proj').classList.add('on');
-  document.getElementById('pbadge').textContent = curProj.fr||'';
-  // Precargar tareas para que drawDet tenga fechas derivadas
-  await loadTasks(curProj.id);
-  stab('det');
+  document.getElementById('pbadge').textContent=curProj.fr||'';
+
+  // Activar tab Detalle visualmente de inmediato
+  document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
+  document.querySelectorAll('.pv').forEach(v=>v.classList.remove('on'));
+  document.getElementById('pt-det').classList.add('on');
+  document.getElementById('pv-det').classList.add('on');
+
+  // Renderizar detalle con lo que hay (curTasks puede estar vacío — se ve "Requiere fechas")
+  drawDet();
   drawSidebar();
+
+  // Cargar tareas en segundo plano — luego actualizar detalle
+  showLoading(true);
+  try{
+    await loadTasks(curProj.id);
+    drawDet(); // re-renderiza con fechas derivadas de tareas
+  }finally{
+    isLoading=false;
+    showLoading(false);
+  }
 }
 
-function stab(tab) {
+function stab(tab){
+  if(isLoading) return;
   document.querySelectorAll('.ptab').forEach(t=>t.classList.remove('on'));
   document.querySelectorAll('.pv').forEach(v=>v.classList.remove('on'));
   document.getElementById('pt-'+tab).classList.add('on');
   document.getElementById('pv-'+tab).classList.add('on');
-  // FIX 3: cada tab solo carga lo que necesita, aprovechando caché
-  if(tab==='det')   drawDet();
-  if(tab==='gantt') loadTasks(curProj.id).then(()=>drawGantt());
-  if(tab==='av')    loadInfs(curProj.id).then(()=>drawAv());
-  if(tab==='info')  loadInfoData(curProj.id).then(()=>drawInfo());
+  if(tab==='det') { drawDet(); }
+  if(tab==='gantt') { showLoading(true); loadTasks(curProj.id).then(()=>{drawGantt();showLoading(false);}); }
+  if(tab==='av')    { showLoading(true); loadInfs(curProj.id).then(()=>{drawAv();showLoading(false);}); }
+  if(tab==='info')  { showLoading(true); loadInfoData(curProj.id).then(()=>{drawInfo();showLoading(false);}); }
 }
 
-// ── 7. DRAW ──
-
-/** FIX 3: drawAll no llama drawTable dos veces */
-function drawAll() {
-  drawTable();
-  drawSbar();
-  drawSidebar();
+// ── 8. DRAW ──
+function drawAll(){
+  drawSbar(); drawSidebar(); drawTable();
   document.getElementById('lrow').style.display='none';
 }
 
-function drawSbar() {
+function drawSbar(){
   const t=projects.length;
   const avg=t?Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t):0;
-  // FIX 1: usar _ini/_fin como fallback para proyectos sin fechas directas
-  const gp=p=>{
-    const fi=p.fin||p._fin||null;
-    const ii=p.inicio||p._ini||null;
-    return pctPlan(ii,fi);
-  };
+  const gp=p=>pctPlan(p.inicio||p._ini||null,p.fin||p._fin||null);
   const ep=projects.filter(p=>(p.real||0)>=gp(p)).length;
   const at=projects.filter(p=>(p.real||0)<gp(p)-10).length;
   const hc=projects.filter(p=>p.complejidad==='Alta').length;
@@ -1003,11 +864,10 @@ function drawSbar() {
     <div class="sv"><div class="svv" style="color:var(--gn)">${avg}%</div><div class="svl">Avance Prom.</div></div>
     <div class="sv"><div class="svv" style="color:var(--gn)">${ep}</div><div class="svl">En Plazo</div></div>
     <div class="sv"><div class="svv" style="color:var(--rd)">${at}</div><div class="svl">Con Atraso</div></div>
-    <div class="sv"><div class="svv" style="color:var(--yw)">${hc}</div><div class="svl">Alta Complejidad</div></div>
-  `;
+    <div class="sv"><div class="svv" style="color:var(--yw)">${hc}</div><div class="svl">Alta Complejidad</div></div>`;
 }
 
-function drawSidebar() {
+function drawSidebar(){
   document.getElementById('sbcnt').textContent=projects.length;
   document.getElementById('sbprojs').innerHTML=projects.map(p=>
     `<div class="sbp ${curProj&&N(curProj.id)===N(p.id)?'on':''}" onclick="openProj(${p.id})">
@@ -1015,13 +875,9 @@ function drawSidebar() {
     </div>`).join('');
 }
 
-let sortDir=1;
-function tsort(k) {
-  if(sortK===k) sortDir*=-1; else{sortK=k;sortDir=1;}
-  drawTable();
-}
+function tsort(k){if(sortK===k)sortDir*=-1;else{sortK=k;sortDir=1;}drawTable();}
 
-function drawTable() {
+function drawTable(){
   const q=(document.getElementById('qsearch')?.value||'').toLowerCase();
   const fc=document.getElementById('qcomp')?.value||'';
   const ff=document.getElementById('qflujo')?.value||'';
@@ -1029,16 +885,12 @@ function drawTable() {
     const m=!q||(p.fr||'').toLowerCase().includes(q)||(p.nombre||'').toLowerCase().includes(q)||(p.jp||'').toLowerCase().includes(q);
     return m&&(!fc||p.complejidad===fc)&&(!ff||p.flujo===ff);
   });
+  const getPl=x=>pctPlan(x.inicio||x._ini||null,x.fin||x._fin||null);
   list.sort((a,b)=>{
-    // FIX 1: usar _ini/_fin como fallback en el sort también
-    const getIni = x => x.inicio || x._ini || null;
-    const getFin = x => x.fin || x._fin || null;
-    const pl=x=>pctPlan(getIni(x),getFin(x));
-    const dv=x=>(x.real||0)-pl(x);
     let va,vb;
     if(sortK==='real'){va=a.real||0;vb=b.real||0;}
-    else if(sortK==='plan'){va=pl(a);vb=pl(b);}
-    else if(sortK==='dev'){va=dv(a);vb=dv(b);}
+    else if(sortK==='plan'){va=getPl(a);vb=getPl(b);}
+    else if(sortK==='dev'){va=(a.real||0)-getPl(a);vb=(b.real||0)-getPl(b);}
     else{va=(a[sortK]||'').toString();vb=(b[sortK]||'').toString();}
     return typeof va==='number'?(va-vb)*sortDir:va.localeCompare(vb)*sortDir;
   });
@@ -1049,14 +901,10 @@ function drawTable() {
   if(!list.length){tbody.innerHTML='';empt.style.display='flex';return;}
   empt.style.display='none';
   tbody.innerHTML=list.map(p=>{
-    // FIX 1: usar siempre _fin/_ini como fallback para el % planificado
-    const efin = p.fin || p._fin || null;
-    const eini = p.inicio || p._ini || null;
-    const pl=pctPlan(eini, efin);
-    const real=p.real||0;
-    const dv=real-pl;
+    const efin=p.fin||p._fin||null, eini=p.inicio||p._ini||null;
+    const pl=pctPlan(eini,efin), real=p.real||0, dv=real-pl;
     const rc=real>=pl?'gn':real>=pl-10?'yw':'rd';
-    return `<tr onclick="openProj(${p.id})">
+    return`<tr onclick="openProj(${p.id})">
       <td class="tdc">${p.fr||'—'}</td>
       <td class="tdn" title="${p.nombre||''}">${p.nombre||'Sin nombre'}</td>
       <td style="font-size:11px;max-width:120px;overflow:hidden;text-overflow:ellipsis;">${p.jp||'—'}</td>
@@ -1075,39 +923,32 @@ function drawTable() {
   }).join('');
 }
 
-// ── 8. PROYECTO CRUD ──
-function openNewProj() {
+// ── 9. PROYECTO CRUD ──
+function openNewProj(){
   if(!canEdit()){toast('Sin permisos','⚠️');return;}
   editProjId=null;
   document.getElementById('mptl').textContent='Nuevo Proyecto';
   ['fr','nb','in','fi','jp','ar','de'].forEach(f=>{const el=document.getElementById('pf-'+f);if(el)el.value='';});
-  document.getElementById('pf-co').value='';
-  document.getElementById('pf-fl').value='';
-  document.getElementById('pf-re').value='';
-  document.getElementById('pf-pp').value='';
+  ['co','fl'].forEach(f=>document.getElementById('pf-'+f).value='');
+  document.getElementById('pf-re').value='';document.getElementById('pf-pp').value='';
   openM('m-proj');
 }
-function openEditProj(id) {
+function openEditProj(id){
   if(!canEdit()){toast('Sin permisos','⚠️');return;}
-  const p=projects.find(x=>N(x.id)===N(id)); if(!p) return;
+  const p=projects.find(x=>N(x.id)===N(id));if(!p)return;
   editProjId=id;
   document.getElementById('mptl').textContent='Editar Proyecto';
-  document.getElementById('pf-fr').value=p.fr||'';
-  document.getElementById('pf-nb').value=p.nombre||'';
-  document.getElementById('pf-in').value=p.inicio||'';
-  document.getElementById('pf-fi').value=p.fin||'';
-  document.getElementById('pf-jp').value=p.jp||'';
-  document.getElementById('pf-ar').value=p.area||'';
-  document.getElementById('pf-co').value=p.complejidad||'';
-  document.getElementById('pf-fl').value=p.flujo||'';
-  document.getElementById('pf-re').value=p.real||'';
-  document.getElementById('pf-pp').value=p.presupuesto||'';
+  document.getElementById('pf-fr').value=p.fr||'';document.getElementById('pf-nb').value=p.nombre||'';
+  document.getElementById('pf-in').value=p.inicio||'';document.getElementById('pf-fi').value=p.fin||'';
+  document.getElementById('pf-jp').value=p.jp||'';document.getElementById('pf-ar').value=p.area||'';
+  document.getElementById('pf-co').value=p.complejidad||'';document.getElementById('pf-fl').value=p.flujo||'';
+  document.getElementById('pf-re').value=p.real||'';document.getElementById('pf-pp').value=p.presupuesto||'';
   document.getElementById('pf-de').value=p.descripcion||'';
   openM('m-proj');
 }
-async function saveProj() {
+async function saveProj(){
   const btn=document.getElementById('mpbtn');
-  btn.disabled=true; btn.textContent='Guardando...';
+  btn.disabled=true;btn.textContent='Guardando...';
   const p={
     fr:document.getElementById('pf-fr').value.trim()||null,
     nombre:document.getElementById('pf-nb').value.trim()||null,
@@ -1122,33 +963,33 @@ async function saveProj() {
     descripcion:document.getElementById('pf-de').value.trim()||null
   };
   if(editProjId) p.id=editProjId;
-  try {
+  try{
     const s=await dbSaveProj(p);
     if(!editProjId&&s) projects.unshift(s);
     else if(editProjId){const i=projects.findIndex(x=>N(x.id)===N(editProjId));if(i>=0)projects[i]={...projects[i],...(s||p)};}
-    closeM('m-proj'); drawAll();
+    closeM('m-proj');drawAll();
     toast(editProjId?'Proyecto actualizado':'Proyecto creado','✓');
-  } catch(e){toast('Error: '+e.message,'❌');}
-  btn.disabled=false; btn.textContent='✓ Guardar';
+  }catch(e){toast('Error: '+e.message,'❌');}
+  btn.disabled=false;btn.textContent='✓ Guardar';
 }
-function askDelProj(id,name) {
+function askDelProj(id,name){
   if(!canAdmin()){toast('Solo administradores','⚠️');return;}
   pendDelProjId=id;
   document.getElementById('delpmsg').innerHTML=`¿Eliminar <strong>"${name}"</strong>?`;
   openM('m-delp');
 }
-async function confirmDelProj() {
+async function confirmDelProj(){
   closeM('m-delp');
-  try {
+  try{
     await dbDelProj(pendDelProjId);
-    invalidateCache(pendDelProjId);
+    clearCache(pendDelProjId);
     if(curProj&&N(curProj.id)===N(pendDelProjId)){curProj=null;nav('centro');}
-    drawAll(); toast('Proyecto eliminado','🗑');
-  } catch(e){toast('Error: '+e.message,'❌');}
+    drawAll();toast('Proyecto eliminado','🗑');
+  }catch(e){toast('Error: '+e.message,'❌');}
   pendDelProjId=null;
 }
 
-// ── 9. DETALLE ──
+// ── 10. DETALLE ──
 const CHK=[{k:'tiene_ia',l:'¿Tiene IA?',i:'🤖'},{k:'es_estrategico',l:'¿Es estratégico?',i:'⭐'},{k:'consume_nube',l:'¿Consume Nube?',i:'☁️'},{k:'es_pci',l:'¿Es PCI?',i:'🔒'}];
 function chkV(p,k){return p[k]===true||p[k]==='true'?'si':p[k]===false||p[k]==='false'?'no':null;}
 async function toggleChk(k,v){
@@ -1156,37 +997,25 @@ async function toggleChk(k,v){
   const cur=chkV(curProj,k);
   curProj[k]=cur===v?null:v==='si'?true:false;
   const pi=projects.findIndex(x=>N(x.id)===N(curProj.id));
-  if(pi>=0) projects[pi][k]=curProj[k];
-  if(!DEMO) try{await sbFetch('proyectos','PATCH',{[k]:curProj[k]},`?id=eq.${curProj.id}`);}catch(_){}
+  if(pi>=0)projects[pi][k]=curProj[k];
+  if(!DEMO)try{await sbFetch('proyectos','PATCH',{[k]:curProj[k]},`?id=eq.${curProj.id}`);}catch(_){}
   drawDet();
 }
 
-/**
- * FIX 1 + FIX 2: drawDet ahora siempre tiene curTasks disponibles
- * porque openProj los precarga. Calcula % planificado correctamente.
- */
 function drawDet(){
   const p=curProj;
-  // FIX 1: derivar fechas desde tareas cuando el proyecto no las tiene
-  const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
-  const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
-  // FIX 1: calcular pl con fechas derivadas (nunca retorna 0 si hay fechas válidas)
-  const pl=pctPlan(derivedIni, derivedFin);
-  const real=p.real||0;
-  const dv=real-pl;
+  const derivedIni=p.inicio||(curTasks.length?curTasks.map(t=>t.inicio).filter(Boolean).sort()[0]:null);
+  const derivedFin=p.fin||(curTasks.length?curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0]:null);
+  const pl=pctPlan(derivedIni,derivedFin);
+  const real=p.real||0, dv=real-pl;
   const dc=dv>=0?'var(--gn)':'var(--rd)';
-
   const chkHtml=CHK.map(c=>{
     const v=chkV(p,c.k);
-    return `<div class="chki">
-      <span class="chkl">${c.i} ${c.l}</span>
-      <div class="chkbs">
-        <button class="chkb ${v==='si'?'sy':''}" onclick="toggleChk('${c.k}','si')">Sí</button>
-        <button class="chkb ${v==='no'?'sn':''}" onclick="toggleChk('${c.k}','no')">No</button>
-      </div>
-    </div>`;
+    return`<div class="chki"><span class="chkl">${c.i} ${c.l}</span><div class="chkbs">
+      <button class="chkb ${v==='si'?'sy':''}" onclick="toggleChk('${c.k}','si')">Sí</button>
+      <button class="chkb ${v==='no'?'sn':''}" onclick="toggleChk('${c.k}','no')">No</button>
+    </div></div>`;
   }).join('');
-
   document.getElementById('det').innerHTML=`
     <div class="dhero">
       <div style="flex:1;min-width:200px">
@@ -1221,41 +1050,31 @@ function drawDet(){
       <div class="dsec"><div class="sttl">📅 Cronograma</div>
         <div class="fr"><div class="fl">Fecha Inicio</div><div class="fv" style="font-family:var(--mo);color:${derivedIni?'var(--tx2)':'var(--rd)'}">${derivedIni?fd(derivedIni):'⚠️ Sin definir'}</div></div>
         <div class="fr"><div class="fl">Fecha Fin</div><div class="fv" style="font-family:var(--mo);color:${derivedFin?'var(--tx2)':'var(--rd)'}">${derivedFin?fd(derivedFin)+(p.fin?'':' <span style="font-size:9px;color:var(--yw)">(desde tareas)</span>'):'⚠️ Sin definir'}</div></div>
-        <div class="fr"><div class="fl">Duración</div><div class="fv" style="font-family:var(--mo)">${derivedIni&&derivedFin?Math.ceil((new Date(derivedFin)-new Date(derivedIni))/86400000)+' días':'— (requiere inicio y fin)'}</div></div>
-        <div class="fr"><div class="fl">Días Restantes</div><div class="fv" style="font-family:var(--mo);color:${!derivedFin?'var(--tx3)':new Date(derivedFin)<new Date()?'var(--rd)':'var(--tx2)'}">${derivedFin?Math.max(0,Math.ceil((new Date(derivedFin)-new Date())/86400000))+' días':'— (sin fecha fin)'}</div></div>
+        <div class="fr"><div class="fl">Duración</div><div class="fv" style="font-family:var(--mo)">${derivedIni&&derivedFin?Math.ceil((new Date(derivedFin)-new Date(derivedIni))/86400000)+' días':'—'}</div></div>
+        <div class="fr"><div class="fl">Días Restantes</div><div class="fv" style="font-family:var(--mo);color:${!derivedFin?'var(--tx3)':new Date(derivedFin)<new Date()?'var(--rd)':'var(--tx2)'}">${derivedFin?Math.max(0,Math.ceil((new Date(derivedFin)-new Date())/86400000))+' días':'—'}</div></div>
         <div class="fr"><div class="fl">% Tiempo Transcurrido</div><div class="fv">${derivedIni&&derivedFin?pbar(pl,'ac'):'<span style="font-size:11px;color:var(--tx3)">Requiere inicio y fin</span>'}</div></div>
-        ${(!p.fin&&derivedFin)?`<div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--yw)">💡 La fecha fin se está calculando desde las tareas. Edita el proyecto para fijarla manualmente.</div>`:(!p.inicio&&!p.fin)?`<div style="background:var(--rdd);border:1px solid rgba(239,68,68,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--rd)">⚠️ Edita el proyecto y completa las fechas de inicio y fin.</div>`:''}
+        ${(!p.fin&&derivedFin)?`<div style="background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--yw)">💡 Fecha fin calculada desde tareas. Edita el proyecto para fijarla.</div>`:(!p.inicio&&!p.fin)?`<div style="background:var(--rdd);border:1px solid rgba(239,68,68,.25);border-radius:var(--r);padding:6px 9px;margin-top:6px;font-size:11px;color:var(--rd)">⚠️ Edita el proyecto y completa las fechas.</div>`:''}
       </div>
-    </div>
-  `;
+    </div>`;
 }
 
-// ── 10. GANTT ──
-function drawGantt() {
-  const p = curProj;
-  const shell = document.getElementById('gshell');
+// ── 11. GANTT ──
+function drawGantt(){
+  const p=curProj, shell=document.getElementById('gshell');
+  const colBtns=[{k:'ini',l:'Inicio'},{k:'fin',l:'Fin'},{k:'real',l:'% Real'},{k:'plan',l:'% Plan.'},{k:'dev',l:'Desv.'},{k:'resp',l:'Responsable'}]
+    .map(c=>`<button class="gct ${gcols[c.k]?'on':''}" onclick="toggleGcol('${c.k}')">${c.l}</button>`).join('');
 
-  const colBtns = [
-    {k:'ini',l:'Inicio'},{k:'fin',l:'Fin'},
-    {k:'real',l:'% Real'},{k:'plan',l:'% Plan.'},
-    {k:'dev',l:'Desv.'},{k:'resp',l:'Responsable'}
-  ].map(c=>`<button class="gct ${gcols[c.k]?'on':''}" onclick="toggleGcol('${c.k}')">${c.l}</button>`).join('');
-
-  // Build parent selector with full hierarchy
-  let parentOpts = '<option value="">— Sin padre (raíz) —</option>';
-  function addOpt(pid, depth) {
-    curTasks
-      .filter(t=>NP(t.parent_id)===NP(pid))
-      .sort((a,b)=>(a.orden||0)-(b.orden||0))
-      .forEach(t=>{
-        const icon = hasKids(t.id,curTasks)?'▸ ':'· ';
-        parentOpts += `<option value="${t.id}">${'  '.repeat(depth)+icon+(t.nombre||'')}</option>`;
-        addOpt(t.id, depth+1);
-      });
+  let parentOpts='<option value="">— Sin padre (raíz) —</option>';
+  const maps=buildTaskMaps(curTasks);
+  function addOpt(key,depth){
+    (maps.childrenOf.get(key)||[]).slice().sort((a,b)=>(a.orden||0)-(b.orden||0)).forEach(t=>{
+      parentOpts+=`<option value="${t.id}">${'  '.repeat(depth)+(hasKidsFast(t.id,maps)?'▸ ':'· ')+(t.nombre||'')}</option>`;
+      addOpt(Number(t.id),depth+1);
+    });
   }
-  addOpt(null, 0);
+  addOpt('__root__',0);
 
-  shell.innerHTML = `
+  shell.innerHTML=`
     <div class="gtbar">
       <div><div class="gttl">Planificación — ${p.nombre||''}</div>
       <div class="gtsub">${p.fr||''} · ${fd(p.inicio)} → ${fd(p.fin)}</div></div>
@@ -1269,77 +1088,72 @@ function drawGantt() {
       <select class="gas" id="nt-pr" style="min-width:140px">${parentOpts}</select>
       <button class="gbtn p" onclick="addTask()">✓ Agregar</button>
     </div>`:''}
-    <div class="gbody" id="gbody"></div>
-  `;
+    <div class="gbody" id="gbody"></div>`;
 
-  if (!curTasks.length) {
+  if(!curTasks.length){
     document.getElementById('gbody').innerHTML=`<div class="empty"><div class="ei">📊</div><div class="et">Sin tareas</div><div class="es">Agrega la primera actividad usando el formulario de arriba.</div></div>`;
     return;
   }
   buildGanttGrid();
 }
 
-function buildGanttGrid() {
-  const p = curProj;
-  const lw = leftW();
+function buildGanttGrid(){
+  const p=curProj, lw=leftW();
+  // Pre-computar Maps una sola vez para toda la grilla
+  const maps=buildTaskMaps(curTasks);
 
-  const allD = curTasks.flatMap(t=>[t.inicio&&new Date(t.inicio),t.fin&&new Date(t.fin)]).filter(Boolean);
+  const allD=curTasks.flatMap(t=>[t.inicio&&new Date(t.inicio),t.fin&&new Date(t.fin)]).filter(Boolean);
   if(p.inicio) allD.push(new Date(p.inicio));
-  if(p.fin)    allD.push(new Date(p.fin));
-  if(!allD.length){
-    document.getElementById('gbody').innerHTML='<div class="empty"><div class="et">Define fechas para ver el diagrama</div></div>';
-    return;
-  }
+  if(p.fin) allD.push(new Date(p.fin));
+  if(!allD.length){document.getElementById('gbody').innerHTML='<div class="empty"><div class="et">Define fechas para ver el diagrama</div></div>';return;}
+
   const minD=new Date(Math.min(...allD.map(d=>d.getTime())));
   const maxD=new Date(Math.max(...allD.map(d=>d.getTime())));
-  minD.setDate(minD.getDate()-7);
-  maxD.setDate(maxD.getDate()+14);
+  minD.setDate(minD.getDate()-7); maxD.setDate(maxD.getDate()+14);
 
   const weeks=[];
-  let wc=new Date(minD); wc.setDate(wc.getDate()-wc.getDay()+1);
+  let wc=new Date(minD);wc.setDate(wc.getDate()-wc.getDay()+1);
   while(wc<=maxD){weeks.push(new Date(wc));wc.setDate(wc.getDate()+7);}
   const TW=weeks.length*WK_W;
 
-  function dx(d) {
-    if(!d) return -9999;
-    return ((new Date(d).getTime()-minD.getTime())/(1000*60*60*24*7))*WK_W;
-  }
+  function dx(d){if(!d)return-9999;return((new Date(d).getTime()-minD.getTime())/(1000*60*60*24*7))*WK_W;}
+  const todayX=dx(new Date().toISOString().split('T')[0]);
 
-  const todayX = dx(new Date().toISOString().split('T')[0]);
-  // FIX 2: buildEDT con NP robusto muestra todas las tareas correctamente
-  const rows    = buildEDT(curTasks);
-
+  const rows=buildEDT(curTasks,maps);
   const vcols=[];
-  if(gcols.ini) vcols.push({k:'ini',l:'INICIO',w:GCOL_W.ini});
-  if(gcols.fin) vcols.push({k:'fin',l:'FIN',w:GCOL_W.fin});
+  if(gcols.ini)vcols.push({k:'ini',l:'INICIO',w:GCOL_W.ini});
+  if(gcols.fin)vcols.push({k:'fin',l:'FIN',w:GCOL_W.fin});
   if(gcols.real)vcols.push({k:'real',l:'REAL',w:GCOL_W.real});
   if(gcols.plan)vcols.push({k:'plan',l:'PLAN.',w:GCOL_W.plan});
-  if(gcols.dev) vcols.push({k:'dev',l:'DESV.',w:GCOL_W.dev});
+  if(gcols.dev)vcols.push({k:'dev',l:'DESV.',w:GCOL_W.dev});
   if(gcols.resp)vcols.push({k:'resp',l:'RESP.',w:GCOL_W.resp});
 
   const lHdr=`<div class="gch nl" style="width:${NAME_W}px;flex-shrink:0">NOMBRE / ACTIVIDAD</div>${vcols.map(c=>`<div class="gch" style="width:${c.w}px;flex-shrink:0">${c.l}</div>`).join('')}`;
   const rHdr=`<div style="display:flex;width:${TW}px">${weeks.map(w=>`<div class="wkh" style="min-width:${WK_W}px;width:${WK_W}px">S${getWeekNum(w)}<span style="font-size:8px;opacity:.5">${w.getDate()} ${w.toLocaleDateString('es-CL',{month:'short'}).toUpperCase()}</span></div>`).join('')}</div>`;
 
-  const derivedFin = p.fin || (curTasks.length ? curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0] : null);
-  const derivedIni = p.inicio || (curTasks.length ? curTasks.map(t=>t.inicio).filter(Boolean).sort()[0] : null);
+  const derivedFin=p.fin||(curTasks.length?curTasks.map(t=>t.fin).filter(Boolean).sort().reverse()[0]:null);
+  const derivedIni=p.inicio||(curTasks.length?curTasks.map(t=>t.inicio).filter(Boolean).sort()[0]:null);
   const pReal=projPctReal(curTasks)??p.real??0;
-  // FIX 1: calcular pPlan con fechas derivadas
-  const pPlan=pctPlan(derivedIni, derivedFin);
+  const pPlan=pctPlan(derivedIni,derivedFin);
   const pDev=pReal-pPlan;
   const pX=dx(derivedIni), pW=Math.max(6,dx(derivedFin)-dx(derivedIni));
   const ppc=pReal>=pPlan?'pg':pReal>=pPlan-15?'py':'pr';
 
   function projCell(k){
-    if(k==='ini')return `<span style="font-family:var(--mo);font-size:9px">${fd(derivedIni)}</span>`;
-    if(k==='fin')return `<span style="font-family:var(--mo);font-size:9px">${derivedFin?fd(derivedFin):'<span style="color:var(--yw)">—</span>'}</span>`;
+    if(k==='ini')return`<span style="font-family:var(--mo);font-size:9px">${fd(derivedIni)}</span>`;
+    if(k==='fin')return`<span style="font-family:var(--mo);font-size:9px">${derivedFin?fd(derivedFin):'<span style="color:var(--yw)">—</span>'}</span>`;
     if(k==='real')return pbar(pReal,pReal>=pPlan?'gn':'yw',38);
     if(k==='plan')return pbar(pPlan,'ac',38);
     if(k==='dev')return devH(pDev);
     if(k==='resp')return`<span style="font-size:10px">${p.jp||'—'}</span>`;
-    return '';
+    return'';
   }
 
-  // FIX 3: Construir HTML en strings y hacer una sola asignación al DOM
+  // OPTIMIZACIÓN: línea de hoy y líneas verticales como un solo canvas en vez de N divs
+  // Las líneas verticales se pintan en canvas — eliminamos todos los .gvl divs
+  const rowCount=rows.length+1; // +1 fila de proyecto
+
+  // Construir HTML de filas izquierdas y derechas
   let leftHTML=`<div class="grow lp">
     <div class="gleft-row" style="width:${lw}px">
       <div class="gc n" style="width:${NAME_W}px;flex-shrink:0;padding-left:8px">
@@ -1351,24 +1165,25 @@ function buildGanttGrid() {
     </div>
   </div>`;
 
+  // Para el lado derecho, la línea de hoy va en un div absoluto sobre todo
+  // Las líneas de semana se dibujan en CSS background-repeat (más eficiente que divs)
+  const weekBg=`repeating-linear-gradient(to right, transparent 0px, transparent ${WK_W-1}px, var(--bd) ${WK_W-1}px, var(--bd) ${WK_W}px)`;
+
   let rightHTML=`<div class="grow lp">
-    <div class="gright-row" style="width:${TW}px;min-height:36px">
-      ${weeks.map((_,i)=>`<div class="gvl" style="left:${i*WK_W}px"></div>`).join('')}
+    <div class="gright-row" style="width:${TW}px;min-height:36px;background-image:${weekBg};background-size:${WK_W}px 100%">
       ${pX>-999&&pW>0?`<div class="gbar-w" style="left:${pX}px;width:${pW}px"><div class="gbar bp" style="width:100%"><div class="bprog ${ppc}" style="width:${pReal}%"></div><span class="blbl">${pReal}%</span></div></div>`:''}
-      <div class="todayl" style="left:${todayX}px"></div>
-      <div class="todayb" style="left:${todayX}px">HOY</div>
+      <div class="todayl" style="left:${todayX}px"></div><div class="todayb" style="left:${todayX}px">HOY</div>
     </div>
   </div>`;
 
-  rows.forEach(({t, depth})=>{
-    const {ini:ti, fin:tf}=tDates(t.id, curTasks);
-    const tReal=tPctReal(t.id, curTasks);
-    // FIX 1: cada tarea calcula su % plan con sus fechas efectivas
-    const tPlan=pctPlan(ti, tf);
+  rows.forEach(({t,depth})=>{
+    // OPTIMIZACIÓN: llamar tPctRealFast y tDatesFast con Maps pre-computados
+    const {ini:ti,fin:tf}=tDatesFast(t.id,maps);
+    const tReal=tPctRealFast(t.id,maps);
+    const tPlan=pctPlan(ti,tf);
     const tDev=tReal-tPlan;
     const tX=dx(ti), tW=Math.max(4,dx(tf)-tX);
-    const isParent=hasKids(t.id,curTasks);
-
+    const isParent=hasKidsFast(t.id,maps);
     const lc=['l0','l1','l2','l3'][Math.min(depth,3)];
     const bc=['b0','b1','b2','b3'][Math.min(depth,3)];
     const pc=tReal>=tPlan?'pg':tReal>=tPlan-15?'py':'pr';
@@ -1379,20 +1194,17 @@ function buildGanttGrid() {
       :`<span class="gsp"></span>`;
 
     const realCell=isParent
-      ? pbar(tReal,tReal>=tPlan?'gn':'yw',38)
-      : `<div class="pin">
-           <input class="pinp" id="p${t.id}" value="${t.pct||0}" type="number" min="0" max="100" onkeydown="if(event.key==='Enter')spct(${t.id})">
-           <button class="psv" onclick="spct(${t.id})">✓</button>
-         </div>`;
+      ?pbar(tReal,tReal>=tPlan?'gn':'yw',38)
+      :`<div class="pin"><input class="pinp" id="p${t.id}" value="${t.pct||0}" type="number" min="0" max="100" onkeydown="if(event.key==='Enter')spct(${t.id})"><button class="psv" onclick="spct(${t.id})">✓</button></div>`;
 
     function tcell(k){
-      if(k==='ini')return `<span style="font-family:var(--mo);font-size:9px">${fd(ti)}</span>`;
-      if(k==='fin')return `<span style="font-family:var(--mo);font-size:9px">${fd(tf)}</span>`;
+      if(k==='ini')return`<span style="font-family:var(--mo);font-size:9px">${fd(ti)}</span>`;
+      if(k==='fin')return`<span style="font-family:var(--mo);font-size:9px">${fd(tf)}</span>`;
       if(k==='real')return canEdit()?realCell:pbar(tReal,tReal>=tPlan?'gn':'yw',38);
       if(k==='plan')return pbar(tPlan,'ac',38);
       if(k==='dev')return devH(tDev);
-      if(k==='resp')return `<span style="font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.responsable||'—'}</span>`;
-      return '';
+      if(k==='resp')return`<span style="font-size:10px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${t.responsable||'—'}</span>`;
+      return'';
     }
 
     leftHTML+=`<div class="grow ${lc}" id="gr${t.id}">
@@ -1400,25 +1212,21 @@ function buildGanttGrid() {
         <div class="gc n" style="width:${NAME_W}px;flex-shrink:0;padding-left:${indent}px">
           ${toggle}
           <span class="gnt" title="${t.nombre||''}">${t.nombre||'Sin nombre'}</span>
-          ${canEdit()?`<div class="gra">
-            <button onclick="openEditTask(${t.id})" title="Editar">✏️</button>
-            <button class="d" onclick="askDelTask(${t.id},'${(t.nombre||'').replace(/'/g,"\\'")}')">🗑</button>
-          </div>`:''}
+          ${canEdit()?`<div class="gra"><button onclick="openEditTask(${t.id})" title="Editar">✏️</button><button class="d" onclick="askDelTask(${t.id},'${(t.nombre||'').replace(/'/g,"\\'")}')">🗑</button></div>`:''}
         </div>
         ${vcols.map(c=>`<div class="gc" style="width:${c.w}px;flex-shrink:0">${tcell(c.k)}</div>`).join('')}
       </div>
     </div>`;
 
     rightHTML+=`<div class="grow ${lc}">
-      <div class="gright-row" style="width:${TW}px;min-height:${isParent?34:30}px">
-        ${weeks.map((_,i)=>`<div class="gvl" style="left:${i*WK_W}px"></div>`).join('')}
+      <div class="gright-row" style="width:${TW}px;min-height:${isParent?34:30}px;background-image:${weekBg};background-size:${WK_W}px 100%">
         ${tX>-999&&tW>0?`<div class="gbar-w" style="left:${tX}px;width:${tW}px"><div class="gbar ${bc}" style="width:100%"><div class="bprog ${pc}" style="width:${tReal}%"></div><span class="blbl">${tReal}%</span></div></div>`:''}
         <div class="todayl" style="left:${todayX}px"></div>
       </div>
     </div>`;
   });
 
-  // FIX 3: Insertar todo el DOM de una vez
+  // Inserción DOM única
   document.getElementById('gbody').innerHTML=`
     <div class="gleft" style="width:${lw}px">
       <div class="glh"><div style="display:flex;align-items:stretch;width:100%">${lHdr}</div></div>
@@ -1427,23 +1235,31 @@ function buildGanttGrid() {
     <div class="gright">
       <div class="grh">${rHdr}</div>
       <div class="grs" id="gr">${rightHTML}</div>
-    </div>
-  `;
+    </div>`;
 
-  // FIX 3: Sync scroll con flag para evitar bucle
+  // OPTIMIZACIÓN: scroll sync sin reflow forzado
+  // Usamos passive listeners y coordinar con requestAnimationFrame
   const gl=document.getElementById('gl'), gr=document.getElementById('gr');
   if(gl&&gr){
-    let syncing=false;
-    gl.addEventListener('scroll',()=>{if(syncing)return;syncing=true;gr.scrollTop=gl.scrollTop;requestAnimationFrame(()=>syncing=false);});
-    gr.addEventListener('scroll',()=>{if(syncing)return;syncing=true;gl.scrollTop=gr.scrollTop;requestAnimationFrame(()=>syncing=false);});
+    let ticking=false;
+    let lastSource=null;
+    gl.addEventListener('scroll',()=>{
+      if(lastSource==='gr') return;
+      lastSource='gl';
+      if(!ticking){ticking=true;requestAnimationFrame(()=>{gr.scrollTop=gl.scrollTop;ticking=false;lastSource=null;});}
+    },{passive:true});
+    gr.addEventListener('scroll',()=>{
+      if(lastSource==='gl') return;
+      lastSource='gr';
+      if(!ticking){ticking=true;requestAnimationFrame(()=>{gl.scrollTop=gr.scrollTop;ticking=false;lastSource=null;});}
+    },{passive:true});
   }
 }
 
 function toggleGcol(k){gcols[k]=!gcols[k];buildGanttGrid();}
 function toggleG(id){
   const n=Number(id);
-  if(collapsed.has(n)) collapsed.delete(n);
-  else collapsed.add(n);
+  if(collapsed.has(n))collapsed.delete(n);else collapsed.add(n);
   buildGanttGrid();
 }
 
@@ -1453,107 +1269,76 @@ async function addTask(){
   if(!nb){toast('Escribe un nombre para la actividad','⚠️');return;}
   const ini=document.getElementById('nt-in')?.value||null;
   const fin=document.getElementById('nt-fi')?.value||null;
-  const prRaw=document.getElementById('nt-pr')?.value;
-  // FIX 2: usar NP para garantizar Number|null
-  const parent_id = NP(prRaw);
-  const t = {
-    proyecto_id: curProj.id,
-    nombre: nb,
-    inicio: ini,
-    fin: fin,
-    pct: 0,
-    responsable: curProj.jp || null,
-    parent_id: parent_id,
-    orden: curTasks.length + 1
-  };
+  const parent_id=NP(document.getElementById('nt-pr')?.value);
+  const t={proyecto_id:curProj.id,nombre:nb,inicio:ini,fin:fin,pct:0,responsable:curProj.jp||null,parent_id,orden:curTasks.length+1};
   try{
-    const s = await dbSaveTask(t);
-    // dbSaveTask ya actualiza curTasks y _taskCache
+    await dbSaveTask(t);
     document.getElementById('nt-nb').value='';
-    drawGantt();
-    toast(`"${nb}" agregada`,'✓');
+    drawGantt();toast(`"${nb}" agregada`,'✓');
   }catch(e){toast('Error: '+e.message,'❌');}
 }
 
 async function spct(taskId){
   const n=N(taskId);
-  const inp=document.getElementById('p'+taskId);
-  if(!inp)return;
-  if(hasKids(taskId,curTasks)){toast('Se calcula automáticamente','ℹ️');return;}
+  const inp=document.getElementById('p'+taskId);if(!inp)return;
+  const maps=buildTaskMaps(curTasks);
+  if(hasKidsFast(taskId,maps)){toast('Se calcula automáticamente','ℹ️');return;}
   const val=Math.min(100,Math.max(0,parseInt(inp.value)||0));
-  const t=curTasks.find(x=>N(x.id)===n);
-  if(!t)return;
+  const t=curTasks.find(x=>N(x.id)===n);if(!t)return;
   t.pct=val;
-  try{
-    await dbSaveTask(t);
-    await syncProjReal();
-    buildGanttGrid();
-    toast(`Avance ${val}% guardado`,'✓');
-  }catch(e){toast('Error: '+e.message,'❌');}
+  try{await dbSaveTask(t);await syncProjReal();buildGanttGrid();toast(`Avance ${val}% guardado`,'✓');}
+  catch(e){toast('Error: '+e.message,'❌');}
 }
 
 function openEditTask(id){
   editTaskId=id;
-  const t=curTasks.find(x=>N(x.id)===N(id)); if(!t)return;
-  document.getElementById('mttask').textContent=hasKids(t.id,curTasks)?'Editar Fase':'Editar Tarea';
-  document.getElementById('tf-nb').value=t.nombre||'';
-  document.getElementById('tf-in').value=t.inicio||'';
-  document.getElementById('tf-fi').value=t.fin||'';
-  document.getElementById('tf-pc').value=t.pct||0;
-  document.getElementById('tf-re').value=t.responsable||'';
-  openM('m-task');
+  const t=curTasks.find(x=>N(x.id)===N(id));if(!t)return;
+  const maps=buildTaskMaps(curTasks);
+  document.getElementById('mttask').textContent=hasKidsFast(t.id,maps)?'Editar Fase':'Editar Tarea';
+  document.getElementById('tf-nb').value=t.nombre||'';document.getElementById('tf-in').value=t.inicio||'';
+  document.getElementById('tf-fi').value=t.fin||'';document.getElementById('tf-pc').value=t.pct||0;
+  document.getElementById('tf-re').value=t.responsable||'';openM('m-task');
 }
 async function saveTaskModal(){
-  const t=curTasks.find(x=>N(x.id)===N(editTaskId)); if(!t)return;
+  const t=curTasks.find(x=>N(x.id)===N(editTaskId));if(!t)return;
   t.nombre=document.getElementById('tf-nb').value.trim()||t.nombre;
   t.inicio=document.getElementById('tf-in').value||t.inicio;
   t.fin=document.getElementById('tf-fi').value||t.fin;
   t.pct=parseInt(document.getElementById('tf-pc').value)||0;
   t.responsable=document.getElementById('tf-re').value||null;
-  try{
-    await dbSaveTask(t);
-    await syncProjReal();
-    closeM('m-task');
-    drawGantt();
-    toast('Guardado','✓');
-  }catch(e){toast('Error: '+e.message,'❌');}
+  try{await dbSaveTask(t);await syncProjReal();closeM('m-task');drawGantt();toast('Guardado','✓');}
+  catch(e){toast('Error: '+e.message,'❌');}
 }
-
 function askDelTask(id,name){
   pendDelTaskId=id;
-  const n=curTasks.filter(x=>NP(x.parent_id)===Number(id)).length;
+  const maps=buildTaskMaps(curTasks);
+  const n=(maps.childrenOf.get(Number(id))||[]).length;
   document.getElementById('deltmsg').innerHTML=`¿Eliminar <strong>"${name}"</strong>?`;
   document.getElementById('deltsub').textContent=n>0?`También se eliminarán ${n} subtarea(s).`:'Esta acción no se puede deshacer.';
   openM('m-delt');
 }
 async function confirmDelTask(){
   closeM('m-delt');
-  try{
-    await dbDelTask(pendDelTaskId);
-    await syncProjReal();
-    drawGantt();
-    toast('Eliminada','🗑');
-  }catch(e){toast('Error: '+e.message,'❌');}
+  try{await dbDelTask(pendDelTaskId);await syncProjReal();drawGantt();toast('Eliminada','🗑');}
+  catch(e){toast('Error: '+e.message,'❌');}
   pendDelTaskId=null;
 }
 
-// ── 11. AVANCE SEMANAL ──
+// ── 12. AVANCE SEMANAL ──
 function drawAv(){
   const p=curProj;
   document.getElementById('avhdr').innerHTML=`
     <div><div style="font-size:14px;font-weight:700">Avance Semanal — ${p.nombre||''}</div>
     <div style="font-size:11px;color:var(--tx3);font-family:var(--mo)">${p.fr||''} · ${curInfs.length} informe(s)</div></div>
-    ${canEdit()?`<button class="gbtn p" onclick="openNewInf()">+ Nuevo Informe</button>`:''}
-  `;
+    ${canEdit()?`<button class="gbtn p" onclick="openNewInf()">+ Nuevo Informe</button>`:''}`;
   const list=document.getElementById('avlist');
   if(!curInfs.length){
-    list.innerHTML=`<div class="empty"><div class="ei">📝</div><div class="et">Sin informes</div><div class="es">Registra el primer informe semanal.</div>${canEdit()?'<button class="bp2" onclick="openNewInf()">+ Registrar</button>':''}</div>`;
-    return;
+    list.innerHTML=`<div class="empty"><div class="ei">📝</div><div class="et">Sin informes</div><div class="es">Registra el primer informe semanal.</div>${canEdit()?'<button class="bp2" onclick="openNewInf()">+ Registrar</button>':''}</div>`;return;
   }
   list.innerHTML=[...curInfs].sort((a,b)=>(b.fecha||'').localeCompare(a.fecha||'')).map(inf=>{
-    const pct=inf.pct||0, pc=pct>=80?'gn':pct>=50?'yw':'rd';
+    const pct=inf.pct||0,pc=pct>=80?'gn':pct>=50?'yw':'rd';
     const wn=inf.fecha?getWeekNum(new Date(inf.fecha)):'?';
-    return `<div class="ic">
+    return`<div class="ic">
       <div class="ih" onclick="this.nextElementSibling.style.display=this.nextElementSibling.style.display==='block'?'none':'block'">
         <span class="iwk">S${wn}</span>
         <div><div style="font-size:12px;font-weight:600">${inf.responsable||'—'}</div><div style="font-size:10px;color:var(--tx3)">${inf.estado||''} · ${fd(inf.fecha)}</div></div>
@@ -1578,9 +1363,7 @@ function openNewInf(){
   document.getElementById('if-re').value=curProj.jp||'';
   document.getElementById('if-fe').value=new Date().toISOString().split('T')[0];
   document.getElementById('if-pc').value=curProj.real||'';
-  document.getElementById('if-de').value='';
-  document.getElementById('if-pr').value='';
-  document.getElementById('if-ob').value='';
+  ['de','pr','ob'].forEach(f=>document.getElementById('if-'+f).value='');
   openM('m-inf');
 }
 async function saveInf(){
@@ -1588,18 +1371,18 @@ async function saveInf(){
   const inf={proyecto_id:curProj.id,responsable:document.getElementById('if-re').value||null,fecha:document.getElementById('if-fe').value||null,pct,estado:document.getElementById('if-es').value,detalle:document.getElementById('if-de').value||null,proximos:document.getElementById('if-pr').value||null,obstaculos:document.getElementById('if-ob').value||null};
   try{
     const s=await dbSaveInf(inf);
-    if(!DEMO&&s) curInfs.unshift(s);
-    // Invalidar caché de informes para este proyecto
-    delete _infCache[Number(curProj.id)];
+    if(!DEMO&&s)curInfs.unshift(s);
+    const key=N(curProj.id);
+    if(_cache[key])_cache[key].infs=curInfs;
     curProj.real=pct;
     const pi=projects.findIndex(x=>N(x.id)===N(curProj.id));
-    if(pi>=0) projects[pi].real=pct;
-    if(!DEMO) try{await sbFetch('proyectos','PATCH',{real:pct},`?id=eq.${curProj.id}`);}catch(_){}
-    closeM('m-inf'); drawAv(); drawSbar(); toast('Informe guardado','✓');
+    if(pi>=0)projects[pi].real=pct;
+    if(!DEMO)try{await sbFetch('proyectos','PATCH',{real:pct},`?id=eq.${curProj.id}`);}catch(_){}
+    closeM('m-inf');drawAv();drawSbar();toast('Informe guardado','✓');
   }catch(e){toast('Error: '+e.message,'❌');}
 }
 
-// ── 12. INFORMACIÓN ──
+// ── 13. INFORMACIÓN ──
 function drawInfo(){
   const{riesgos,docs,coms}=infoData;
   document.getElementById('infocnt').innerHTML=`
@@ -1615,27 +1398,25 @@ function drawInfo(){
       <div class="iptl">💬 Comentarios</div>
       ${!coms.length?'<div style="color:var(--tx3);font-size:12px;margin-bottom:8px">Sin comentarios.</div>':coms.map(c=>`<div class="cmi"><div class="cmm"><span class="cma">${c.autor||'—'}</span><span class="cmd">${fd((c.created_at||'').split('T')[0])}</span></div><div style="font-size:12px;color:var(--tx2);line-height:1.5">${c.texto||'—'}</div></div>`).join('')}
       ${canEdit()?`<div style="margin-top:10px"><textarea class="fta" id="cminp" placeholder="Escribe un comentario..." style="min-height:50px"></textarea><button class="gbtn p" style="margin-top:6px" onclick="addCom()">💬 Comentar</button></div>`:''}
-    </div>
-  `;
+    </div>`;
 }
-async function addRiesgo(){const nv=prompt('Nivel (Alta/Media/Baja):')||'Media';const dc=prompt('Descripción:');if(!dc)return;const ow=prompt('Responsable:')||'';const r={nivel:nv,descripcion:dc,responsable:ow,proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('riesgos','POST',r);infoData.riesgos.push(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else infoData.riesgos.push(r);delete _infoCache[Number(curProj.id)];drawInfo();toast('Riesgo agregado','⚠️');}
-async function removeRiesgo(i){const r=infoData.riesgos[i];if(r.id&&!DEMO)try{await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`);}catch(e){toast('Error','❌');return;}infoData.riesgos.splice(i,1);delete _infoCache[Number(curProj.id)];drawInfo();toast('Eliminado','🗑');}
-async function addDoc(){const n=prompt('Nombre:');if(!n)return;const s=prompt('Tamaño (ej: 1.2 MB):')||'';const tp=n.endsWith('.pdf')?'📄':n.endsWith('.xlsx')||n.endsWith('.xls')?'📊':'📝';const d={nombre:n,tipo:tp,tamano:s,proyecto_id:curProj.id};if(!DEMO){try{const sv=await sbFetch('documentos','POST',d);infoData.docs.push(Array.isArray(sv)?sv[0]:sv);}catch(e){toast('Error','❌');return;}}else infoData.docs.push(d);delete _infoCache[Number(curProj.id)];drawInfo();toast('Documento agregado','📎');}
-async function removeDoc(i){const d=infoData.docs[i];if(d.id&&!DEMO)try{await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`);}catch(e){toast('Error','❌');return;}infoData.docs.splice(i,1);delete _infoCache[Number(curProj.id)];drawInfo();toast('Eliminado','🗑');}
-async function addCom(){const txt=document.getElementById('cminp')?.value.trim();if(!txt)return;const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('comentarios','POST',c);infoData.coms.unshift(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else{c.created_at=new Date().toISOString();infoData.coms.unshift(c);}delete _infoCache[Number(curProj.id)];drawInfo();toast('Comentario agregado','💬');}
+async function addRiesgo(){const nv=prompt('Nivel (Alta/Media/Baja):')||'Media';const dc=prompt('Descripción:');if(!dc)return;const ow=prompt('Responsable:')||'';const r={nivel:nv,descripcion:dc,responsable:ow,proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('riesgos','POST',r);infoData.riesgos.push(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else infoData.riesgos.push(r);const k=N(curProj.id);if(_cache[k])_cache[k].info=infoData;drawInfo();toast('Riesgo agregado','⚠️');}
+async function removeRiesgo(i){const r=infoData.riesgos[i];if(r.id&&!DEMO)try{await sbFetch('riesgos','DELETE',null,`?id=eq.${r.id}`);}catch(e){toast('Error','❌');return;}infoData.riesgos.splice(i,1);const k=N(curProj.id);if(_cache[k])_cache[k].info=infoData;drawInfo();toast('Eliminado','🗑');}
+async function addDoc(){const n=prompt('Nombre:');if(!n)return;const s=prompt('Tamaño (ej: 1.2 MB):')||'';const tp=n.endsWith('.pdf')?'📄':n.endsWith('.xlsx')||n.endsWith('.xls')?'📊':'📝';const d={nombre:n,tipo:tp,tamano:s,proyecto_id:curProj.id};if(!DEMO){try{const sv=await sbFetch('documentos','POST',d);infoData.docs.push(Array.isArray(sv)?sv[0]:sv);}catch(e){toast('Error','❌');return;}}else infoData.docs.push(d);const k=N(curProj.id);if(_cache[k])_cache[k].info=infoData;drawInfo();toast('Documento agregado','📎');}
+async function removeDoc(i){const d=infoData.docs[i];if(d.id&&!DEMO)try{await sbFetch('documentos','DELETE',null,`?id=eq.${d.id}`);}catch(e){toast('Error','❌');return;}infoData.docs.splice(i,1);const k=N(curProj.id);if(_cache[k])_cache[k].info=infoData;drawInfo();toast('Eliminado','🗑');}
+async function addCom(){const txt=document.getElementById('cminp')?.value.trim();if(!txt)return;const c={texto:txt,autor:ROLES[roleIdx],proyecto_id:curProj.id};if(!DEMO){try{const s=await sbFetch('comentarios','POST',c);infoData.coms.unshift(Array.isArray(s)?s[0]:s);}catch(e){toast('Error','❌');return;}}else{c.created_at=new Date().toISOString();infoData.coms.unshift(c);}const k=N(curProj.id);if(_cache[k])_cache[k].info=infoData;drawInfo();toast('Comentario agregado','💬');}
 
-// ── 13. REPORTERÍA ──
+// ── 14. REPORTERÍA ──
 function drawReport(){
   document.getElementById('rptdate').textContent=new Date().toLocaleDateString('es-CL',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
   const t=projects.length;
   if(!t){document.getElementById('rptcnt').innerHTML=`<div class="empty"><div class="ei">📈</div><div class="et">Sin datos</div></div>`;return;}
   const avg=Math.round(projects.reduce((s,p)=>s+(p.real||0),0)/t);
-  // FIX 1: drawReport usa _fin/_ini como fallback
-  const getPl=p=>pctPlan(p.inicio||p._ini||null, p.fin||p._fin||null);
+  const getPl=p=>pctPlan(p.inicio||p._ini||null,p.fin||p._fin||null);
   const ep=projects.filter(p=>(p.real||0)>=getPl(p)).length;
   const at=projects.filter(p=>(p.real||0)<getPl(p)).length;
   const tp=projects.reduce((s,p)=>s+(p.presupuesto||0),0);
-  const byC={Alta:0,Media:0,Baja:0}, byF={Completo:0,Básico:0,Ágil:0};
+  const byC={Alta:0,Media:0,Baja:0},byF={Completo:0,Básico:0,Ágil:0};
   projects.forEach(p=>{if(p.complejidad)byC[p.complejidad]=(byC[p.complejidad]||0)+1;if(p.flujo)byF[p.flujo]=(byF[p.flujo]||0)+1;});
   document.getElementById('rptcnt').innerHTML=`
     <div class="rkpis">
@@ -1653,35 +1434,27 @@ function drawReport(){
       <div style="padding:9px 13px;border-bottom:1px solid var(--bd);font-size:12px;font-weight:700">Estado Consolidado</div>
       <table style="width:100%;border-collapse:collapse">
         <thead><tr>${['FR','Nombre','JP','Real','Plan.','Desv.','Flujo'].map(h=>`<th style="padding:7px 10px;text-align:left;font-family:var(--mo);font-size:10px;color:var(--tx3);background:var(--sf2);border-bottom:1px solid var(--bd)">${h}</th>`).join('')}</tr></thead>
-        <tbody>${projects.map(p=>{
-          // FIX 1: usar _fin/_ini en reportería
-          const pl=getPl(p),rv=p.real||0,dv=rv-pl;
-          return`<tr style="border-bottom:1px solid var(--bd);cursor:pointer" onclick="openProj(${p.id})">
-            <td style="padding:7px 10px;font-family:var(--mo);font-size:11px;color:var(--ac2)">${p.fr||'—'}</td>
-            <td style="padding:7px 10px;font-size:12px;font-weight:600">${p.nombre||'—'}</td>
-            <td style="padding:7px 10px;font-size:11px">${p.jp||'—'}</td>
-            <td style="padding:7px 10px">${pbar(rv,rv>=pl?'gn':'yw',34)}</td>
-            <td style="padding:7px 10px">${pbar(pl,'ac',34)}</td>
-            <td style="padding:7px 10px">${devH(dv)}</td>
-            <td style="padding:7px 10px">${bflujo(p.flujo)}</td>
-          </tr>`;
-        }).join('')}</tbody>
+        <tbody>${projects.map(p=>{const pl=getPl(p),rv=p.real||0,dv=rv-pl;return`<tr style="border-bottom:1px solid var(--bd);cursor:pointer" onclick="openProj(${p.id})">
+          <td style="padding:7px 10px;font-family:var(--mo);font-size:11px;color:var(--ac2)">${p.fr||'—'}</td>
+          <td style="padding:7px 10px;font-size:12px;font-weight:600">${p.nombre||'—'}</td>
+          <td style="padding:7px 10px;font-size:11px">${p.jp||'—'}</td>
+          <td style="padding:7px 10px">${pbar(rv,rv>=pl?'gn':'yw',34)}</td>
+          <td style="padding:7px 10px">${pbar(pl,'ac',34)}</td>
+          <td style="padding:7px 10px">${devH(dv)}</td>
+          <td style="padding:7px 10px">${bflujo(p.flujo)}</td>
+        </tr>`;}).join('')}</tbody>
       </table>
-    </div>
-  `;
+    </div>`;
 }
 
 function exportCSV(){
   const h=['FR','Nombre','JP','Área','Inicio','Fin','% Real','% Planificado','% Desviación','Complejidad','Flujo','Presupuesto'];
-  const rows=projects.map(p=>{
-    const pl=pctPlan(p.inicio||p._ini||null,p.fin||p._fin||null),rv=p.real||0;
-    return[p.fr,p.nombre,p.jp,p.area,p.inicio,p.fin,rv,pl,rv-pl,p.complejidad,p.flujo,p.presupuesto];
-  });
+  const rows=projects.map(p=>{const pl=pctPlan(p.inicio||p._ini||null,p.fin||p._fin||null),rv=p.real||0;return[p.fr,p.nombre,p.jp,p.area,p.inicio,p.fin,rv,pl,rv-pl,p.complejidad,p.flujo,p.presupuesto];});
   const csv=[h,...rows].map(r=>r.map(v=>`"${v??''}"`).join(',')).join('\n');
   const a=document.createElement('a');a.href='data:text/csv;charset=utf-8,\uFEFF'+encodeURIComponent(csv);a.download=`portafolio_${new Date().toISOString().split('T')[0]}.csv`;a.click();toast('CSV exportado','⬇');
 }
 
-// ── 14. SUPABASE CONFIG ──
+// ── 15. SUPABASE CONFIG ──
 async function connectSB(){
   SB_URL=document.getElementById('cfgurl').value.trim();
   SB_KEY=document.getElementById('cfgkey').value.trim();
@@ -1691,12 +1464,7 @@ async function connectSB(){
     await sbFetch('proyectos','GET',null,'?select=id&limit=1');
     localStorage.setItem('sb_url',SB_URL);localStorage.setItem('sb_key',SB_KEY);
     DEMO=false;setDB(true);document.getElementById('cfgres').textContent='✅ Conectado!';
-    toast('Conectado a Supabase','✅');
-    // FIX 3: limpiar caché al reconectar
-    Object.keys(_taskCache).forEach(k=>delete _taskCache[k]);
-    Object.keys(_infCache).forEach(k=>delete _infCache[k]);
-    Object.keys(_infoCache).forEach(k=>delete _infoCache[k]);
-    await loadProjects();
+    toast('Conectado a Supabase','✅');clearAllCache();await loadProjects();
   }catch(e){document.getElementById('cfgres').textContent='❌ '+e.message.substring(0,80);setDB(false,true);toast('Error','❌');}
 }
 async function testSB(){
@@ -1705,21 +1473,16 @@ async function testSB(){
   catch(e){document.getElementById('cfgres').textContent='❌ '+e.message.substring(0,80);toast('Error','❌');}
 }
 function useDemo(){
-  DEMO=true;SB_URL='';SB_KEY='';
-  localStorage.removeItem('sb_url');localStorage.removeItem('sb_key');
+  DEMO=true;SB_URL='';SB_KEY='';localStorage.removeItem('sb_url');localStorage.removeItem('sb_key');
   setDB(false);document.getElementById('cfgres').textContent='🎭 Modo Demo';
-  // Limpiar caché al cambiar a demo
-  Object.keys(_taskCache).forEach(k=>delete _taskCache[k]);
-  Object.keys(_infCache).forEach(k=>delete _infCache[k]);
-  Object.keys(_infoCache).forEach(k=>delete _infoCache[k]);
-  toast('Modo Demo','🎭');loadProjects();nav('centro');
+  clearAllCache();toast('Modo Demo','🎭');loadProjects();nav('centro');
 }
 
-// ── 15. ROL ──
+// ── 16. ROL ──
 function cycleRole(){roleIdx=(roleIdx+1)%ROLES.length;document.getElementById('rlbl').textContent=ROLES[roleIdx];toast(`Rol: ${ROLES[roleIdx]}`,'👤');drawTable();}
 
-// ── 16. INIT ──
-document.addEventListener('DOMContentLoaded', async()=>{
+// ── 17. INIT ──
+document.addEventListener('DOMContentLoaded',async()=>{
   if(SB_URL&&SB_KEY){
     DEMO=false;document.getElementById('dbl').textContent='Conectando...';
     try{await sbFetch('proyectos','GET',null,'?select=id&limit=1');setDB(true);DEMO=false;}
